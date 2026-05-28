@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import { Menu, X } from '@lucide/vue'
 import ComponentPreview from '@/components/ComponentPreview.vue'
 import SidebarNav, { type SidebarItem } from '@/components/SidebarNav.vue'
+import ThemeModeMenu from '@/components/ThemeModeMenu.vue'
 import AccordionDemo from '@/demos/AccordionDemo.vue'
 import accordionVueSource from '@/demos/AccordionDemo.vue?raw'
 
@@ -87,17 +88,23 @@ function closeMobileSidebar() {
       <main class="flex-1 overflow-y-auto">
         <div class="mx-auto w-full max-w-4xl px-4 py-6 sm:px-6 sm:py-10">
           <header class="mb-10 space-y-2">
-            <div class="mb-2 flex items-center gap-3 md:hidden">
-              <button
-                type="button"
-                class="hover:bg-muted inline-flex size-9 items-center justify-center rounded-md border"
-                @click="mobileSidebarOpen = true"
-              >
-                <Menu class="size-4" />
-              </button>
-              <span class="text-muted-foreground text-sm font-medium">
-                Components
-              </span>
+            <div class="mb-2 flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3 md:hidden">
+                <button
+                  type="button"
+                  class="hover:bg-muted inline-flex size-9 items-center justify-center rounded-md border"
+                  @click="mobileSidebarOpen = true"
+                >
+                  <Menu class="size-4" />
+                </button>
+                <span class="text-muted-foreground text-sm font-medium">
+                  Components
+                </span>
+              </div>
+
+              <div class="ml-auto">
+                <ThemeModeMenu />
+              </div>
             </div>
             <p class="text-muted-foreground text-sm font-medium tracking-wide uppercase">
               Component playground
