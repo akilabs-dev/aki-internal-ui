@@ -8,13 +8,13 @@ let highlighterPromise: Promise<HighlighterCore> | null = null
 export function getHighlighter() {
   highlighterPromise ??= createHighlighterCore({
     themes: [bundledThemes['dark-plus']],
-    langs: [bundledLanguages.vue, bundledLanguages.html],
+    langs: [bundledLanguages.vue, bundledLanguages.html, bundledLanguages.css],
     engine: createOnigurumaEngine(() => import('shiki/wasm')),
   })
   return highlighterPromise
 }
 
-export async function highlightCode(code: string, lang: 'vue' | 'html') {
+export async function highlightCode(code: string, lang: 'vue' | 'html' | 'css') {
   const highlighter = await getHighlighter()
   return highlighter.codeToHtml(code, {
     lang,
@@ -44,7 +44,8 @@ function extractCodeInnerHtml(shikiHtml: string) {
  */
 export async function highlightCodeWithLineNumbers(
   code: string,
-  lang: 'vue' | 'html',
+  lang: 'vue' | 'html' | 'css',
+  folds?: Array<{ from: number; to: number }>,
 ) {
   const shikiHtml = await highlightCode(code, lang)
   const inner = extractCodeInnerHtml(shikiHtml)
@@ -54,11 +55,22 @@ export async function highlightCodeWithLineNumbers(
   const lastIndex = lines.length - 1
   const normalized = lastIndex >= 0 && lines[lastIndex] === '' ? lines.slice(0, -1) : lines
 
+  const foldByFrom = new Map<number, number>()
+  for (const f of folds ?? []) {
+    if (f.to <= f.from) continue
+    const existing = foldByFrom.get(f.from)
+    if (!existing || f.to > existing) foldByFrom.set(f.from, f.to)
+  }
+
   const rows = normalized
     .map((lineHtml, i) => {
       const lineNumber = i + 1
       const aria = escapeAttribute(`Line ${lineNumber}`)
-      return `<span class="code-ln__row"><span class="code-ln__gutter" aria-label="${aria}">${lineNumber}</span><span class="code-ln__code">${lineHtml || '&nbsp;'}</span></span>`
+      const foldTo = foldByFrom.get(lineNumber)
+      const foldBtn = foldTo
+        ? `<button class="code-ln__fold" type="button" data-fold-from="${lineNumber}" data-fold-to="${foldTo}" aria-label="Toggle fold" title="Toggle fold">▾</button>`
+        : `<span class="code-ln__fold-spacer" aria-hidden="true"></span>`
+      return `<span class="code-ln__row" data-ln="${lineNumber}"><span class="code-ln__gutter" aria-label="${aria}">${foldBtn}${lineNumber}</span><span class="code-ln__code">${lineHtml || '&nbsp;'}</span></span>`
     })
     .join('')
 

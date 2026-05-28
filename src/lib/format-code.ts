@@ -45,3 +45,15 @@ export async function formatHtmlSource(code: string): Promise<string> {
     return formatHtml(code)
   }
 }
+
+export async function formatCssSource(code: string): Promise<string> {
+  try {
+    return await prettier.format(code, {
+      ...prettierOptions,
+      parser: 'css',
+      plugins: [pluginPostcss],
+    })
+  } catch {
+    return code.trim()
+  }
+}

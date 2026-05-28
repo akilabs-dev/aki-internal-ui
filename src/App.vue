@@ -6,7 +6,16 @@ import SidebarNav, { type SidebarItem } from '@/components/SidebarNav.vue'
 import ThemeModeMenu from '@/components/ThemeModeMenu.vue'
 import ThemeStyleMenu from '@/components/ThemeStyleMenu.vue'
 
-const items: SidebarItem[] = [
+const sectionItems: SidebarItem[] = [
+  { id: 'introduction', label: 'Introduction' },
+  { id: 'installation', label: 'Installation' },
+  { id: 'copy-guide', label: 'Usage in your project' },
+  { id: 'styling', label: 'Styling' },
+  { id: 'theme-configuration', label: 'Theme configuration' },
+  { id: 'faq', label: 'FAQ' },
+]
+
+const componentItems: SidebarItem[] = [
   { id: 'accordion', label: 'Accordion' },
   { id: 'alert', label: 'Alert' },
   { id: 'alert-dialog', label: 'Alert Dialog', disabled: true },
@@ -26,21 +35,39 @@ const mobileSidebarOpen = ref(false)
 const route = useRoute()
 const router = useRouter()
 
-const activeId = computed(() => {
+const activeComponentId = computed(() => {
   const path = route.path
   if (path.startsWith('/docs/components/accordion')) return 'accordion'
   if (path.startsWith('/docs/components/alert')) return 'alert'
-  return 'accordion'
+  return ''
 })
 
 function closeMobileSidebar() {
   mobileSidebarOpen.value = false
 }
 
-function onSelectSidebar(id: string) {
+function onSelectComponent(id: string) {
   if (id === 'accordion') void router.push('/docs/components/accordion')
   if (id === 'alert') void router.push('/docs/components/alert')
 }
+
+const activeSectionId = computed(() => {
+  const path = route.path
+  if (path.startsWith('/docs/introduction')) return 'introduction'
+  if (path.startsWith('/docs/installation')) return 'installation'
+  if (path.startsWith('/docs/copy-guide')) return 'copy-guide'
+  if (path.startsWith('/docs/styling')) return 'styling'
+  if (path.startsWith('/docs/theme-configuration')) return 'theme-configuration'
+  if (path.startsWith('/docs/faq')) return 'faq'
+  return ''
+})
+
+function onSelectSection(id: string) {
+  void router.push(`/docs/${id}`)
+}
+
+const headerEyebrow = computed(() => (route.meta.eyebrow as string) || 'Docs')
+const headerTitle = computed(() => (route.meta.title as string) || 'Introduction')
 </script>
 
 <template>
@@ -48,7 +75,23 @@ function onSelectSidebar(id: string) {
     <div class="flex h-svh">
       <!-- Desktop sidebar -->
       <div class="hidden md:block">
-        <SidebarNav :items="items" :active-id="activeId" @select="onSelectSidebar" />
+        <div class="h-svh w-64 overflow-y-auto border-r bg-background">
+          <SidebarNav
+            title="Sections"
+            :items="sectionItems"
+            :active-id="activeSectionId"
+            class="border-r-0"
+            @select="onSelectSection"
+          />
+          <div class="border-t" />
+          <SidebarNav
+            title="Components"
+            :items="componentItems"
+            :active-id="activeComponentId"
+            class="border-r-0"
+            @select="onSelectComponent"
+          />
+        </div>
       </div>
 
       <!-- Mobile sidebar (drawer) -->
@@ -63,7 +106,7 @@ function onSelectSidebar(id: string) {
       >
         <div class="flex items-center justify-between border-b px-4 py-3">
           <div class="text-sm font-medium text-muted-foreground">
-            Components
+            Menu
           </div>
           <button
             type="button"
@@ -75,11 +118,22 @@ function onSelectSidebar(id: string) {
         </div>
         <div class="h-[calc(100svh-3.25rem)] overflow-y-auto">
           <SidebarNav
-            :items="items"
-            :active-id="activeId"
+            title="Sections"
+            :items="sectionItems"
+            :active-id="activeSectionId"
             on-select-close
             class="border-r-0"
-            @select="onSelectSidebar"
+            @select="onSelectSection"
+            @close="closeMobileSidebar"
+          />
+          <div class="my-4 border-t" />
+          <SidebarNav
+            title="Components"
+            :items="componentItems"
+            :active-id="activeComponentId"
+            on-select-close
+            class="border-r-0"
+            @select="onSelectComponent"
             @close="closeMobileSidebar"
           />
         </div>
@@ -98,7 +152,7 @@ function onSelectSidebar(id: string) {
                   <Menu class="size-4" />
                 </button>
                 <span class="text-muted-foreground text-sm font-medium">
-                  Components
+                  Menu
                 </span>
               </div>
 
@@ -110,15 +164,11 @@ function onSelectSidebar(id: string) {
               </div>
             </div>
             <p class="text-muted-foreground text-sm font-medium tracking-wide uppercase">
-              Component playground
+              {{ headerEyebrow }}
             </p>
             <h1 class="font-serif text-3xl font-semibold tracking-tight">
-              Preview
+              {{ headerTitle }}
             </h1>
-            <p class="text-muted-foreground max-w-xl text-sm leading-relaxed">
-              Inspect shadcn-vue components live, then view the source and rendered
-              HTML from the same demo.
-            </p>
           </header>
 
           <RouterView />
