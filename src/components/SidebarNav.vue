@@ -10,12 +10,12 @@ export type SidebarItem = {
 const props = defineProps<{
   title?: string
   items: SidebarItem[]
-  modelValue: string
+  activeId: string
   onSelectClose?: boolean
 }>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string]
+  select: [id: string]
   close: []
 }>()
 
@@ -23,7 +23,7 @@ const title = computed(() => props.title ?? 'Components')
 
 function select(id: string, disabled?: boolean) {
   if (disabled) return
-  emit('update:modelValue', id)
+  emit('select', id)
   if (props.onSelectClose) {
     emit('close')
   }
@@ -47,7 +47,7 @@ function select(id: string, disabled?: boolean) {
             item.disabled
               ? 'text-muted-foreground/50 cursor-not-allowed'
               : 'hover:bg-muted hover:text-foreground',
-            item.id === modelValue ? 'bg-muted text-foreground' : '',
+            item.id === activeId ? 'bg-muted text-foreground' : '',
           ]"
           :disabled="item.disabled"
           @click="select(item.id, item.disabled)"

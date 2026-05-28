@@ -1,14 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { Menu, X } from '@lucide/vue'
-import ComponentPreview from '@/components/ComponentPreview.vue'
 import SidebarNav, { type SidebarItem } from '@/components/SidebarNav.vue'
 import ThemeModeMenu from '@/components/ThemeModeMenu.vue'
 import ThemeStyleMenu from '@/components/ThemeStyleMenu.vue'
-import AccordionDemo from '@/demos/accordion/AccordionDemo.vue'
-import accordionVueSource from '@/demos/accordion/AccordionDemo.vue?raw'
-import AlertDemo from '@/demos/alert/AlertDemo.vue'
-import alertVueSource from '@/demos/alert/AlertDemo.vue?raw'
 
 const items: SidebarItem[] = [
   { id: 'accordion', label: 'Accordion' },
@@ -26,33 +22,24 @@ const items: SidebarItem[] = [
   { id: 'chart', label: 'Chart', disabled: true },
 ]
 
-const selected = ref(items[0]!.id)
 const mobileSidebarOpen = ref(false)
+const route = useRoute()
+const router = useRouter()
 
-const preview = computed(() => {
-  if (selected.value === 'accordion') {
-    return {
-      title: 'Accordion',
-      description: 'Collapsible sections built with reka-ui and shadcn-vue.',
-      alpineExtractor: 'accordion' as const,
-      vueSource: accordionVueSource,
-      component: AccordionDemo,
-    }
-  }
-  if (selected.value === 'alert') {
-    return {
-      title: 'Alert',
-      description: 'Displays important messages and statuses.',
-      alpineExtractor: 'alert' as const,
-      vueSource: alertVueSource,
-      component: AlertDemo,
-    }
-  }
-  return null
+const activeId = computed(() => {
+  const path = route.path
+  if (path.startsWith('/docs/components/accordion')) return 'accordion'
+  if (path.startsWith('/docs/components/alert')) return 'alert'
+  return 'accordion'
 })
 
 function closeMobileSidebar() {
   mobileSidebarOpen.value = false
+}
+
+function onSelectSidebar(id: string) {
+  if (id === 'accordion') void router.push('/docs/components/accordion')
+  if (id === 'alert') void router.push('/docs/components/alert')
 }
 </script>
 
@@ -61,7 +48,7 @@ function closeMobileSidebar() {
     <div class="flex h-svh">
       <!-- Desktop sidebar -->
       <div class="hidden md:block">
-        <SidebarNav v-model="selected" :items="items" />
+        <SidebarNav :items="items" :active-id="activeId" @select="onSelectSidebar" />
       </div>
 
       <!-- Mobile sidebar (drawer) -->
@@ -88,10 +75,11 @@ function closeMobileSidebar() {
         </div>
         <div class="h-[calc(100svh-3.25rem)] overflow-y-auto">
           <SidebarNav
-            v-model="selected"
             :items="items"
+            :active-id="activeId"
             on-select-close
             class="border-r-0"
+            @select="onSelectSidebar"
             @close="closeMobileSidebar"
           />
         </div>
@@ -133,22 +121,7 @@ function closeMobileSidebar() {
             </p>
           </header>
 
-          <div v-if="preview">
-            <ComponentPreview
-              :title="preview.title"
-              :description="preview.description"
-              :alpine-extractor="preview.alpineExtractor"
-              :vue-source="preview.vueSource"
-            >
-              <component :is="preview.component" />
-            </ComponentPreview>
-          </div>
-          <div
-            v-else
-            class="text-muted-foreground rounded-lg border p-8 text-sm"
-          >
-            This component demo isn’t wired yet.
-          </div>
+          <RouterView />
         </div>
       </main>
     </div>

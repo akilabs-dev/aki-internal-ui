@@ -8,7 +8,8 @@ export function registerAlpineData() {
     open: 'item-1' as string | null,
 
     init() {
-      const defaultOpen = (this.$root as HTMLElement).dataset.defaultOpen
+      const defaultOpen = ((this as any).$root as HTMLElement | undefined)?.dataset
+        ?.defaultOpen
       if (defaultOpen) {
         this.open = defaultOpen
       }
@@ -33,13 +34,14 @@ export function ensureAlpine() {
   started = true
 }
 
-export function initAlpineOnElement(el: HTMLElement) {
+export function initAlpineOnElement(el: any) {
   ensureAlpine()
-  Alpine.initTree(el)
+  ;(Alpine as any).initTree(el)
 }
 
-export function destroyAlpineOnElement(el: HTMLElement) {
-  if ('destroyTree' in Alpine && typeof Alpine.destroyTree === 'function') {
-    Alpine.destroyTree(el)
+export function destroyAlpineOnElement(el: any) {
+  const maybeDestroyTree = (Alpine as any).destroyTree as unknown
+  if (typeof maybeDestroyTree === 'function') {
+    maybeDestroyTree(el)
   }
 }

@@ -26,7 +26,8 @@ const label = computed(() => {
   return 'System'
 })
 
-function setMode(next: string) {
+function setMode(next: unknown) {
+  if (typeof next !== 'string') return
   const value = next as ThemeMode
   mode.value = value
   storeThemeMode(value)

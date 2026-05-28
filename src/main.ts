@@ -6,6 +6,7 @@ import {
   getStoredThemeMode,
   getStoredThemeStyle,
 } from '@/lib/theme'
+import { router } from '@/router'
 import './style.css'
 import App from './App.vue'
 
@@ -19,4 +20,4 @@ ensureAlpine()
 applyThemeStyle(getStoredThemeStyle())
 applyTheme(getStoredThemeMode())
 
-createApp(App).mount('#app')
+createApp(App).use(router).mount('#app')

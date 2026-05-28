@@ -10,7 +10,7 @@ const props = defineProps<{
   html: string
 }>()
 
-const host = ref<HTMLElement | null>(null)
+const host = ref<any>(null)
 const mountedHtml = ref('')
 
 async function mountAlpine(html: string) {
@@ -40,7 +40,7 @@ async function mountAlpine(html: string) {
 }
 
 function setHost(el: unknown) {
-  host.value = el instanceof HTMLElement ? el : null
+  host.value = el && typeof el === 'object' ? el : null
   if (host.value && props.html.trim()) {
     void mountAlpine(props.html)
   }

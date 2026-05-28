@@ -44,7 +44,8 @@ const themes = computed(() => {
 
 const label = computed(() => toLabel(style.value))
 
-function setStyle(next: string) {
+function setStyle(next: unknown) {
+  if (typeof next !== 'string') return
   const value = next as ThemeStyle
   style.value = value
   storeThemeStyle(value)

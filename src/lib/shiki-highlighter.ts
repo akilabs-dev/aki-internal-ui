@@ -1,15 +1,14 @@
 import { createHighlighterCore, type HighlighterCore } from 'shiki/core'
 import { createOnigurumaEngine } from 'shiki/engine/oniguruma'
-import langHtml from 'shiki/langs/html'
-import langVue from 'shiki/langs/vue'
-import themeDarkPlus from 'shiki/themes/dark-plus'
+import { bundledLanguages } from 'shiki/langs'
+import { bundledThemes } from 'shiki/themes'
 
 let highlighterPromise: Promise<HighlighterCore> | null = null
 
 export function getHighlighter() {
   highlighterPromise ??= createHighlighterCore({
-    themes: [themeDarkPlus],
-    langs: [langVue, langHtml],
+    themes: [bundledThemes['dark-plus']],
+    langs: [bundledLanguages.vue, bundledLanguages.html],
     engine: createOnigurumaEngine(() => import('shiki/wasm')),
   })
   return highlighterPromise
