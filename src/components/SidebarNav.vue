@@ -11,10 +11,12 @@ const props = defineProps<{
   title?: string
   items: SidebarItem[]
   modelValue: string
+  onSelectClose?: boolean
 }>()
 
 const emit = defineEmits<{
   'update:modelValue': [value: string]
+  close: []
 }>()
 
 const title = computed(() => props.title ?? 'Components')
@@ -22,6 +24,9 @@ const title = computed(() => props.title ?? 'Components')
 function select(id: string, disabled?: boolean) {
   if (disabled) return
   emit('update:modelValue', id)
+  if (props.onSelectClose) {
+    emit('close')
+  }
 }
 </script>
 
