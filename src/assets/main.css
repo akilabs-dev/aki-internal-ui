@@ -1,0 +1,17 @@
+@import './base.css';
+@import "tailwindcss";
+
+/* Scan all Vue/TS sources so preview components get Tailwind utilities */
+@source "../**/*.{vue,ts,js}";
+
+/*
+  Tailwind v4 "dark:" variant is media-based by default.
+  We define a custom dark variant that activates when:
+  <html data-theme="dark"> ... </html>
+*/
+@custom-variant dark (&:where(:root[data-theme='dark'] *));
+
+#app {
+  min-height: 100vh;
+  width: 100%;
+}
