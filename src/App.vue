@@ -4,6 +4,7 @@ import { Menu, X } from '@lucide/vue'
 import ComponentPreview from '@/components/ComponentPreview.vue'
 import SidebarNav, { type SidebarItem } from '@/components/SidebarNav.vue'
 import ThemeModeMenu from '@/components/ThemeModeMenu.vue'
+import ThemeStyleMenu from '@/components/ThemeStyleMenu.vue'
 import AccordionDemo from '@/demos/AccordionDemo.vue'
 import accordionVueSource from '@/demos/AccordionDemo.vue?raw'
 
@@ -103,7 +104,10 @@ function closeMobileSidebar() {
               </div>
 
               <div class="ml-auto">
-                <ThemeModeMenu />
+                <div class="flex items-center gap-2">
+                  <ThemeStyleMenu />
+                  <ThemeModeMenu />
+                </div>
               </div>
             </div>
             <p class="text-muted-foreground text-sm font-medium tracking-wide uppercase">
