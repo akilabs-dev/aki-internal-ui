@@ -1,0 +1,117 @@
+:root[data-theme="green-hacker"] {
+  /* Modern "hacker green" light palette: clean surfaces + crisp contrast */
+  --background: oklch(0.9850 0.0100 162);
+  --foreground: oklch(0.1750 0.0150 165);
+  --card: oklch(1.0000 0 0);
+  --card-foreground: oklch(0.1750 0.0150 165);
+  --popover: oklch(1.0000 0 0);
+  --popover-foreground: oklch(0.1750 0.0150 165);
+
+  --primary: oklch(0.6950 0.1850 149);
+  --primary-foreground: oklch(0.1100 0.0150 165);
+
+  --secondary: oklch(0.9550 0.0200 155);
+  --secondary-foreground: oklch(0.2600 0.0300 165);
+
+  --muted: oklch(0.9650 0.0060 160);
+  --muted-foreground: oklch(0.4700 0.0200 165);
+
+  --accent: oklch(0.9300 0.0550 155);
+  --accent-foreground: oklch(0.2000 0.0200 165);
+  --destructive: oklch(0.5771 0.2152 27.3250);
+  --destructive-foreground: oklch(1.0000 0 0);
+  --border: oklch(0.8850 0.0140 160);
+  --input: oklch(0.9960 0.0020 160);
+  --ring: oklch(0.6950 0.1850 149);
+  --chart-1: oklch(0.6271 0.1699 149.2138);
+  --chart-2: oklch(0.7227 0.1920 149.5793);
+  --chart-3: oklch(0.8003 0.1821 151.7110);
+  --chart-4: oklch(0.8712 0.1363 154.4491);
+  --chart-5: oklch(0.9250 0.0806 155.9947);
+  --sidebar: oklch(0.9900 0.0060 160);
+  --sidebar-foreground: oklch(0.2000 0.0200 165);
+  --sidebar-primary: oklch(0.6950 0.1850 149);
+  --sidebar-primary-foreground: oklch(0.1100 0.0150 165);
+  --sidebar-accent: oklch(0.9650 0.0120 160);
+  --sidebar-accent-foreground: oklch(0.2600 0.0300 165);
+  --sidebar-border: oklch(0.9200 0.0100 160);
+  --sidebar-ring: oklch(0.6950 0.1850 149);
+  /* Body feels like terminal; headings feel like HUD */
+  --font-sans: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-serif: "Orbitron", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --radius: 0rem;
+  --shadow-x: 0px;
+  --shadow-y: 2px;
+  --shadow-blur: 14px;
+  --shadow-spread: 0px;
+  --shadow-opacity: 0.14;
+  --shadow-color: rgba(16, 185, 129, 0.16);
+  /* Light mode: keep it subtle (no neon bloom) */
+  --shadow-2xs: 0 0 0 1px hsl(158 64% 52% / 0.10);
+  --shadow-xs: 0 0 0 1px hsl(158 64% 52% / 0.12), 0 6px 16px hsl(158 64% 52% / 0.06);
+  --shadow-sm: 0 0 0 1px hsl(158 64% 52% / 0.14), 0 10px 24px hsl(158 64% 52% / 0.07);
+  --shadow: 0 0 0 1px hsl(158 64% 52% / 0.16), 0 12px 30px hsl(158 64% 52% / 0.07);
+  --shadow-md: 0 0 0 1px hsl(158 64% 52% / 0.18), 0 16px 36px hsl(158 64% 52% / 0.08);
+  --shadow-lg: 0 0 0 1px hsl(158 64% 52% / 0.20), 0 22px 50px hsl(158 64% 52% / 0.09);
+  --shadow-xl: 0 0 0 1px hsl(158 64% 52% / 0.22), 0 28px 66px hsl(158 64% 52% / 0.10);
+  --shadow-2xl: 0 0 0 1px hsl(158 64% 52% / 0.24), 0 38px 90px hsl(158 64% 52% / 0.10);
+  --tracking-normal: 0.07em;
+  --spacing: 0.25rem;
+}
+
+:root.dark[data-theme="green-hacker"] {
+  --background: oklch(0.0950 0.0100 160);
+  --foreground: oklch(0.9400 0.0200 162);
+  --card: oklch(0.1350 0.0120 160);
+  --card-foreground: oklch(0.9350 0.0200 162);
+  --popover: oklch(0.1150 0.0100 160);
+  --popover-foreground: oklch(0.9400 0.0200 162);
+  /* Avoid black text on hover (outline/ghost uses accent/primary foreground) */
+  --primary: oklch(0.7200 0.1550 151.7);
+  --primary-foreground: oklch(0.9650 0.0150 164.5);
+  --secondary: oklch(0.2100 0.0200 160);
+  --secondary-foreground: oklch(0.9400 0.0200 162);
+  --muted: oklch(0.1850 0.0120 160);
+  --muted-foreground: oklch(0.7200 0.0200 160);
+  --accent: oklch(0.3000 0.0600 155.0);
+  --accent-foreground: oklch(0.9650 0.0150 164.5);
+  --destructive: oklch(0.5400 0.1900 27.5);
+  --destructive-foreground: oklch(1.0000 0 0);
+  --border: oklch(0.3800 0.0550 155);
+  --input: oklch(0.1550 0.0120 160);
+  --ring: oklch(0.7200 0.1550 151.7);
+  --chart-1: oklch(0.8003 0.1821 151.7110);
+  --chart-2: oklch(0.7227 0.1920 149.5793);
+  --chart-3: oklch(0.6959 0.1491 162.4796);
+  --chart-4: oklch(0.5960 0.1274 163.2254);
+  --chart-5: oklch(0.3780 0.0730 168.9398);
+  --sidebar: oklch(0.0800 0.0100 160);
+  --sidebar-foreground: oklch(0.9400 0.0200 162);
+  --sidebar-primary: oklch(0.7200 0.1550 151.7);
+  --sidebar-primary-foreground: oklch(0.9650 0.0150 164.5);
+  --sidebar-accent: oklch(0.1600 0.0120 160);
+  --sidebar-accent-foreground: oklch(0.9400 0.0200 162);
+  --sidebar-border: oklch(0.3200 0.0350 155);
+  --sidebar-ring: oklch(0.7200 0.1550 151.7);
+  --font-sans: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-serif: "Orbitron", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --radius: 0rem;
+  /* Terminal card look: crisp border + controlled glow */
+  --shadow-x: 0px;
+  --shadow-y: 0px;
+  --shadow-blur: 18px;
+  --shadow-spread: 0px;
+  --shadow-opacity: 0.22;
+  --shadow-color: rgba(34, 197, 94, 0.35);
+  --shadow-2xs: 0 0 0 1px hsl(142 71% 45% / 0.22), 0 0 12px hsl(142 71% 45% / 0.10);
+  --shadow-xs: 0 0 0 1px hsl(142 71% 45% / 0.26), 0 0 16px hsl(142 71% 45% / 0.12);
+  --shadow-sm: 0 0 0 1px hsl(142 71% 45% / 0.30), 0 0 18px hsl(142 71% 45% / 0.14);
+  --shadow: 0 0 0 1px hsl(142 71% 45% / 0.34), 0 0 22px hsl(142 71% 45% / 0.16);
+  --shadow-md: 0 0 0 1px hsl(142 71% 45% / 0.36), 0 0 28px hsl(142 71% 45% / 0.18);
+  --shadow-lg: 0 0 0 1px hsl(142 71% 45% / 0.40), 0 0 34px hsl(142 71% 45% / 0.20);
+  --shadow-xl: 0 0 0 1px hsl(142 71% 45% / 0.44), 0 0 42px hsl(142 71% 45% / 0.22);
+  --shadow-2xl: 0 0 0 1px hsl(142 71% 45% / 0.48), 0 0 56px hsl(142 71% 45% / 0.26);
+}
+
