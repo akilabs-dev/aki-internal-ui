@@ -8,6 +8,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/aki-internal-ui/',
   plugins: [
     vue(),
     vueDevTools(),
