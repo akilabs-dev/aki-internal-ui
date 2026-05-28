@@ -12,6 +12,7 @@ const props = defineProps<{
   items: SidebarItem[]
   activeId: string
   onSelectClose?: boolean
+  dense?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -31,9 +32,15 @@ function select(id: string, disabled?: boolean) {
 </script>
 
 <template>
-  <aside class="h-svh w-64 overflow-y-auto border-r bg-background">
-    <div class="px-4 py-6">
-      <div class="text-muted-foreground mb-3 text-sm font-medium">
+  <section>
+    <div :class="props.dense ? 'px-4 py-4' : 'px-4 py-6'">
+      <div
+        :class="
+          props.dense
+            ? 'text-muted-foreground mb-2 text-xs font-medium tracking-wide uppercase'
+            : 'text-muted-foreground mb-3 text-sm font-medium'
+        "
+      >
         {{ title }}
       </div>
 
@@ -56,6 +63,6 @@ function select(id: string, disabled?: boolean) {
         </button>
       </nav>
     </div>
-  </aside>
+  </section>
 </template>
 

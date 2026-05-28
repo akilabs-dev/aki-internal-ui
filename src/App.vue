@@ -80,6 +80,7 @@ const headerTitle = computed(() => (route.meta.title as string) || 'Introduction
             title="Sections"
             :items="sectionItems"
             :active-id="activeSectionId"
+            dense
             class="border-r-0"
             @select="onSelectSection"
           />
@@ -88,6 +89,7 @@ const headerTitle = computed(() => (route.meta.title as string) || 'Introduction
             title="Components"
             :items="componentItems"
             :active-id="activeComponentId"
+            dense
             class="border-r-0"
             @select="onSelectComponent"
           />
@@ -122,16 +124,18 @@ const headerTitle = computed(() => (route.meta.title as string) || 'Introduction
             :items="sectionItems"
             :active-id="activeSectionId"
             on-select-close
+            dense
             class="border-r-0"
             @select="onSelectSection"
             @close="closeMobileSidebar"
           />
-          <div class="my-4 border-t" />
+          <div class="border-t" />
           <SidebarNav
             title="Components"
             :items="componentItems"
             :active-id="activeComponentId"
             on-select-close
+            dense
             class="border-r-0"
             @select="onSelectComponent"
             @close="closeMobileSidebar"
