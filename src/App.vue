@@ -44,8 +44,8 @@ function closeMobileSidebar() {
 </script>
 
 <template>
-  <div class="bg-background text-foreground min-h-svh">
-    <div class="flex min-h-svh">
+  <div class="bg-background text-foreground h-svh overflow-hidden">
+    <div class="flex h-svh">
       <!-- Desktop sidebar -->
       <div class="hidden md:block">
         <SidebarNav v-model="selected" :items="items" />
@@ -73,16 +73,18 @@ function closeMobileSidebar() {
             <X class="size-4" />
           </button>
         </div>
-        <SidebarNav
-          v-model="selected"
-          :items="items"
-          on-select-close
-          class="border-r-0"
-          @close="closeMobileSidebar"
-        />
+        <div class="h-[calc(100svh-3.25rem)] overflow-y-auto">
+          <SidebarNav
+            v-model="selected"
+            :items="items"
+            on-select-close
+            class="border-r-0"
+            @close="closeMobileSidebar"
+          />
+        </div>
       </div>
 
-      <main class="flex-1">
+      <main class="flex-1 overflow-y-auto">
         <div class="mx-auto w-full max-w-4xl px-4 py-6 sm:px-6 sm:py-10">
           <header class="mb-10 space-y-2">
             <div class="mb-2 flex items-center gap-3 md:hidden">

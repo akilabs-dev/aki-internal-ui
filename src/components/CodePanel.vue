@@ -56,7 +56,7 @@ watch(
 
 <template>
   <div
-    class="code-panel overflow-hidden rounded-lg border border-[#2b2b2b] shadow-sm"
+    class="code-panel min-w-0 overflow-hidden rounded-lg border border-[#2b2b2b] shadow-sm"
   >
     <div
       class="code-panel__toolbar flex items-center justify-between gap-2 border-b border-[#2b2b2b] bg-[#252526] px-3 py-2"
@@ -78,7 +78,7 @@ watch(
       </Button>
     </div>
 
-    <div class="code-panel__body relative max-h-[min(70vh,32rem)] overflow-auto bg-[#1e1e1e]">
+    <div class="code-panel__body relative max-h-[min(70vh,32rem)] min-w-0 overflow-x-auto overflow-y-auto bg-[#1e1e1e]">
       <div
         v-if="!isReady"
         class="code-panel__content code-panel__content--loading text-[#858585]"
@@ -149,13 +149,15 @@ watch(
 
 .code-panel__highlight :deep(.shiki--line-numbers code) {
   display: block;
+  min-width: max-content;
 }
 
 .code-panel__highlight :deep(.code-ln__row) {
   display: grid;
-  grid-template-columns: max-content 1fr;
+  grid-template-columns: max-content max-content;
   column-gap: 1rem;
   padding: 0 0;
+  min-width: max-content;
 }
 
 .code-panel__highlight :deep(.code-ln__gutter) {
@@ -170,5 +172,6 @@ watch(
 .code-panel__highlight :deep(.code-ln__code) {
   padding-left: 0;
   white-space: pre;
+  min-width: max-content;
 }
 </style>

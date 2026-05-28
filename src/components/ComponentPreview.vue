@@ -97,10 +97,10 @@ async function goToSection(section: 'preview' | 'vue' | 'html') {
       </p>
     </header>
 
-    <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_14rem]">
+    <div class="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1fr)_14rem]">
       <Tabs
         :model-value="activeTab"
-        class="w-full"
+        class="w-full min-w-0"
         @update:model-value="onTabChange"
       >
         <TabsList class="grid w-full max-w-md grid-cols-3">
@@ -131,7 +131,7 @@ async function goToSection(section: 'preview' | 'vue' | 'html') {
         </TabsContent>
 
         <TabsContent value="vue" class="mt-4">
-          <div ref="vueSectionRef" class="scroll-mt-6">
+          <div ref="vueSectionRef" class="scroll-mt-6 min-w-0">
             <CodePanel :code="vueSource" language="vue" />
           </div>
         </TabsContent>
@@ -141,7 +141,7 @@ async function goToSection(section: 'preview' | 'vue' | 'html') {
           force-mount
           class="mt-4 space-y-4 data-[state=inactive]:hidden"
         >
-          <div ref="htmlSectionRef" class="scroll-mt-6 space-y-4">
+          <div ref="htmlSectionRef" class="scroll-mt-6 min-w-0 space-y-4">
             <div class="flex justify-end">
               <Button
                 type="button"

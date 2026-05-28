@@ -31,7 +31,7 @@ function select(id: string, disabled?: boolean) {
 </script>
 
 <template>
-  <aside class="w-64 border-r bg-background">
+  <aside class="h-svh w-64 overflow-y-auto border-r bg-background">
     <div class="px-4 py-6">
       <div class="text-muted-foreground mb-3 text-sm font-medium">
         {{ title }}
