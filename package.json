@@ -1,0 +1,42 @@
+{
+  "name": "japanese-style",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "render:accordion": "DUMP_HTML=1 vitest run scripts/accordion-html.test.ts && cat scripts/accordion-output.html"
+  },
+  "dependencies": {
+    "@alpinejs/collapse": "^3.15.12",
+    "@lucide/vue": "^1.16.0",
+    "@tailwindcss/vite": "^4.3.0",
+    "@vue/server-renderer": "^3.5.35",
+    "@vueuse/core": "^14.3.0",
+    "alpinejs": "^3.15.12",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "prettier": "^3.8.3",
+    "reka-ui": "^2.9.8",
+    "shiki": "^4.1.0",
+    "tailwind-merge": "^3.6.0",
+    "tailwindcss": "^4.3.0",
+    "vue": "^3.5.34"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "@vitejs/plugin-vue": "^6.0.6",
+    "@vue/test-utils": "^2.4.10",
+    "@vue/tsconfig": "^0.9.1",
+    "happy-dom": "^20.9.0",
+    "tw-animate-css": "^1.4.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.0.12",
+    "vite-node": "^6.0.0",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^4.1.7",
+    "vue-tsc": "^3.2.8"
+  }
+}
