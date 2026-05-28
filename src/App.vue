@@ -5,12 +5,14 @@ import ComponentPreview from '@/components/ComponentPreview.vue'
 import SidebarNav, { type SidebarItem } from '@/components/SidebarNav.vue'
 import ThemeModeMenu from '@/components/ThemeModeMenu.vue'
 import ThemeStyleMenu from '@/components/ThemeStyleMenu.vue'
-import AccordionDemo from '@/demos/AccordionDemo.vue'
-import accordionVueSource from '@/demos/AccordionDemo.vue?raw'
+import AccordionDemo from '@/demos/accordion/AccordionDemo.vue'
+import accordionVueSource from '@/demos/accordion/AccordionDemo.vue?raw'
+import AlertDemo from '@/demos/alert/AlertDemo.vue'
+import alertVueSource from '@/demos/alert/AlertDemo.vue?raw'
 
 const items: SidebarItem[] = [
   { id: 'accordion', label: 'Accordion' },
-  { id: 'alert', label: 'Alert', disabled: true },
+  { id: 'alert', label: 'Alert' },
   { id: 'alert-dialog', label: 'Alert Dialog', disabled: true },
   { id: 'aspect-ratio', label: 'Aspect Ratio', disabled: true },
   { id: 'avatar', label: 'Avatar', disabled: true },
@@ -35,6 +37,15 @@ const preview = computed(() => {
       alpineExtractor: 'accordion' as const,
       vueSource: accordionVueSource,
       component: AccordionDemo,
+    }
+  }
+  if (selected.value === 'alert') {
+    return {
+      title: 'Alert',
+      description: 'Displays important messages and statuses.',
+      alpineExtractor: 'alert' as const,
+      vueSource: alertVueSource,
+      component: AlertDemo,
     }
   }
   return null

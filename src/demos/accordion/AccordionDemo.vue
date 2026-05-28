@@ -5,7 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import { accordionDemoSections } from '@/demos/accordion-demo.data'
+import { accordionDemoSections } from './accordion-demo.data'
 </script>
 
 <template>
@@ -28,3 +28,4 @@ import { accordionDemoSections } from '@/demos/accordion-demo.data'
     </AccordionItem>
   </Accordion>
 </template>
+

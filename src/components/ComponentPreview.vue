@@ -30,16 +30,20 @@ const previewSectionRef = ref<HTMLElement | null>(null)
 const vueSectionRef = ref<HTMLElement | null>(null)
 const htmlSectionRef = ref<HTMLElement | null>(null)
 
-const HTML_PREAMBLE = `<!-- Requires Alpine.js 3 + @alpinejs/collapse (accordionDemo in app) -->
+const HTML_PREAMBLE_ALPINE = `<!-- Requires Alpine.js 3 + @alpinejs/collapse (accordionDemo in app) -->
 `
 
+const needsAlpinePreview = computed(() => props.alpineExtractor === 'accordion')
+
 const alpinePreviewHtml = computed(() =>
-  htmlSource.value.replace(HTML_PREAMBLE, ''),
+  htmlSource.value.replace(HTML_PREAMBLE_ALPINE, ''),
 )
 
 async function captureHtml() {
   htmlReady.value = false
   await nextTick()
+  // Give the slot content a paint/frame so DOM is stable before snapshotting.
+  await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()))
 
   const root = previewRef.value
   if (!root) {
@@ -50,14 +54,18 @@ async function captureHtml() {
 
   // Vue template refs can be typed as broader element-like objects by tooling;
   // cast to HTMLElement for our extractor boundary.
-  const alpineHtml = extractVueToAlpineHtml(root as unknown as HTMLElement, props.alpineExtractor)
-  htmlSource.value = alpineHtml ? `${HTML_PREAMBLE}${alpineHtml}` : ''
+  const html = extractVueToAlpineHtml(root as unknown as HTMLElement, props.alpineExtractor)
+  htmlSource.value = html
+    ? needsAlpinePreview.value
+      ? `${HTML_PREAMBLE_ALPINE}${html}`
+      : html
+    : ''
   htmlReady.value = true
 }
 
 function onTabChange(value: string | number) {
   activeTab.value = String(value)
-  if (activeTab.value === 'html' && !htmlSource.value) {
+  if (activeTab.value === 'html') {
     void captureHtml()
   }
 }
@@ -153,28 +161,52 @@ async function goToSection(section: 'preview' | 'vue' | 'html') {
               </Button>
             </div>
 
-            <AlpineHtmlPreview
-              v-if="htmlReady && alpinePreviewHtml"
-              :key="alpinePreviewKey"
-              :html="alpinePreviewHtml"
-            />
-            <div
-              v-else-if="htmlReady && !alpinePreviewHtml"
-              class="text-muted-foreground rounded-lg border p-6 text-sm"
-            >
-              No HTML extracted.
-            </div>
-            <div
-              v-else
-              class="text-muted-foreground rounded-lg border p-6 text-sm"
-            >
-              Extracting Alpine HTML…
-            </div>
+            <!-- Interactive (Alpine-powered) preview -->
+            <template v-if="needsAlpinePreview">
+              <AlpineHtmlPreview
+                v-if="htmlReady && alpinePreviewHtml"
+                :key="alpinePreviewKey"
+                :html="alpinePreviewHtml"
+              />
+              <div
+                v-else-if="htmlReady && !alpinePreviewHtml"
+                class="text-muted-foreground rounded-lg border p-6 text-sm"
+              >
+                No HTML extracted.
+              </div>
+              <div
+                v-else
+                class="text-muted-foreground rounded-lg border p-6 text-sm"
+              >
+                Extracting Alpine HTML…
+              </div>
+            </template>
+
+            <!-- Static HTML snapshot preview -->
+            <template v-else>
+              <div
+                v-if="htmlReady && htmlSource"
+                class="bg-card text-card-foreground rounded-lg border p-6 shadow-sm"
+                v-html="htmlSource"
+              />
+              <div
+                v-else-if="htmlReady && !htmlSource"
+                class="text-muted-foreground rounded-lg border p-6 text-sm"
+              >
+                No HTML extracted.
+              </div>
+              <div
+                v-else
+                class="text-muted-foreground rounded-lg border p-6 text-sm"
+              >
+                Extracting HTML…
+              </div>
+            </template>
 
             <CodePanel
               :code="htmlSource"
               language="html"
-              empty-label="Extracting Alpine HTML…"
+              :empty-label="needsAlpinePreview ? 'Extracting Alpine HTML…' : 'Extracting HTML…'"
             />
           </div>
         </TabsContent>

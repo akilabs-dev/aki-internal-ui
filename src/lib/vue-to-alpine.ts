@@ -1,6 +1,6 @@
 import { extractAccordionToAlpine } from '@/lib/extractors/accordion-to-alpine'
 
-export type AlpineExtractorId = 'accordion'
+export type AlpineExtractorId = 'accordion' | 'alert'
 
 export function extractVueToAlpineHtml(
   root: HTMLElement,
@@ -9,6 +9,8 @@ export function extractVueToAlpineHtml(
   switch (extractor) {
     case 'accordion':
       return extractAccordionToAlpine(root)
+    case 'alert':
+      return root.innerHTML.trim()
     default:
       return ''
   }
