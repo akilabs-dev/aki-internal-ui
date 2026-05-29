@@ -1,5 +1,6 @@
+import { copyFileSync, existsSync } from 'node:fs'
 import path from 'node:path'
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 
@@ -13,10 +14,30 @@ function githubPagesBase(): string {
   return `/${repo}/`
 }
 
+/**
+ * GitHub Pages has no SPA rewrite, so a hard refresh on a deep route 404s.
+ * Emit 404.html as a copy of the built index.html; Pages serves it for any
+ * missing path and the router resolves the real route client-side.
+ */
+function spaPagesFallback(): Plugin {
+  let outDir = ''
+  return {
+    name: 'spa-pages-fallback',
+    apply: 'build',
+    configResolved(config) {
+      outDir = path.resolve(config.root, config.build.outDir)
+    },
+    closeBundle() {
+      const index = path.join(outDir, 'index.html')
+      if (existsSync(index)) copyFileSync(index, path.join(outDir, '404.html'))
+    },
+  }
+}
+
 // https://vite.dev/config/
 export default defineConfig({
   base: githubPagesBase(),
-  plugins: [vue(), tailwindcss()],
+  plugins: [vue(), tailwindcss(), spaPagesFallback()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
