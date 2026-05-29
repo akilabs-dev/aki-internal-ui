@@ -1,20 +1,10 @@
 <script setup lang="ts">
+import DocsPageHeader from '@/components/DocsPageHeader.vue'
 </script>
 
 <template>
   <div class="space-y-8">
-    <section class="space-y-2">
-      <p class="text-muted-foreground text-sm font-medium tracking-wide uppercase">
-        Introduction
-      </p>
-      <h1 class="font-serif text-3xl font-semibold tracking-tight">
-        Japanese Style — shadcn-vue samples
-      </h1>
-      <p class="text-muted-foreground max-w-2xl text-sm leading-relaxed">
-        Browse component examples, preview them live, and copy the sample code into
-        your own Vue + Tailwind + shadcn-vue project.
-      </p>
-    </section>
+    <DocsPageHeader />
 
     <section class="space-y-3">
       <h2 class="font-serif text-xl font-semibold tracking-tight">
@@ -32,4 +22,3 @@
     </section>
   </div>
 </template>
-

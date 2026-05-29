@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Code2, Monitor, RotateCw } from '@lucide/vue'
 import { computed, defineAsyncComponent, nextTick, onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import AlpineHtmlPreview from '@/components/AlpineHtmlPreview.vue'
 import ComponentPagination from '@/components/ComponentPagination.vue'
 import type { CodePanelTab } from '@/components/CodePanel.vue'
@@ -16,11 +17,25 @@ import { cn } from '@/lib/utils'
 const CodePanel = defineAsyncComponent(() => import('@/components/CodePanel.vue'))
 
 const props = defineProps<{
-  title: string
+  title?: string
   description?: string
   vueSource: string
   alpineExtractor: AlpineExtractorId
 }>()
+
+const route = useRoute()
+
+const pageTitle = computed(
+  () => props.title ?? (route.meta.title as string | undefined) ?? 'Component',
+)
+
+const pageDescription = computed(
+  () => props.description ?? (route.meta.description as string | undefined),
+)
+
+const pageEyebrow = computed(
+  () => (route.meta.eyebrow as string | undefined) ?? 'Components',
+)
 
 type ViewId = 'preview' | 'code'
 type FrameworkId = 'vue' | 'html'
@@ -156,11 +171,17 @@ watch(activeView, (view) => {
 <template>
   <section class="space-y-6">
     <header class="space-y-2">
-      <h2 class="text-3xl font-bold tracking-tight">
-        {{ title }}
-      </h2>
-      <p v-if="description" class="text-muted-foreground max-w-2xl text-base">
-        {{ description }}
+      <p class="text-muted-foreground text-sm font-medium tracking-wide uppercase">
+        {{ pageEyebrow }}
+      </p>
+      <h1 class="text-3xl font-bold tracking-tight">
+        {{ pageTitle }}
+      </h1>
+      <p
+        v-if="pageDescription"
+        class="text-muted-foreground max-w-2xl text-base leading-relaxed"
+      >
+        {{ pageDescription }}
       </p>
     </header>
 
