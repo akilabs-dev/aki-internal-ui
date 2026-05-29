@@ -11,6 +11,7 @@ export default defineConfig({
     },
     dedupe: ['vue'],
   },
+  base: '/aki-internal-ui/', // GitHub Pages base path (public repository name)
   test: {
     environment: 'happy-dom',
   },
