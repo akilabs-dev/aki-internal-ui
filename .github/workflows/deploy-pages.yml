@@ -1,0 +1,123 @@
+# Deploy static site to GitHub Pages.
+#
+# Release policy
+#   production  →  push a version tag matching `v*` (e.g. v1.0.0)
+#   manual        →  workflow_dispatch with a tag name
+#   CI only       →  pull requests targeting `main` / `master` (build, no deploy)
+#
+# Create a release:
+#   git tag v1.0.0 && git push origin v1.0.0
+#
+# Repository Settings → Pages → Source: GitHub Actions
+
+name: Deploy GitHub Pages
+
+on:
+  push:
+    tags:
+      - v*
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Tag to deploy (e.g. v1.0.0)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  BUN_VERSION: latest
+  NODE_ENV: production
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    outputs:
+      deploy: ${{ steps.plan.outputs.deploy }}
+      version: ${{ steps.plan.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && format('refs/tags/{0}', inputs.tag) || github.ref }}
+
+      - name: Resolve deployment plan
+        id: plan
+        run: |
+          deploy=false
+          target="none"
+          version=""
+
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            target="ci"
+          elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            version="${{ inputs.tag }}"
+            if [[ ! "${version}" =~ ^v ]]; then
+              echo "::error::Tag must start with 'v' (e.g. v1.0.0). Got: ${version}"
+              exit 1
+            fi
+            deploy=true
+            target="production"
+          elif [[ "${{ github.ref }}" =~ ^refs/tags/v ]]; then
+            version="${GITHUB_REF#refs/tags/}"
+            deploy=true
+            target="production"
+          fi
+
+          echo "deploy=${deploy}" >> "${GITHUB_OUTPUT}"
+          echo "target=${target}" >> "${GITHUB_OUTPUT}"
+          echo "version=${version}" >> "${GITHUB_OUTPUT}"
+          echo "Deployment target: ${target} (deploy=${deploy}, version=${version:-n/a})"
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build site
+        run: bun run build
+        env:
+          GITHUB_PAGES: ${{ steps.plan.outputs.deploy == 'true' && 'true' || '' }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+
+      - name: Configure GitHub Pages
+        if: steps.plan.outputs.deploy == 'true'
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        if: steps.plan.outputs.deploy == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    name: Deploy production (${{ needs.build.outputs.version }})
+    needs: build
+    if: needs.build.outputs.deploy == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
