@@ -41,7 +41,7 @@ function onSelectComponent(id: string) {
 
 const activeSectionId = computed(() => {
   const path = route.path
-  if (path.startsWith('/docs/introduction')) return 'introduction'
+  if (path === '/') return 'introduction'
   if (path.startsWith('/docs/installation')) return 'installation'
   if (path.startsWith('/docs/copy-guide')) return 'copy-guide'
   if (path.startsWith('/docs/styling')) return 'styling'
@@ -51,10 +51,16 @@ const activeSectionId = computed(() => {
 })
 
 function onSelectSection(id: string) {
+  if (id === 'introduction') {
+    void router.push('/')
+    return
+  }
   void router.push(`/docs/${id}`)
 }
 
-const hasPageHeader = computed(() => route.path.startsWith('/docs/'))
+const hasPageHeader = computed(
+  () => route.path === '/' || route.path.startsWith('/docs/'),
+)
 </script>
 
 <template>

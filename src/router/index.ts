@@ -14,15 +14,7 @@ declare module 'vue-router' {
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: '/docs/introduction',
-  },
-  {
-    path: '/docs',
-    redirect: '/docs/introduction',
-  },
-  {
-    path: '/docs/introduction',
-    name: 'docs-introduction',
+    name: 'home',
     component: () => import('@/pages/docs/IntroductionPage.vue'),
     meta: {
       title: 'Introduction',
@@ -31,6 +23,14 @@ const routes: RouteRecordRaw[] = [
       description:
         'Browse component examples, preview them live, and copy the sample code into your own Vue + Tailwind + shadcn-vue project.',
     },
+  },
+  {
+    path: '/docs',
+    redirect: '/',
+  },
+  {
+    path: '/docs/introduction',
+    redirect: '/',
   },
   {
     path: '/docs/installation',
