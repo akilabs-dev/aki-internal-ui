@@ -6,12 +6,9 @@ import vueSource from '@/demos/alert/AlertDemo.vue?raw'
 
 <template>
   <ComponentPreview
-    title="Alert"
-    description="Displays important messages and statuses."
     alpine-extractor="alert"
     :vue-source="vueSource"
   >
     <AlertDemo />
   </ComponentPreview>
 </template>
-

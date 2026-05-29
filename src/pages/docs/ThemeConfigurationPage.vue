@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import CodePanel from '@/components/CodePanel.vue'
+import DocsPageHeader from '@/components/DocsPageHeader.vue'
 
 type ThemeFile = { id: string; css: string }
 
@@ -173,18 +174,7 @@ const fullConfiguration = computed(() => {
 
 <template>
   <div class="space-y-8">
-    <section class="space-y-2">
-      <p class="text-muted-foreground text-sm font-medium tracking-wide uppercase">
-        Theme configuration
-      </p>
-      <h1 class="font-serif text-3xl font-semibold tracking-tight">
-        Tokens for “{{ activeThemeId }}”
-      </h1>
-      <p class="text-muted-foreground max-w-2xl text-sm leading-relaxed">
-        This page updates automatically when you switch theme styles. Copy the token
-        values into your own project.
-      </p>
-    </section>
+    <DocsPageHeader :headline="`Tokens for “${activeThemeId}”`" />
 
     <section class="space-y-2">
       <h2 class="font-serif text-xl font-semibold tracking-tight">

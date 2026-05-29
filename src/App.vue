@@ -41,7 +41,7 @@ function onSelectComponent(id: string) {
 
 const activeSectionId = computed(() => {
   const path = route.path
-  if (path.startsWith('/docs/introduction')) return 'introduction'
+  if (path === '/') return 'introduction'
   if (path.startsWith('/docs/installation')) return 'installation'
   if (path.startsWith('/docs/copy-guide')) return 'copy-guide'
   if (path.startsWith('/docs/styling')) return 'styling'
@@ -51,13 +51,16 @@ const activeSectionId = computed(() => {
 })
 
 function onSelectSection(id: string) {
+  if (id === 'introduction') {
+    void router.push('/')
+    return
+  }
   void router.push(`/docs/${id}`)
 }
 
-const headerEyebrow = computed(() => (route.meta.eyebrow as string) || 'Docs')
-const headerTitle = computed(() => (route.meta.title as string) || 'Introduction')
-
-const isComponentDoc = computed(() => route.path.startsWith('/docs/components/'))
+const hasPageHeader = computed(
+  () => route.path === '/' || route.path.startsWith('/docs/'),
+)
 </script>
 
 <template>
@@ -137,11 +140,11 @@ const isComponentDoc = computed(() => route.path.startsWith('/docs/components/')
         <div class="mx-auto w-full max-w-4xl px-4 py-6 sm:px-6 sm:py-10">
           <header
             class="space-y-2"
-            :class="isComponentDoc ? 'mb-6' : 'mb-10'"
+            :class="hasPageHeader ? 'mb-6' : 'mb-10'"
           >
             <div
               class="flex items-center justify-between gap-3"
-              :class="isComponentDoc ? '' : 'mb-2'"
+              :class="hasPageHeader ? '' : 'mb-2'"
             >
               <div class="flex items-center gap-3 md:hidden">
                 <button
@@ -152,7 +155,7 @@ const isComponentDoc = computed(() => route.path.startsWith('/docs/components/')
                   <Menu class="size-4" />
                 </button>
                 <span
-                  v-if="!isComponentDoc"
+                  v-if="!hasPageHeader"
                   class="text-muted-foreground text-sm font-medium"
                 >
                   Menu
@@ -166,14 +169,6 @@ const isComponentDoc = computed(() => route.path.startsWith('/docs/components/')
                 </div>
               </div>
             </div>
-            <template v-if="!isComponentDoc">
-              <p class="text-muted-foreground text-sm font-medium tracking-wide uppercase">
-                {{ headerEyebrow }}
-              </p>
-              <h1 class="font-serif text-3xl font-semibold tracking-tight">
-                {{ headerTitle }}
-              </h1>
-            </template>
           </header>
 
           <RouterView />

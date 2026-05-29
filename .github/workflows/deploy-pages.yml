@@ -1,128 +1,46 @@
-# Deploy static site to GitHub Pages.
+# Deploy static site to GitHub Pages from the default branch.
 #
-# Release policy
-#   production  →  publish a GitHub Release (`v*`, not a pre-release), or push tag `v*` (SSH-friendly)
-#   manual        →  workflow_dispatch with a release tag name
-#   CI only       →  pull requests targeting `main` / `master` (build, no deploy)
-#
-# Ship via SSH (no gh required):
-#   git tag v1.0.0 && git push origin v1.0.0
-#
-# Ship via GitHub Release (recommended for notes):
-#   gh release create v1.0.0 --generate-notes
+# Why this avoids the "Tag v* is not allowed to deploy" error:
+#   The github-pages environment always permits the repo's default branch,
+#   so deploying on push to `main` satisfies the protection rule without
+#   needing to add a `v*` tag pattern in Settings → Environments.
 #
 # Repository Settings → Pages → Source: GitHub Actions
-#
-# If deploy fails with "Tag v* is not allowed to deploy to github-pages":
-#   Settings → Environments → github-pages → Deployment branches and tags
-#   → add tag pattern `v*` (or choose "No restriction"), then re-run the workflow.
-#
-# Workaround without changing tag rules: Actions → Run workflow → branch `main`
-#   → enter tag (e.g. v1.0.1); deploy uses the main ref for environment checks.
 
-name: Deploy GitHub Pages
+name: pages-build-deployment
 
 on:
-  release:
-    types: [published]
   push:
-    tags:
-      - v*
-  pull_request:
     branches:
       - main
-      - master
   workflow_dispatch:
-    inputs:
-      tag:
-        description: Release tag to build (e.g. v1.0.1). Run this workflow from branch main.
-        required: true
-        type: string
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# Allow one concurrent deployment; don't cancel an in-progress publish.
 concurrency:
-  group: pages-release-${{ github.event.release.tag_name || github.ref_name || inputs.tag || github.sha }}
+  group: pages
   cancel-in-progress: false
 
 defaults:
   run:
     shell: bash
 
-env:
-  BUN_VERSION: latest
-  NODE_ENV: production
-
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    outputs:
-      deploy: ${{ steps.plan.outputs.deploy }}
-      version: ${{ steps.plan.outputs.version }}
     steps:
-      - name: Resolve deployment plan
-        id: plan
-        run: |
-          deploy=false
-          target="none"
-          version=""
-          ref=""
-
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            target="ci"
-            ref="${{ github.sha }}"
-          elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            version="${{ inputs.tag }}"
-            if [[ ! "${version}" =~ ^v ]]; then
-              echo "::error::Release tag must start with 'v' (e.g. v1.0.0). Got: ${version}"
-              exit 1
-            fi
-            ref="refs/tags/${version}"
-            deploy=true
-            target="production"
-          elif [[ "${{ github.event_name }}" == "release" ]]; then
-            version="${{ github.event.release.tag_name }}"
-            if [[ "${{ github.event.release.prerelease }}" == "true" ]]; then
-              echo "::notice::Skipping deploy for pre-release ${version}"
-              target="prerelease-skipped"
-            elif [[ ! "${version}" =~ ^v ]]; then
-              echo "::error::Release tag must start with 'v' (e.g. v1.0.0). Got: ${version}"
-              exit 1
-            else
-              ref="refs/tags/${version}"
-              deploy=true
-              target="production"
-            fi
-          elif [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" =~ ^refs/tags/v ]]; then
-            version="${GITHUB_REF#refs/tags/}"
-            if [[ ! "${version}" =~ ^v ]]; then
-              echo "::error::Tag must start with 'v' (e.g. v1.0.0). Got: ${version}"
-              exit 1
-            fi
-            ref="${GITHUB_REF}"
-            deploy=true
-            target="production"
-          fi
-
-          echo "deploy=${deploy}" >> "${GITHUB_OUTPUT}"
-          echo "target=${target}" >> "${GITHUB_OUTPUT}"
-          echo "version=${version}" >> "${GITHUB_OUTPUT}"
-          echo "ref=${ref}" >> "${GITHUB_OUTPUT}"
-          echo "Deployment target: ${target} (deploy=${deploy}, version=${version:-n/a})"
-
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: ${{ steps.plan.outputs.ref || github.sha }}
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: ${{ env.BUN_VERSION }}
+          bun-version: latest
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
@@ -130,23 +48,21 @@ jobs:
       - name: Build site
         run: bun run build
         env:
-          GITHUB_PAGES: ${{ steps.plan.outputs.deploy == 'true' && 'true' || '' }}
+          GITHUB_PAGES: "true"
           GITHUB_REPOSITORY: ${{ github.repository }}
+          NODE_ENV: production
 
       - name: Configure GitHub Pages
-        if: steps.plan.outputs.deploy == 'true'
         uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
-        if: steps.plan.outputs.deploy == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
   deploy:
-    name: Deploy production (${{ needs.build.outputs.version }})
+    name: Deploy
     needs: build
-    if: needs.build.outputs.deploy == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

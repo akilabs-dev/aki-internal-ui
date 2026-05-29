@@ -1,20 +1,10 @@
 <script setup lang="ts">
+import DocsPageHeader from '@/components/DocsPageHeader.vue'
 </script>
 
 <template>
   <div class="space-y-8">
-    <section class="space-y-2">
-      <p class="text-muted-foreground text-sm font-medium tracking-wide uppercase">
-        Styling
-      </p>
-      <h1 class="font-serif text-3xl font-semibold tracking-tight">
-        Tailwind + shadcn tokens
-      </h1>
-      <p class="text-muted-foreground max-w-2xl text-sm leading-relaxed">
-        These samples assume a shadcn-style token system (CSS variables) and Tailwind
-        configured to scan your component files.
-      </p>
-    </section>
+    <DocsPageHeader />
 
     <section class="space-y-3">
       <h2 class="font-serif text-xl font-semibold tracking-tight">
@@ -29,13 +19,12 @@
 
     <section class="space-y-3">
       <h2 class="font-serif text-xl font-semibold tracking-tight">
-        Tailwind content scanning
+        Tailwind content paths
       </h2>
       <p class="text-muted-foreground text-sm leading-relaxed">
-        If you move components into a new folder in your app, make sure Tailwind is
-        configured to scan that folder so classes are generated.
+        Ensure Tailwind scans the directories where your components live. If classes are missing,
+        add the relevant paths to your Tailwind config.
       </p>
     </section>
   </div>
 </template>
-
