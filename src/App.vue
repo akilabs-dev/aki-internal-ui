@@ -70,6 +70,8 @@ function onSelectSection(id: string) {
 
 const headerEyebrow = computed(() => (route.meta.eyebrow as string) || 'Docs')
 const headerTitle = computed(() => (route.meta.title as string) || 'Introduction')
+
+const isComponentDoc = computed(() => route.path.startsWith('/docs/components/'))
 </script>
 
 <template>
@@ -147,8 +149,14 @@ const headerTitle = computed(() => (route.meta.title as string) || 'Introduction
 
       <main class="flex-1 overflow-y-auto">
         <div class="mx-auto w-full max-w-4xl px-4 py-6 sm:px-6 sm:py-10">
-          <header class="mb-10 space-y-2">
-            <div class="mb-2 flex items-center justify-between gap-3">
+          <header
+            class="space-y-2"
+            :class="isComponentDoc ? 'mb-6' : 'mb-10'"
+          >
+            <div
+              class="flex items-center justify-between gap-3"
+              :class="isComponentDoc ? '' : 'mb-2'"
+            >
               <div class="flex items-center gap-3 md:hidden">
                 <button
                   type="button"
@@ -157,7 +165,10 @@ const headerTitle = computed(() => (route.meta.title as string) || 'Introduction
                 >
                   <Menu class="size-4" />
                 </button>
-                <span class="text-muted-foreground text-sm font-medium">
+                <span
+                  v-if="!isComponentDoc"
+                  class="text-muted-foreground text-sm font-medium"
+                >
                   Menu
                 </span>
               </div>
@@ -169,12 +180,14 @@ const headerTitle = computed(() => (route.meta.title as string) || 'Introduction
                 </div>
               </div>
             </div>
-            <p class="text-muted-foreground text-sm font-medium tracking-wide uppercase">
-              {{ headerEyebrow }}
-            </p>
-            <h1 class="font-serif text-3xl font-semibold tracking-tight">
-              {{ headerTitle }}
-            </h1>
+            <template v-if="!isComponentDoc">
+              <p class="text-muted-foreground text-sm font-medium tracking-wide uppercase">
+                {{ headerEyebrow }}
+              </p>
+              <h1 class="font-serif text-3xl font-semibold tracking-tight">
+                {{ headerTitle }}
+              </h1>
+            </template>
           </header>
 
           <RouterView />

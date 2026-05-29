@@ -24,7 +24,8 @@ function escapeHtml(text: string): string {
 export function buildAlertDialogAlpineHtml(): string {
   const c = alertDialogDemoContent
 
-  return `<div
+  return `<div class="flex w-full justify-center">
+<div
   x-data="alertDialogDemo"
   data-slot="alert-dialog"
   @keydown.escape.window="close()"
@@ -88,6 +89,7 @@ export function buildAlertDialogAlpineHtml(): string {
       </button>
     </div>
   </div>
+</div>
 </div>`
 }
 

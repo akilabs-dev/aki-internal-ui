@@ -57,3 +57,15 @@ export async function formatCssSource(code: string): Promise<string> {
     return code.trim()
   }
 }
+
+export async function formatJavascriptSource(code: string): Promise<string> {
+  try {
+    return await prettier.format(code, {
+      ...prettierOptions,
+      parser: 'babel',
+      plugins: [pluginEstree, pluginBabel],
+    })
+  } catch {
+    return code.trim()
+  }
+}

@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, nextTick, ref } from 'vue'
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/components/ui/tabs'
+import { Code2, Monitor, RotateCw } from '@lucide/vue'
+import { computed, defineAsyncComponent, nextTick, onMounted, ref, watch } from 'vue'
 import AlpineHtmlPreview from '@/components/AlpineHtmlPreview.vue'
-import { Button } from '@/components/ui/button'
+import type { CodePanelTab } from '@/components/CodePanel.vue'
+import {
+  getAlpineSetupSource,
+  hasAlpineSetup as componentHasAlpineSetup,
+  HTML_ALPINE_SETUP_HINT,
+} from '@/lib/alpine/alpine-setup-snippets'
 import type { AlpineExtractorId } from '@/lib/vue-to-alpine'
 import { extractVueToAlpineHtml } from '@/lib/vue-to-alpine'
+import { cn } from '@/lib/utils'
 
 const CodePanel = defineAsyncComponent(() => import('@/components/CodePanel.vue'))
 
@@ -20,64 +21,96 @@ const props = defineProps<{
   alpineExtractor: AlpineExtractorId
 }>()
 
-const activeTab = ref('preview')
+type ViewId = 'preview' | 'code'
+type FrameworkId = 'vue' | 'html'
+
+const activeView = ref<ViewId>('preview')
+const framework = ref<FrameworkId>('vue')
 const previewRef = ref<HTMLElement | null>(null)
-const htmlSource = ref('')
+const htmlMarkup = ref('')
 const htmlReady = ref(false)
 const alpinePreviewKey = ref(0)
+const codeTabId = ref('vue')
 
-const previewSectionRef = ref<HTMLElement | null>(null)
-const vueSectionRef = ref<HTMLElement | null>(null)
-const htmlSectionRef = ref<HTMLElement | null>(null)
+const needsAlpineSetup = computed(() => componentHasAlpineSetup(props.alpineExtractor))
+const needsAlpinePreview = computed(() => needsAlpineSetup.value)
+const alpineSource = computed(() => getAlpineSetupSource(props.alpineExtractor) ?? '')
 
-const HTML_PREAMBLES: Partial<Record<AlpineExtractorId, string>> = {
-  accordion: `<!-- Requires Alpine.js 3 + @alpinejs/collapse (accordionDemo in app) -->
-`,
-  'alert-dialog': `<!-- Requires Alpine.js 3 (alertDialogDemo in app) -->
-`,
-}
+const htmlSourceForPanel = computed(() => {
+  if (!htmlMarkup.value) return ''
+  if (!needsAlpineSetup.value) return htmlMarkup.value
+  return `${HTML_ALPINE_SETUP_HINT}${htmlMarkup.value}`
+})
 
-const needsAlpinePreview = computed(() =>
-  props.alpineExtractor === 'accordion' || props.alpineExtractor === 'alert-dialog',
+const codePanelTabs = computed<CodePanelTab[]>(() => {
+  const tabs: CodePanelTab[] = [
+    {
+      id: 'vue',
+      label: 'Vue',
+      language: 'vue',
+      code: props.vueSource,
+    },
+    {
+      id: 'html',
+      label: 'HTML',
+      language: 'html',
+      code: htmlSourceForPanel.value,
+      emptyLabel: 'Extracting HTML…',
+    },
+  ]
+
+  if (needsAlpineSetup.value) {
+    tabs.push({
+      id: 'alpine',
+      label: 'Alpine JS',
+      language: 'javascript',
+      code: alpineSource.value,
+      emptyLabel: 'Loading Alpine JS…',
+    })
+  }
+
+  return tabs
+})
+
+const showVueInCard = computed(
+  () => activeView.value === 'preview' && framework.value === 'vue',
 )
 
-const alpinePreviewHtml = computed(() => {
-  const preamble = HTML_PREAMBLES[props.alpineExtractor] ?? ''
-  return htmlSource.value.startsWith(preamble)
-    ? htmlSource.value.slice(preamble.length)
-    : htmlSource.value
-})
+const pillTriggerClass =
+  'inline-flex h-[calc(100%-1px)] items-center justify-center gap-1.5 rounded-md border border-transparent px-3 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0'
+
+const pillActiveClass =
+  'bg-background text-foreground border-border shadow-sm'
+
+const pillInactiveClass =
+  'text-muted-foreground hover:text-foreground'
+
+const pillListClass =
+  'bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-lg p-[3px]'
+
+/** Shared layout for Vue and HTML preview — keep in sync */
+const previewStageClass = 'flex min-h-[280px] w-full flex-col p-8'
+const previewContentClass = 'w-full min-w-0'
 
 async function captureHtml() {
   htmlReady.value = false
   await nextTick()
-  // Give the slot content a paint/frame so DOM is stable before snapshotting.
   await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()))
 
   const root = previewRef.value
   if (!root) {
-    htmlSource.value = ''
+    htmlMarkup.value = ''
     htmlReady.value = true
     return
   }
 
-  // Vue template refs can be typed as broader element-like objects by tooling;
-  // cast to HTMLElement for our extractor boundary.
   const html = extractVueToAlpineHtml(root as unknown as HTMLElement, props.alpineExtractor)
-  const preamble = HTML_PREAMBLES[props.alpineExtractor] ?? ''
-  htmlSource.value = html
-    ? preamble
-      ? `${preamble}${html}`
-      : html
-    : ''
+  htmlMarkup.value = html ?? ''
   htmlReady.value = true
 }
 
-function onTabChange(value: string | number) {
-  activeTab.value = String(value)
-  if (activeTab.value === 'html') {
-    void captureHtml()
-  }
+function syncCodeTabToFramework() {
+  codeTabId.value = framework.value === 'vue' ? 'vue' : 'html'
 }
 
 async function refreshHtml() {
@@ -85,176 +118,174 @@ async function refreshHtml() {
   await captureHtml()
 }
 
-async function goToSection(section: 'preview' | 'vue' | 'html') {
-  activeTab.value = section
-
-  if (section === 'html' && !htmlSource.value) {
-    await captureHtml()
+function selectFramework(id: FrameworkId) {
+  framework.value = id
+  if (activeView.value === 'code') {
+    syncCodeTabToFramework()
   }
-
-  await nextTick()
-
-  const el = section === 'preview'
-    ? previewSectionRef.value
-    : section === 'vue'
-      ? vueSectionRef.value
-      : htmlSectionRef.value
-
-  el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
+
+function selectView(id: ViewId) {
+  activeView.value = id
+  if (id === 'code') {
+    syncCodeTabToFramework()
+  }
+}
+
+onMounted(() => {
+  void captureHtml()
+})
+
+watch(framework, () => {
+  if (activeView.value === 'code') {
+    syncCodeTabToFramework()
+  }
+})
+
+watch(activeView, (view) => {
+  if (view === 'preview' && !htmlReady.value) {
+    void captureHtml()
+  }
+  if (view === 'code') {
+    syncCodeTabToFramework()
+  }
+})
 </script>
 
 <template>
-  <section class="space-y-4">
-    <header class="space-y-1">
-      <h2 class="text-xl font-semibold tracking-tight">
+  <section class="space-y-6">
+    <header class="space-y-2">
+      <h2 class="text-3xl font-bold tracking-tight">
         {{ title }}
       </h2>
-      <p v-if="description" class="text-muted-foreground text-sm">
+      <p v-if="description" class="text-muted-foreground max-w-2xl text-base">
         {{ description }}
       </p>
     </header>
 
-    <div class="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1fr)_14rem]">
-      <Tabs
-        :model-value="activeTab"
-        class="w-full min-w-0"
-        @update:model-value="onTabChange"
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div :class="pillListClass">
+        <button
+          type="button"
+          :class="cn(pillTriggerClass, framework === 'vue' ? pillActiveClass : pillInactiveClass)"
+          @click="selectFramework('vue')"
+        >
+          Vue
+        </button>
+        <button
+          type="button"
+          :class="cn(pillTriggerClass, framework === 'html' ? pillActiveClass : pillInactiveClass)"
+          @click="selectFramework('html')"
+        >
+          HTML (Alpine.js)
+        </button>
+      </div>
+
+      <div :class="cn(pillListClass, 'grid grid-cols-2')">
+        <button
+          type="button"
+          :class="cn(pillTriggerClass, activeView === 'preview' ? pillActiveClass : pillInactiveClass)"
+          @click="selectView('preview')"
+        >
+          <Monitor />
+          Preview
+        </button>
+        <button
+          type="button"
+          :class="cn(pillTriggerClass, activeView === 'code' ? pillActiveClass : pillInactiveClass)"
+          @click="selectView('code')"
+        >
+          <Code2 />
+          Code
+        </button>
+      </div>
+    </div>
+
+    <div v-show="activeView === 'preview'" class="space-y-4">
+      <div
+        class="bg-card text-card-foreground relative min-h-[280px] overflow-hidden rounded-xl border shadow-sm"
       >
-        <TabsList class="grid w-full max-w-md grid-cols-3">
-          <TabsTrigger value="preview">
-            Preview
-          </TabsTrigger>
-          <TabsTrigger value="vue">
-            Vue
-          </TabsTrigger>
-          <TabsTrigger value="html">
-            HTML
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent
-          value="preview"
-          force-mount
-          class="mt-4 data-[state=inactive]:hidden"
+        <div
+          :class="cn(
+            previewStageClass,
+            !showVueInCard && 'pointer-events-none invisible absolute inset-0 z-0',
+          )"
+          :aria-hidden="!showVueInCard"
         >
-          <div ref="previewSectionRef" class="scroll-mt-6">
-            <div
-              ref="previewRef"
-              class="bg-card text-card-foreground rounded-lg border p-6 shadow-sm"
-            >
-              <slot />
-            </div>
+          <div ref="previewRef" :class="previewContentClass">
+            <slot />
           </div>
-        </TabsContent>
+        </div>
 
-        <TabsContent value="vue" class="mt-4">
-          <div ref="vueSectionRef" class="scroll-mt-6 min-w-0">
-            <CodePanel :code="vueSource" language="vue" />
-          </div>
-        </TabsContent>
-
-        <TabsContent
-          value="html"
-          force-mount
-          class="mt-4 space-y-4 data-[state=inactive]:hidden"
+        <div
+          v-if="!showVueInCard"
+          :class="cn(previewStageClass, 'relative z-10')"
         >
-          <div ref="htmlSectionRef" class="scroll-mt-6 min-w-0 space-y-4">
-            <div class="flex justify-end">
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                @click="refreshHtml"
-              >
-                Refresh HTML
-              </Button>
-            </div>
-
-            <!-- Interactive (Alpine-powered) preview -->
+          <div :class="previewContentClass">
             <template v-if="needsAlpinePreview">
               <AlpineHtmlPreview
-                v-if="htmlReady && alpinePreviewHtml"
+                v-if="htmlReady && htmlMarkup"
                 :key="alpinePreviewKey"
-                :html="alpinePreviewHtml"
+                :html="htmlMarkup"
               />
-              <div
-                v-else-if="htmlReady && !alpinePreviewHtml"
-                class="text-muted-foreground rounded-lg border p-6 text-sm"
+              <p
+                v-else-if="htmlReady && !htmlMarkup"
+                class="text-muted-foreground text-sm"
               >
                 No HTML extracted.
-              </div>
-              <div
-                v-else
-                class="text-muted-foreground rounded-lg border p-6 text-sm"
-              >
-                Extracting Alpine HTML…
-              </div>
+              </p>
+              <p v-else class="text-muted-foreground text-sm">
+                Extracting HTML…
+              </p>
             </template>
 
-            <!-- Static HTML snapshot preview -->
             <template v-else>
               <div
-                v-if="htmlReady && htmlSource"
-                class="bg-card text-card-foreground rounded-lg border p-6 shadow-sm"
-                v-html="htmlSource"
+                v-if="htmlReady && htmlMarkup"
+                class="component-preview-html"
+                v-html="htmlMarkup"
               />
-              <div
-                v-else-if="htmlReady && !htmlSource"
-                class="text-muted-foreground rounded-lg border p-6 text-sm"
+              <p
+                v-else-if="htmlReady && !htmlMarkup"
+                class="text-muted-foreground text-sm"
               >
                 No HTML extracted.
-              </div>
-              <div
-                v-else
-                class="text-muted-foreground rounded-lg border p-6 text-sm"
-              >
+              </p>
+              <p v-else class="text-muted-foreground text-sm">
                 Extracting HTML…
-              </div>
+              </p>
             </template>
-
-            <CodePanel
-              :code="htmlSource"
-              language="html"
-              :empty-label="needsAlpinePreview ? 'Extracting Alpine HTML…' : 'Extracting HTML…'"
-            />
           </div>
-        </TabsContent>
-      </Tabs>
-
-      <aside class="hidden lg:block">
-        <div class="sticky top-6">
-          <div class="text-muted-foreground mb-3 text-xs font-medium tracking-wide uppercase">
-            On this page
-          </div>
-          <nav class="space-y-1">
-            <button
-              type="button"
-              class="hover:bg-muted text-muted-foreground hover:text-foreground w-full rounded-md px-3 py-2 text-left text-sm transition-colors"
-              :class="activeTab === 'preview' ? 'bg-muted text-foreground' : ''"
-              @click="goToSection('preview')"
-            >
-              Preview
-            </button>
-            <button
-              type="button"
-              class="hover:bg-muted text-muted-foreground hover:text-foreground w-full rounded-md px-3 py-2 text-left text-sm transition-colors"
-              :class="activeTab === 'vue' ? 'bg-muted text-foreground' : ''"
-              @click="goToSection('vue')"
-            >
-              Vue code
-            </button>
-            <button
-              type="button"
-              class="hover:bg-muted text-muted-foreground hover:text-foreground w-full rounded-md px-3 py-2 text-left text-sm transition-colors"
-              :class="activeTab === 'html' ? 'bg-muted text-foreground' : ''"
-              @click="goToSection('html')"
-            >
-              HTML code
-            </button>
-          </nav>
         </div>
-      </aside>
+
+        <button
+          type="button"
+          class="text-muted-foreground hover:text-foreground hover:bg-muted absolute right-3 bottom-3 inline-flex size-8 items-center justify-center rounded-md transition-colors"
+          title="Refresh preview"
+          @click="refreshHtml"
+        >
+          <RotateCw class="size-4" />
+          <span class="sr-only">Refresh preview</span>
+        </button>
+      </div>
+    </div>
+
+    <div v-show="activeView === 'code'" class="min-w-0">
+      <CodePanel v-model:active-tab-id="codeTabId" :tabs="codePanelTabs" />
     </div>
   </section>
 </template>
+
+<style scoped>
+.component-preview-html,
+.alpine-html-preview {
+  width: 100%;
+  min-width: 0;
+}
+
+.component-preview-html :deep(> *),
+.alpine-html-preview :deep(> *) {
+  width: 100%;
+  min-width: 0;
+}
+</style>

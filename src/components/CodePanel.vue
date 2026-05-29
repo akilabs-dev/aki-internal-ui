@@ -4,14 +4,28 @@ import { useClipboard } from '@vueuse/core'
 import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { Button } from '@/components/ui/button'
 
-const props = defineProps<{
+export type CodeLanguage = 'vue' | 'html' | 'css' | 'javascript'
+
+export type CodePanelTab = {
+  id: string
+  label: string
+  language: CodeLanguage
   code: string
-  language: 'vue' | 'html' | 'css'
+  emptyLabel?: string
+}
+
+const props = defineProps<{
+  /** Single-language mode */
+  code?: string
+  language?: CodeLanguage
+  /** Multi-language mode — tabs in the panel header */
+  tabs?: CodePanelTab[]
   emptyLabel?: string
   collapsible?: boolean
   defaultCollapsed?: boolean
 }>()
 
+const activeTabId = defineModel<string>('activeTabId', { default: '' })
 const formattedCode = ref('')
 const highlightedHtml = ref('')
 const isReady = ref(false)
@@ -20,6 +34,36 @@ const host = ref<HTMLElement | null>(null)
 const foldedFrom = ref(new Set<number>())
 
 const isCollapsible = computed(() => props.collapsible !== false)
+const isTabbed = computed(() => (props.tabs?.length ?? 0) > 0)
+
+const activeTab = computed(() =>
+  props.tabs?.find((t) => t.id === activeTabId.value) ?? null,
+)
+
+const displayLanguage = computed<CodeLanguage>(() =>
+  activeTab.value?.language ?? props.language ?? 'html',
+)
+
+const displayCode = computed(() =>
+  activeTab.value?.code ?? props.code ?? '',
+)
+
+const displayEmptyLabel = computed(() =>
+  activeTab.value?.emptyLabel ?? props.emptyLabel,
+)
+
+const languageLabel = computed(() => {
+  switch (displayLanguage.value) {
+    case 'vue':
+      return 'Vue'
+    case 'css':
+      return 'CSS'
+    case 'javascript':
+      return 'Alpine JS'
+    default:
+      return 'HTML'
+  }
+})
 
 const { copy, copied } = useClipboard()
 
@@ -33,7 +77,7 @@ function toggleCollapsed() {
   collapsed.value = !collapsed.value
 }
 
-async function renderCode(raw: string) {
+async function renderCode(raw: string, language: CodeLanguage) {
   if (!raw.trim()) {
     formattedCode.value = ''
     highlightedHtml.value = ''
@@ -43,20 +87,25 @@ async function renderCode(raw: string) {
 
   isReady.value = false
 
-  const [{ formatCssSource, formatHtmlSource, formatVueSource }, { highlightCodeWithLineNumbers }] = await Promise.all([
+  const [
+    { formatCssSource, formatHtmlSource, formatJavascriptSource, formatVueSource },
+    { highlightCodeWithLineNumbers },
+  ] = await Promise.all([
     import('@/lib/format-code'),
     import('@/lib/shiki-highlighter'),
   ])
 
-  const formatted = props.language === 'vue'
+  const formatted = language === 'vue'
     ? await formatVueSource(raw)
-    : props.language === 'css'
+    : language === 'css'
       ? await formatCssSource(raw)
-      : await formatHtmlSource(raw)
+      : language === 'javascript'
+        ? await formatJavascriptSource(raw)
+        : await formatHtmlSource(raw)
 
   formattedCode.value = formatted
   const folds = computeFoldRanges(formatted)
-  highlightedHtml.value = await highlightCodeWithLineNumbers(formatted, props.language, folds)
+  highlightedHtml.value = await highlightCodeWithLineNumbers(formatted, language, folds)
   isReady.value = true
 
   await nextTick()
@@ -167,9 +216,20 @@ onBeforeUnmount(() => {
 })
 
 watch(
-  () => [props.code, props.language] as const,
-  ([code]) => {
-    void renderCode(code)
+  () => props.tabs,
+  (tabs) => {
+    if (!tabs?.length) return
+    if (!tabs.some((t) => t.id === activeTabId.value)) {
+      activeTabId.value = tabs[0]?.id ?? ''
+    }
+  },
+  { immediate: true },
+)
+
+watch(
+  () => [displayCode.value, displayLanguage.value] as const,
+  ([code, language]) => {
+    void renderCode(code, language)
   },
   { immediate: true },
 )
@@ -182,10 +242,27 @@ watch(
     <div
       class="code-panel__toolbar flex items-center justify-between gap-2 border-b border-[#2b2b2b] bg-[#252526] px-3 py-2"
     >
-      <span class="code-panel__label text-[#cccccc]">
-        {{ language === 'vue' ? 'Vue' : language === 'css' ? 'CSS' : 'HTML' }}
+      <div
+        v-if="isTabbed"
+        class="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto"
+      >
+        <button
+          v-for="tab in tabs"
+          :key="tab.id"
+          type="button"
+          class="code-panel__tab shrink-0 rounded px-2.5 py-1 text-xs font-medium transition-colors"
+          :class="tab.id === activeTabId
+            ? 'bg-[#1e1e1e] text-[#ffffff]'
+            : 'text-[#858585] hover:bg-[#2a2d2e] hover:text-[#cccccc]'"
+          @click="activeTabId = tab.id"
+        >
+          {{ tab.label }}
+        </button>
+      </div>
+      <span v-else class="code-panel__label shrink-0 text-[#cccccc]">
+        {{ languageLabel }}
       </span>
-      <div class="flex items-center gap-1">
+      <div class="flex shrink-0 items-center gap-1">
         <Button
           v-if="isCollapsible"
           type="button"
@@ -225,7 +302,7 @@ watch(
         v-if="!isReady"
         class="code-panel__content code-panel__content--loading text-[#858585]"
       >
-        {{ emptyLabel ?? 'Formatting…' }}
+        {{ displayEmptyLabel ?? 'Formatting…' }}
       </div>
       <div
         v-else
@@ -237,11 +314,15 @@ watch(
 </template>
 
 <style scoped>
-.code-panel__label {
+.code-panel__label,
+.code-panel__tab {
   font-family: var(--font-code);
+  letter-spacing: 0.02em;
+}
+
+.code-panel__label {
   font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.02em;
 }
 
 .code-panel__content {

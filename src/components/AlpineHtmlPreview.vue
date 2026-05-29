@@ -63,14 +63,5 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div
-    class="bg-card text-card-foreground rounded-lg border p-6 shadow-sm"
-  >
-    <p class="text-muted-foreground mb-4 text-xs">
-      Live preview — Alpine.js
-      (<code class="text-foreground">x-collapse</code>,
-      <code class="text-foreground">x-show</code>)
-    </p>
-    <div :ref="setHost" class="alpine-html-preview" />
-  </div>
+  <div :ref="setHost" class="alpine-html-preview w-full min-w-0" />
 </template>

@@ -15,6 +15,7 @@ import { alertDialogDemoContent } from './alert-dialog-demo.data'
 </script>
 
 <template>
+  <div class="flex w-full justify-center">
   <AlertDialog>
     <AlertDialogTrigger as-child>
       <Button variant="outline">
@@ -40,4 +41,5 @@ import { alertDialogDemoContent } from './alert-dialog-demo.data'
       </AlertDialogFooter>
     </AlertDialogContent>
   </AlertDialog>
+  </div>
 </template>

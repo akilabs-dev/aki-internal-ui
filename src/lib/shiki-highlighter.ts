@@ -8,13 +8,21 @@ let highlighterPromise: Promise<HighlighterCore> | null = null
 export function getHighlighter() {
   highlighterPromise ??= createHighlighterCore({
     themes: [bundledThemes['dark-plus']],
-    langs: [bundledLanguages.vue, bundledLanguages.html, bundledLanguages.css],
+    langs: [
+      bundledLanguages.vue,
+      bundledLanguages.html,
+      bundledLanguages.css,
+      bundledLanguages.javascript,
+    ],
     engine: createOnigurumaEngine(() => import('shiki/wasm')),
   })
   return highlighterPromise
 }
 
-export async function highlightCode(code: string, lang: 'vue' | 'html' | 'css') {
+export async function highlightCode(
+  code: string,
+  lang: 'vue' | 'html' | 'css' | 'javascript',
+) {
   const highlighter = await getHighlighter()
   return highlighter.codeToHtml(code, {
     lang,
@@ -44,7 +52,7 @@ function extractCodeInnerHtml(shikiHtml: string) {
  */
 export async function highlightCodeWithLineNumbers(
   code: string,
-  lang: 'vue' | 'html' | 'css',
+  lang: 'vue' | 'html' | 'css' | 'javascript',
   folds?: Array<{ from: number; to: number }>,
 ) {
   const shikiHtml = await highlightCode(code, lang)
