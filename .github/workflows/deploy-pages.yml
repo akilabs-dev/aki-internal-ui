@@ -1,14 +1,15 @@
 # Deploy static site to GitHub Pages.
 #
 # Release policy
-#   production  →  publish a GitHub Release (tag must match `v*`, not a pre-release)
+#   production  →  publish a GitHub Release (`v*`, not a pre-release), or push tag `v*` (SSH-friendly)
 #   manual        →  workflow_dispatch with a release tag name
 #   CI only       →  pull requests targeting `main` / `master` (build, no deploy)
 #
-# Ship a release (recommended):
-#   1. GitHub → Releases → Draft a new release
-#   2. Choose tag v1.0.0 (create from main) and publish
-#   Or: gh release create v1.0.0 --generate-notes
+# Ship via SSH (no gh required):
+#   git tag v1.0.0 && git push origin v1.0.0
+#
+# Ship via GitHub Release (recommended for notes):
+#   gh release create v1.0.0 --generate-notes
 #
 # Repository Settings → Pages → Source: GitHub Actions
 
@@ -17,6 +18,9 @@ name: Deploy GitHub Pages
 on:
   release:
     types: [published]
+  push:
+    tags:
+      - v*
   pull_request:
     branches:
       - main
@@ -34,7 +38,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages-release-${{ github.event.release.tag_name || inputs.tag || github.sha }}
+  group: pages-release-${{ github.event.release.tag_name || github.ref_name || inputs.tag || github.sha }}
   cancel-in-progress: false
 
 defaults:
@@ -86,6 +90,15 @@ jobs:
               deploy=true
               target="production"
             fi
+          elif [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" =~ ^refs/tags/v ]]; then
+            version="${GITHUB_REF#refs/tags/}"
+            if [[ ! "${version}" =~ ^v ]]; then
+              echo "::error::Tag must start with 'v' (e.g. v1.0.0). Got: ${version}"
+              exit 1
+            fi
+            ref="${GITHUB_REF}"
+            deploy=true
+            target="production"
           fi
 
           echo "deploy=${deploy}" >> "${GITHUB_OUTPUT}"
