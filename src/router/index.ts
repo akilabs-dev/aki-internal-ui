@@ -194,6 +194,16 @@ const routes: RouteRecordRaw[] = [
       description: 'A date field component that allows users to enter and edit date.',
     },
   },
+  {
+    path: '/docs/components/card',
+    name: 'docs-components-card',
+    component: () => import('@/pages/components/CardPage.vue'),
+    meta: {
+      title: 'Card',
+      eyebrow: 'Components',
+      description: 'Displays a card with header, content, and footer.',
+    },
+  },
 ]
 
 export const router = createRouter({
