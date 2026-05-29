@@ -164,6 +164,16 @@ const routes: RouteRecordRaw[] = [
       description: 'Displays the path to the current resource using a hierarchy of links.',
     },
   },
+  {
+    path: '/docs/components/button',
+    name: 'docs-components-button',
+    component: () => import('@/pages/components/ButtonPage.vue'),
+    meta: {
+      title: 'Button',
+      eyebrow: 'Components',
+      description: 'Displays a button or a component that looks like a button.',
+    },
+  },
 ]
 
 export const router = createRouter({
