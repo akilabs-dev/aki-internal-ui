@@ -92,3 +92,21 @@ export async function formatJavascriptSource(code: string): Promise<string> {
     return code.trim()
   }
 }
+
+export async function formatTypescriptSource(code: string): Promise<string> {
+  try {
+    const [{ format }, pluginEstree, pluginTypescript] = await Promise.all([
+      import('prettier/standalone'),
+      import('prettier/plugins/estree'),
+      import('prettier/plugins/typescript'),
+    ])
+
+    return await format(code, {
+      ...prettierOptions,
+      parser: 'typescript',
+      plugins: [pluginEstree.default, pluginTypescript.default],
+    })
+  } catch {
+    return code.trim()
+  }
+}

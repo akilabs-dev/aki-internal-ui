@@ -3,6 +3,7 @@ import { createOnigurumaEngine } from 'shiki/engine/oniguruma'
 import langCss from '@shikijs/langs/css'
 import langHtml from '@shikijs/langs/html'
 import langJavascript from '@shikijs/langs/javascript'
+import langTypescript from '@shikijs/langs/typescript'
 import langVue from '@shikijs/langs/vue'
 import themeDarkPlus from '@shikijs/themes/dark-plus'
 
@@ -11,7 +12,7 @@ let highlighterPromise: Promise<HighlighterCore> | null = null
 export function getHighlighter() {
   highlighterPromise ??= createHighlighterCore({
     themes: [themeDarkPlus],
-    langs: [langVue, langHtml, langCss, langJavascript],
+    langs: [langVue, langHtml, langCss, langJavascript, langTypescript],
     engine: createOnigurumaEngine(() => import('shiki/wasm')),
   })
   return highlighterPromise
@@ -19,7 +20,7 @@ export function getHighlighter() {
 
 export async function highlightCode(
   code: string,
-  lang: 'vue' | 'html' | 'css' | 'javascript',
+  lang: 'vue' | 'html' | 'css' | 'javascript' | 'typescript',
 ) {
   const highlighter = await getHighlighter()
   return highlighter.codeToHtml(code, {
@@ -50,7 +51,7 @@ function extractCodeInnerHtml(shikiHtml: string) {
  */
 export async function highlightCodeWithLineNumbers(
   code: string,
-  lang: 'vue' | 'html' | 'css' | 'javascript',
+  lang: 'vue' | 'html' | 'css' | 'javascript' | 'typescript',
   folds?: Array<{ from: number; to: number }>,
 ) {
   const shikiHtml = await highlightCode(code, lang)

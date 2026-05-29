@@ -3,7 +3,7 @@ import { Check, ChevronDown, Copy } from '@lucide/vue'
 import { computed, nextTick, onBeforeUnmount, onUnmounted, ref, watch } from 'vue'
 import { Button } from '@/components/ui/button'
 
-export type CodeLanguage = 'vue' | 'html' | 'css' | 'javascript'
+export type CodeLanguage = 'vue' | 'html' | 'css' | 'javascript' | 'typescript'
 
 export type CodePanelTab = {
   id: string
@@ -59,6 +59,8 @@ const languageLabel = computed(() => {
       return 'CSS'
     case 'javascript':
       return 'Alpine JS'
+    case 'typescript':
+      return 'TypeScript'
     default:
       return 'HTML'
   }
@@ -111,6 +113,10 @@ async function renderCode(raw: string, language: CodeLanguage) {
       case 'javascript': {
         const { formatJavascriptSource } = await import('@/lib/format-code')
         return formatJavascriptSource(raw)
+      }
+      case 'typescript': {
+        const { formatTypescriptSource } = await import('@/lib/format-code')
+        return formatTypescriptSource(raw)
       }
       default: {
         const { formatHtmlSource } = await import('@/lib/format-code')

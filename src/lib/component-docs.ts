@@ -12,7 +12,7 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'alert-dialog', label: 'Alert Dialog', path: '/docs/components/alert-dialog' },
   { id: 'aspect-ratio', label: 'Aspect Ratio', path: '/docs/components/aspect-ratio' },
   { id: 'avatar', label: 'Avatar', path: '/docs/components/avatar' },
-  { id: 'badge', label: 'Badge', disabled: true },
+  { id: 'badge', label: 'Badge', path: '/docs/components/badge' },
   { id: 'breadcrumb', label: 'Breadcrumb', disabled: true },
   { id: 'button', label: 'Button', disabled: true },
   { id: 'button-group', label: 'Button Group', disabled: true },

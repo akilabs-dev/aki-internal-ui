@@ -10,6 +10,7 @@ import {
   hasAlpineSetup as componentHasAlpineSetup,
   HTML_ALPINE_SETUP_HINT,
 } from '@/lib/alpine/alpine-setup-snippets'
+import { demoDataTabId, DEMO_DATA_TAB_LABEL, type DemoDataSource } from '@/lib/demo-data-sources'
 import type { AlpineExtractorId } from '@/lib/vue-to-alpine'
 import { extractVueToAlpineHtml } from '@/lib/vue-to-alpine'
 import { cn } from '@/lib/utils'
@@ -20,6 +21,8 @@ const props = defineProps<{
   title?: string
   description?: string
   vueSource: string
+  /** Optional demo data files shown as tabs next to Vue in the code panel */
+  demoDataSources?: DemoDataSource[]
   alpineExtractor: AlpineExtractorId
 }>()
 
@@ -84,6 +87,15 @@ const codePanelTabs = computed<CodePanelTab[]>(() => {
       emptyLabel: 'Loading Alpine JS…',
     })
   }
+
+  tabs.push(
+    ...(props.demoDataSources ?? []).map((source) => ({
+      id: demoDataTabId(source.label),
+      label: DEMO_DATA_TAB_LABEL,
+      language: 'typescript' as const,
+      code: source.code,
+    })),
+  )
 
   return tabs
 })

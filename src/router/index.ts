@@ -144,6 +144,16 @@ const routes: RouteRecordRaw[] = [
       description: 'An aspect ratio component.',
     },
   },
+  {
+    path: '/docs/components/badge',
+    name: 'docs-components-badge',
+    component: () => import('@/pages/components/BadgePage.vue'),
+    meta: {
+      title: 'Badge',
+      eyebrow: 'Components',
+      description: 'Displays a badge or a component that looks like a badge.',
+    },
+  },
 ]
 
 export const router = createRouter({

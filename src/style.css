@@ -78,6 +78,12 @@
 }
 
 @layer base {
+  :root {
+    --font-code: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+    --code-size: 0.8125rem;
+    --code-leading: 1.5;
+  }
+
   * {
     @apply border-border outline-ring/50;
   }
