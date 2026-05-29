@@ -2,6 +2,7 @@
 import { Code2, Monitor, RotateCw } from '@lucide/vue'
 import { computed, defineAsyncComponent, nextTick, onMounted, ref, watch } from 'vue'
 import AlpineHtmlPreview from '@/components/AlpineHtmlPreview.vue'
+import ComponentPagination from '@/components/ComponentPagination.vue'
 import type { CodePanelTab } from '@/components/CodePanel.vue'
 import {
   getAlpineSetupSource,
@@ -273,6 +274,8 @@ watch(activeView, (view) => {
     <div v-show="activeView === 'code'" class="min-w-0">
       <CodePanel v-model:active-tab-id="codeTabId" :tabs="codePanelTabs" />
     </div>
+
+    <ComponentPagination />
   </section>
 </template>
 

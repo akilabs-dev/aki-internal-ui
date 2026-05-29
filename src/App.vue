@@ -5,6 +5,11 @@ import { Menu, X } from '@lucide/vue'
 import SidebarNav, { type SidebarItem } from '@/components/SidebarNav.vue'
 import ThemeModeMenu from '@/components/ThemeModeMenu.vue'
 import ThemeStyleMenu from '@/components/ThemeStyleMenu.vue'
+import {
+  componentCatalogSidebarItems,
+  getComponentPath,
+  resolveComponentIdFromPath,
+} from '@/lib/component-docs'
 
 const sectionItems: SidebarItem[] = [
   { id: 'introduction', label: 'Introduction' },
@@ -15,42 +20,23 @@ const sectionItems: SidebarItem[] = [
   { id: 'faq', label: 'FAQ' },
 ]
 
-const componentItems: SidebarItem[] = [
-  { id: 'accordion', label: 'Accordion' },
-  { id: 'alert', label: 'Alert' },
-  { id: 'alert-dialog', label: 'Alert Dialog' },
-  { id: 'aspect-ratio', label: 'Aspect Ratio', disabled: true },
-  { id: 'avatar', label: 'Avatar', disabled: true },
-  { id: 'badge', label: 'Badge', disabled: true },
-  { id: 'breadcrumb', label: 'Breadcrumb', disabled: true },
-  { id: 'button', label: 'Button', disabled: true },
-  { id: 'button-group', label: 'Button Group', disabled: true },
-  { id: 'calendar', label: 'Calendar', disabled: true },
-  { id: 'card', label: 'Card', disabled: true },
-  { id: 'carousel', label: 'Carousel', disabled: true },
-  { id: 'chart', label: 'Chart', disabled: true },
-]
+const componentItems: SidebarItem[] = componentCatalogSidebarItems()
 
 const mobileSidebarOpen = ref(false)
 const route = useRoute()
 const router = useRouter()
 
-const activeComponentId = computed(() => {
-  const path = route.path
-  if (path.startsWith('/docs/components/accordion')) return 'accordion'
-  if (path.startsWith('/docs/components/alert-dialog')) return 'alert-dialog'
-  if (path.startsWith('/docs/components/alert')) return 'alert'
-  return ''
-})
+const activeComponentId = computed(
+  () => resolveComponentIdFromPath(route.path) ?? '',
+)
 
 function closeMobileSidebar() {
   mobileSidebarOpen.value = false
 }
 
 function onSelectComponent(id: string) {
-  if (id === 'accordion') void router.push('/docs/components/accordion')
-  if (id === 'alert-dialog') void router.push('/docs/components/alert-dialog')
-  if (id === 'alert') void router.push('/docs/components/alert')
+  const path = getComponentPath(id)
+  if (path) void router.push(path)
 }
 
 const activeSectionId = computed(() => {
