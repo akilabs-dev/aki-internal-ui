@@ -124,6 +124,26 @@ const routes: RouteRecordRaw[] = [
         'A modal dialog that interrupts the user with important content and expects a response.',
     },
   },
+  {
+    path: '/docs/components/avatar',
+    name: 'docs-components-avatar',
+    component: () => import('@/pages/components/AvatarPage.vue'),
+    meta: {
+      title: 'Avatar',
+      eyebrow: 'Components',
+      description: 'An image element with a fallback for representing the user.',
+    },
+  },
+  {
+    path: '/docs/components/aspect-ratio',
+    name: 'docs-components-aspect-ratio',
+    component: () => import('@/pages/components/AspectRatioPage.vue'),
+    meta: {
+      title: 'Aspect Ratio',
+      eyebrow: 'Components',
+      description: 'An aspect ratio component.',
+    },
+  },
 ]
 
 export const router = createRouter({
