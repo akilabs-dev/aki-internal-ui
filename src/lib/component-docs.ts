@@ -13,7 +13,7 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'aspect-ratio', label: 'Aspect Ratio', path: '/docs/components/aspect-ratio' },
   { id: 'avatar', label: 'Avatar', path: '/docs/components/avatar' },
   { id: 'badge', label: 'Badge', path: '/docs/components/badge' },
-  { id: 'breadcrumb', label: 'Breadcrumb', disabled: true },
+  { id: 'breadcrumb', label: 'Breadcrumb', path: '/docs/components/breadcrumb' },
   { id: 'button', label: 'Button', disabled: true },
   { id: 'button-group', label: 'Button Group', disabled: true },
   { id: 'calendar', label: 'Calendar', disabled: true },
