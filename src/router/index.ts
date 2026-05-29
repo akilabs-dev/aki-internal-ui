@@ -184,6 +184,16 @@ const routes: RouteRecordRaw[] = [
       description: 'A container that groups related buttons together with consistent styling.',
     },
   },
+  {
+    path: '/docs/components/calendar',
+    name: 'docs-components-calendar',
+    component: () => import('@/pages/components/CalendarPage.vue'),
+    meta: {
+      title: 'Calendar',
+      eyebrow: 'Components',
+      description: 'A date field component that allows users to enter and edit date.',
+    },
+  },
 ]
 
 export const router = createRouter({
