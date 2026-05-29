@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import CodePanel from '@/components/CodePanel.vue'
+import { computed, defineAsyncComponent, onBeforeUnmount, onMounted, ref } from 'vue'
+
+const CodePanel = defineAsyncComponent(() => import('@/components/CodePanel.vue'))
 import DocsPageHeader from '@/components/DocsPageHeader.vue'
 
 type ThemeFile = { id: string; css: string }

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Check, ChevronDown, Copy } from '@lucide/vue'
-import { useClipboard } from '@vueuse/core'
-import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onUnmounted, ref, watch } from 'vue'
 import { Button } from '@/components/ui/button'
 
 export type CodeLanguage = 'vue' | 'html' | 'css' | 'javascript'
@@ -65,12 +64,22 @@ const languageLabel = computed(() => {
   }
 })
 
-const { copy, copied } = useClipboard()
+const copied = ref(false)
+let copiedResetTimer: ReturnType<typeof setTimeout> | undefined
 
 async function copyCode() {
   if (!formattedCode.value) return
-  await copy(formattedCode.value)
+  await navigator.clipboard.writeText(formattedCode.value)
+  copied.value = true
+  clearTimeout(copiedResetTimer)
+  copiedResetTimer = setTimeout(() => {
+    copied.value = false
+  }, 2000)
 }
+
+onUnmounted(() => {
+  clearTimeout(copiedResetTimer)
+})
 
 function toggleCollapsed() {
   if (!isCollapsible.value) return
@@ -87,21 +96,28 @@ async function renderCode(raw: string, language: CodeLanguage) {
 
   isReady.value = false
 
-  const [
-    { formatCssSource, formatHtmlSource, formatJavascriptSource, formatVueSource },
-    { highlightCodeWithLineNumbers },
-  ] = await Promise.all([
-    import('@/lib/format-code'),
-    import('@/lib/shiki-highlighter'),
-  ])
+  const { highlightCodeWithLineNumbers } = await import('@/lib/shiki-highlighter')
 
-  const formatted = language === 'vue'
-    ? await formatVueSource(raw)
-    : language === 'css'
-      ? await formatCssSource(raw)
-      : language === 'javascript'
-        ? await formatJavascriptSource(raw)
-        : await formatHtmlSource(raw)
+  const formatted = await (async () => {
+    switch (language) {
+      case 'vue': {
+        const { formatVueSource } = await import('@/lib/format-code')
+        return formatVueSource(raw)
+      }
+      case 'css': {
+        const { formatCssSource } = await import('@/lib/format-code')
+        return formatCssSource(raw)
+      }
+      case 'javascript': {
+        const { formatJavascriptSource } = await import('@/lib/format-code')
+        return formatJavascriptSource(raw)
+      }
+      default: {
+        const { formatHtmlSource } = await import('@/lib/format-code')
+        return formatHtmlSource(raw)
+      }
+    }
+  })()
 
   formattedCode.value = formatted
   const folds = computeFoldRanges(formatted)

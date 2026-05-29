@@ -1,19 +1,17 @@
 import { createHighlighterCore, type HighlighterCore } from 'shiki/core'
 import { createOnigurumaEngine } from 'shiki/engine/oniguruma'
-import { bundledLanguages } from 'shiki/langs'
-import { bundledThemes } from 'shiki/themes'
+import langCss from '@shikijs/langs/css'
+import langHtml from '@shikijs/langs/html'
+import langJavascript from '@shikijs/langs/javascript'
+import langVue from '@shikijs/langs/vue'
+import themeDarkPlus from '@shikijs/themes/dark-plus'
 
 let highlighterPromise: Promise<HighlighterCore> | null = null
 
 export function getHighlighter() {
   highlighterPromise ??= createHighlighterCore({
-    themes: [bundledThemes['dark-plus']],
-    langs: [
-      bundledLanguages.vue,
-      bundledLanguages.html,
-      bundledLanguages.css,
-      bundledLanguages.javascript,
-    ],
+    themes: [themeDarkPlus],
+    langs: [langVue, langHtml, langCss, langJavascript],
     engine: createOnigurumaEngine(() => import('shiki/wasm')),
   })
   return highlighterPromise
@@ -82,6 +80,5 @@ export async function highlightCodeWithLineNumbers(
     })
     .join('')
 
-  // Keep the same wrapper class so our existing shiki CSS applies.
   return `<pre class="shiki shiki--line-numbers" tabindex="0"><code>${rows}</code></pre>`
 }

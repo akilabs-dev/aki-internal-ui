@@ -12,6 +12,8 @@
   "dependencies": {
     "@alpinejs/collapse": "^3.15.12",
     "@lucide/vue": "^1.16.0",
+    "@shikijs/langs": "4.1.0",
+    "@shikijs/themes": "4.1.0",
     "@tailwindcss/vite": "^4.3.0",
     "@vue/server-renderer": "^3.5.35",
     "@vueuse/core": "^14.3.0",
