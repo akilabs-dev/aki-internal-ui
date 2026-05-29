@@ -30,4 +30,17 @@ export default defineConfig({
   ssr: {
     noExternal: ['reka-ui', '@vueuse/core', '@lucide/vue'],
   },
+  build: {
+    // Shiki oniguruma wasm (~622 kB) and Prettier vue/typescript are lazy-loaded.
+    chunkSizeWarningLimit: 900,
+    rolldownOptions: {
+      output: {
+        codeSplitting: true,
+      },
+      onwarn(warning, defaultHandler) {
+        if (warning.code === 'INVALID_ANNOTATION') return
+        defaultHandler(warning)
+      },
+    },
+  },
 })
