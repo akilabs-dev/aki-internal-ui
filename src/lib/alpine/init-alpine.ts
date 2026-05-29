@@ -4,6 +4,18 @@ import Alpine from 'alpinejs'
 let started = false
 
 export function registerAlpineData() {
+  Alpine.data('alertDialogDemo', () => ({
+    open: false,
+
+    openDialog() {
+      this.open = true
+    },
+
+    close() {
+      this.open = false
+    },
+  }))
+
   Alpine.data('accordionDemo', () => ({
     open: 'item-1' as string | null,
 

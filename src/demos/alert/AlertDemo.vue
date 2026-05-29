@@ -4,11 +4,24 @@ import {
   AlertDescription,
   AlertTitle,
 } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
+import FigmaIcon from '@/components/icons/FigmaIcon.vue'
 import { alertDemoItems } from './alert-demo.data'
+import { figmaLinks } from '@/figma-links'
 </script>
 
 <template>
   <div class="space-y-4">
+    <div class="flex flex-wrap items-center gap-2">
+      <Button as="a" :href="figmaLinks.alert.light" target="_blank" rel="noreferrer" variant="outline" size="sm">
+        <FigmaIcon class="size-4" />
+        Edit in Figma (Light)
+      </Button>
+      <Button as="a" :href="figmaLinks.alert.dark" target="_blank" rel="noreferrer" variant="outline" size="sm">
+        <FigmaIcon class="size-4" />
+        Edit in Figma (Dark)
+      </Button>
+    </div>
     <Alert
       v-for="item in alertDemoItems"
       :key="item.id"

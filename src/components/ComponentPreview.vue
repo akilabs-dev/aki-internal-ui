@@ -30,14 +30,23 @@ const previewSectionRef = ref<HTMLElement | null>(null)
 const vueSectionRef = ref<HTMLElement | null>(null)
 const htmlSectionRef = ref<HTMLElement | null>(null)
 
-const HTML_PREAMBLE_ALPINE = `<!-- Requires Alpine.js 3 + @alpinejs/collapse (accordionDemo in app) -->
-`
+const HTML_PREAMBLES: Partial<Record<AlpineExtractorId, string>> = {
+  accordion: `<!-- Requires Alpine.js 3 + @alpinejs/collapse (accordionDemo in app) -->
+`,
+  'alert-dialog': `<!-- Requires Alpine.js 3 (alertDialogDemo in app) -->
+`,
+}
 
-const needsAlpinePreview = computed(() => props.alpineExtractor === 'accordion')
-
-const alpinePreviewHtml = computed(() =>
-  htmlSource.value.replace(HTML_PREAMBLE_ALPINE, ''),
+const needsAlpinePreview = computed(() =>
+  props.alpineExtractor === 'accordion' || props.alpineExtractor === 'alert-dialog',
 )
+
+const alpinePreviewHtml = computed(() => {
+  const preamble = HTML_PREAMBLES[props.alpineExtractor] ?? ''
+  return htmlSource.value.startsWith(preamble)
+    ? htmlSource.value.slice(preamble.length)
+    : htmlSource.value
+})
 
 async function captureHtml() {
   htmlReady.value = false
@@ -55,9 +64,10 @@ async function captureHtml() {
   // Vue template refs can be typed as broader element-like objects by tooling;
   // cast to HTMLElement for our extractor boundary.
   const html = extractVueToAlpineHtml(root as unknown as HTMLElement, props.alpineExtractor)
+  const preamble = HTML_PREAMBLES[props.alpineExtractor] ?? ''
   htmlSource.value = html
-    ? needsAlpinePreview.value
-      ? `${HTML_PREAMBLE_ALPINE}${html}`
+    ? preamble
+      ? `${preamble}${html}`
       : html
     : ''
   htmlReady.value = true

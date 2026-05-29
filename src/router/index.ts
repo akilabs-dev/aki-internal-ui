@@ -61,6 +61,12 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/components/AlertPage.vue'),
     meta: { title: 'Alert', eyebrow: 'Components' },
   },
+  {
+    path: '/docs/components/alert-dialog',
+    name: 'docs-components-alert-dialog',
+    component: () => import('@/pages/components/AlertDialogPage.vue'),
+    meta: { title: 'Alert Dialog', eyebrow: 'Components' },
+  },
 ]
 
 export const router = createRouter({

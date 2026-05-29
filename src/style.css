@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap');
 
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -114,4 +114,8 @@
   .alpine-html-preview .alpine-accordion-content[data-state="open"] > div {
     animation: none;
   }
+}
+
+[x-cloak] {
+  display: none !important;
 }

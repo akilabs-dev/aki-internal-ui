@@ -18,7 +18,7 @@ const sectionItems: SidebarItem[] = [
 const componentItems: SidebarItem[] = [
   { id: 'accordion', label: 'Accordion' },
   { id: 'alert', label: 'Alert' },
-  { id: 'alert-dialog', label: 'Alert Dialog', disabled: true },
+  { id: 'alert-dialog', label: 'Alert Dialog' },
   { id: 'aspect-ratio', label: 'Aspect Ratio', disabled: true },
   { id: 'avatar', label: 'Avatar', disabled: true },
   { id: 'badge', label: 'Badge', disabled: true },
@@ -38,6 +38,7 @@ const router = useRouter()
 const activeComponentId = computed(() => {
   const path = route.path
   if (path.startsWith('/docs/components/accordion')) return 'accordion'
+  if (path.startsWith('/docs/components/alert-dialog')) return 'alert-dialog'
   if (path.startsWith('/docs/components/alert')) return 'alert'
   return ''
 })
@@ -48,6 +49,7 @@ function closeMobileSidebar() {
 
 function onSelectComponent(id: string) {
   if (id === 'accordion') void router.push('/docs/components/accordion')
+  if (id === 'alert-dialog') void router.push('/docs/components/alert-dialog')
   if (id === 'alert') void router.push('/docs/components/alert')
 }
 
