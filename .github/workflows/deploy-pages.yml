@@ -12,6 +12,13 @@
 #   gh release create v1.0.0 --generate-notes
 #
 # Repository Settings → Pages → Source: GitHub Actions
+#
+# If deploy fails with "Tag v* is not allowed to deploy to github-pages":
+#   Settings → Environments → github-pages → Deployment branches and tags
+#   → add tag pattern `v*` (or choose "No restriction"), then re-run the workflow.
+#
+# Workaround without changing tag rules: Actions → Run workflow → branch `main`
+#   → enter tag (e.g. v1.0.1); deploy uses the main ref for environment checks.
 
 name: Deploy GitHub Pages
 
@@ -28,7 +35,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Release tag to deploy (e.g. v1.0.0)
+        description: Release tag to build (e.g. v1.0.1). Run this workflow from branch main.
         required: true
         type: string
 
