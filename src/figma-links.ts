@@ -1,10 +1,5 @@
-export const FIGMA_FILE_KEY = "J6ymhjN1tnwdhpkkt67aUr"
-
 export const figmaLinks = {
   // Component sets
-  alert: {
-    light: `https://www.figma.com/design/${FIGMA_FILE_KEY}?node-id=5-14`,
-    dark: `https://www.figma.com/design/${FIGMA_FILE_KEY}?node-id=6-14`,
-  },
+  alert: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-3398&t=acXxeTYt7Lu0fbbB-4`,
 } as const
 

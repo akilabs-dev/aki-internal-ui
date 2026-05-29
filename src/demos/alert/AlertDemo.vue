@@ -12,14 +12,10 @@ import { figmaLinks } from '@/figma-links'
 
 <template>
   <div class="space-y-4">
-    <div class="flex flex-wrap items-center gap-2">
-      <Button as="a" :href="figmaLinks.alert.light" target="_blank" rel="noreferrer" variant="outline" size="sm">
+    <div class="flex flex-wrap items-center justify-end gap-2">
+      <Button as="a" :href="figmaLinks.alert" target="_blank" rel="noreferrer" variant="outline" size="sm">
         <FigmaIcon class="size-4" />
-        Edit in Figma (Light)
-      </Button>
-      <Button as="a" :href="figmaLinks.alert.dark" target="_blank" rel="noreferrer" variant="outline" size="sm">
-        <FigmaIcon class="size-4" />
-        Edit in Figma (Dark)
+        Figma Link
       </Button>
     </div>
     <Alert
