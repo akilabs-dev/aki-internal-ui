@@ -1,23 +1,37 @@
 <script setup lang="ts">
 import { Badge } from '@/components/ui/badge'
-import { badgeSpecialItems, badgeVariantItems } from './badge-demo.data'
+import { Button } from '@/components/ui/button'
+import FigmaIcon from '@/components/icons/FigmaIcon.vue'
+import { figmaLinks } from '@/figma-links'
+import { badgeDemoItems, badgeGridGapPx, badgeGridWidthPx } from './badge-demo.data'
+
+function badgeGridStyle() {
+  return {
+    maxWidth: `${badgeGridWidthPx}px`,
+    gap: `${badgeGridGapPx}px`,
+  }
+}
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-2">
-    <div class="flex w-full flex-wrap gap-2">
-      <Badge
-        v-for="item in badgeVariantItems"
-        :key="item.id"
-        :variant="item.variant"
+  <div class="space-y-4">
+    <div class="flex flex-wrap items-center justify-end gap-2">
+      <Button
+        as="a"
+        :href="figmaLinks.badge"
+        target="_blank"
+        rel="noreferrer"
+        variant="outline"
+        size="sm"
       >
-        {{ item.label }}
-      </Badge>
+        <FigmaIcon class="size-4" />
+        Figma Link
+      </Button>
     </div>
 
-    <div class="flex w-full flex-wrap gap-2">
+    <div class="grid w-full grid-cols-4" :style="badgeGridStyle()">
       <Badge
-        v-for="item in badgeSpecialItems"
+        v-for="item in badgeDemoItems"
         :key="item.id"
         :variant="item.variant"
         :class="item.class"

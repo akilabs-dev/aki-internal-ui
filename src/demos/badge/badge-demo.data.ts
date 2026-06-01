@@ -2,6 +2,9 @@ import type { BadgeVariants } from '@/components/ui/badge'
 import { BadgeCheckIcon } from '@lucide/vue'
 import type { Component } from 'vue'
 
+export const badgeGridWidthPx = 396
+export const badgeGridGapPx = 16
+
 export type BadgeDemoItem = {
   id: string
   label: string
@@ -10,19 +13,15 @@ export type BadgeDemoItem = {
   icon?: Component
 }
 
-export const badgeVariantItems: BadgeDemoItem[] = [
+/** Figma grid order: row 1 then row 2 (2×4) */
+export const badgeDemoItems: BadgeDemoItem[] = [
   { id: 'default', label: 'Badge' },
   { id: 'secondary', label: 'Secondary', variant: 'secondary' },
   { id: 'destructive', label: 'Destructive', variant: 'destructive' },
   { id: 'outline', label: 'Outline', variant: 'outline' },
-]
-
-export const badgeSpecialItems: BadgeDemoItem[] = [
   {
     id: 'verified',
     label: 'Verified',
-    variant: 'secondary',
-    class: 'bg-blue-500 text-white dark:bg-blue-600',
     icon: BadgeCheckIcon,
   },
   {
