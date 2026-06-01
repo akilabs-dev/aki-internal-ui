@@ -54,25 +54,25 @@ Alpine.start()
 const CALENDAR_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 Alpine.data('calendarDemo', () => ({
-  viewYear: 0,
-  viewMonth: 0,
-  selectedYear: 0,
-  selectedMonth: 0,
-  selectedDay: 0,
+  viewYear: new Date().getFullYear(),
+  viewMonth: new Date().getMonth() + 1,
+  selectedYear: new Date().getFullYear(),
+  selectedMonth: new Date().getMonth() + 1,
+  selectedDay: new Date().getDate(),
   minYear: 1925,
   maxYear: 2035,
-  weekDays: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+  weekDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
 
   init() {
     const root = this.$root
     this.minYear = Number(root.dataset.minYear) || 1925
     this.maxYear = Number(root.dataset.maxYear) || 2035
-    const today = new Date()
-    this.viewYear = today.getFullYear()
-    this.viewMonth = today.getMonth() + 1
-    this.selectedYear = today.getFullYear()
-    this.selectedMonth = today.getMonth() + 1
-    this.selectedDay = today.getDate()
+    const now = new Date()
+    this.viewYear = now.getFullYear()
+    this.viewMonth = now.getMonth() + 1
+    this.selectedYear = now.getFullYear()
+    this.selectedMonth = now.getMonth() + 1
+    this.selectedDay = now.getDate()
   },
 
   get years() {

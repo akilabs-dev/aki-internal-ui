@@ -1,14 +1,19 @@
 /** Shared Alpine.data factory for the calendar demo (HTML preview + init). */
 export function createCalendarDemoData() {
+  const today = new Date()
+  const todayYear = today.getFullYear()
+  const todayMonth = today.getMonth() + 1
+  const todayDay = today.getDate()
+
   return {
-    viewYear: 0,
-    viewMonth: 0,
-    selectedYear: 0,
-    selectedMonth: 0,
-    selectedDay: 0,
+    viewYear: todayYear,
+    viewMonth: todayMonth,
+    selectedYear: todayYear,
+    selectedMonth: todayMonth,
+    selectedDay: todayDay,
     minYear: 1925,
     maxYear: 2035,
-    weekDays: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+    weekDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
 
     init(this: {
       $root: HTMLElement
@@ -23,12 +28,12 @@ export function createCalendarDemoData() {
       const root = this.$root
       this.minYear = Number(root.dataset.minYear) || 1925
       this.maxYear = Number(root.dataset.maxYear) || 2035
-      const today = new Date()
-      this.viewYear = today.getFullYear()
-      this.viewMonth = today.getMonth() + 1
-      this.selectedYear = today.getFullYear()
-      this.selectedMonth = today.getMonth() + 1
-      this.selectedDay = today.getDate()
+      const now = new Date()
+      this.viewYear = now.getFullYear()
+      this.viewMonth = now.getMonth() + 1
+      this.selectedYear = now.getFullYear()
+      this.selectedMonth = now.getMonth() + 1
+      this.selectedDay = now.getDate()
     },
 
     get years() {

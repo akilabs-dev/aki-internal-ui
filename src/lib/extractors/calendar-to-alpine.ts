@@ -7,7 +7,7 @@ const CHEVRON_LEFT = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height=
 
 const CHEVRON_RIGHT = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="m9 18 6-6-6-6"></path></svg>`
 
-const CHEVRON_DOWN = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground pointer-events-none absolute top-1/2 right-3.5 size-4 -translate-y-1/2 opacity-50 select-none" aria-hidden="true" data-slot="native-select-icon"><path d="m6 9 6 6 6-6"></path></svg>`
+const CHEVRON_DOWN = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground pointer-events-none absolute top-1/2 right-1 size-4 -translate-y-1/2 opacity-50 select-none" aria-hidden="true" data-slot="native-select-icon"><path d="m6 9 6 6 6-6"></path></svg>`
 
 const PREV_BUTTON_CLASS =
   'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 size-7 bg-transparent p-0 opacity-50 hover:opacity-100'
@@ -15,7 +15,7 @@ const PREV_BUTTON_CLASS =
 const SELECT_WRAPPER_CLASS = 'group/native-select relative w-fit has-[select:disabled]:opacity-50'
 
 const SELECT_CLASS =
-  'border-input placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 dark:hover:bg-input/50 h-8 w-full min-w-0 appearance-none rounded-md border bg-transparent px-3 py-2 pr-9 text-xs shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]'
+  'border-input placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 dark:hover:bg-input/50 h-8 w-full min-w-0 appearance-none rounded-md border bg-transparent pl-2 pr-6 text-sm shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]'
 
 export function buildCalendarAlpineHtml(options: {
   minYear?: number
@@ -24,15 +24,33 @@ export function buildCalendarAlpineHtml(options: {
   const minYear = options.minYear ?? calendarDemoMinYear
   const maxYear = options.maxYear ?? calendarDemoMaxYear
 
+  const now = new Date()
+  const defaultMonth = now.getMonth() + 1
+  const defaultYear = Math.min(maxYear, Math.max(minYear, now.getFullYear()))
+
+  const monthOptions = Array.from({ length: 12 }, (_, index) => {
+    const month = index + 1
+    const selected = month === defaultMonth ? ' selected' : ''
+    const label = new Date(2000, month - 1, 1).toLocaleString(undefined, { month: 'short' })
+    return `<option value="${month}"${selected}>${label}</option>`
+  }).join('')
+
+  const yearOptions = Array.from({ length: maxYear - minYear + 1 }, (_, index) => {
+    const year = minYear + index
+    const selected = year === defaultYear ? ' selected' : ''
+    return `<option value="${year}"${selected}>${year}</option>`
+  }).join('')
+
   return `<div class="flex min-h-[216px] w-full items-center justify-center">
 <div
   x-data="calendarDemo"
+  x-init="init()"
   data-slot="calendar"
   class="p-3 rounded-md border shadow-sm w-auto"
   data-min-year="${minYear}"
   data-max-year="${maxYear}"
 >
-  <div data-slot="calendar-header" class="flex justify-center pt-1 relative items-center w-full px-8">
+  <div data-slot="calendar-header" class="flex justify-center pt-0 relative items-center w-full px-8">
     <nav class="flex items-center gap-1 absolute top-0 inset-x-0 justify-between">
       <button
         type="button"
@@ -58,25 +76,24 @@ export function buildCalendarAlpineHtml(options: {
         <select
           data-slot="native-select"
           class="${SELECT_CLASS}"
+          value="${defaultMonth}"
           x-model.number="viewMonth"
           @change="onViewChange()"
         >
-          <template x-for="month in months" :key="month">
-            <option :value="month" x-text="monthLabel(month)"></option>
-          </template>
+          ${monthOptions}
         </select>
         ${CHEVRON_DOWN}
       </div>
+
       <div class="${SELECT_WRAPPER_CLASS}" data-slot="native-select-wrapper">
         <select
           data-slot="native-select"
           class="${SELECT_CLASS}"
+          value="${defaultYear}"
           x-model.number="viewYear"
           @change="onViewChange()"
         >
-          <template x-for="year in years" :key="year">
-            <option :value="year" x-text="year"></option>
-          </template>
+          ${yearOptions}
         </select>
         ${CHEVRON_DOWN}
       </div>
@@ -87,7 +104,7 @@ export function buildCalendarAlpineHtml(options: {
     <div data-slot="calendar-grid" class="w-full border-collapse space-x-1">
       <div data-slot="calendar-grid-head">
         <div data-slot="calendar-grid-row" class="flex">
-          <template x-for="label in weekDays" :key="label">
+          <template x-for="(label, idx) in weekDays" :key="idx">
             <div
               data-slot="calendar-head-cell"
               class="text-muted-foreground rounded-md flex-1 font-normal text-[0.8rem] text-center"
