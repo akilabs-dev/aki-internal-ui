@@ -14,7 +14,7 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'avatar', label: 'Avatar', path: '/docs/components/avatar' },
   { id: 'badge', label: 'Badge', path: '/docs/components/badge' },
   { id: 'breadcrumb', label: 'Breadcrumb', path: '/docs/components/breadcrumb' },
-  { id: 'button', label: 'Button', disabled: true },
+  { id: 'button', label: 'Button', path: '/docs/components/button' },
   { id: 'button-group', label: 'Button Group', disabled: true },
   { id: 'calendar', label: 'Calendar', disabled: true },
   { id: 'card', label: 'Card', disabled: true },
