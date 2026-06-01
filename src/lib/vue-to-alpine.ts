@@ -1,7 +1,7 @@
 import { extractAccordionToAlpine } from '@/lib/extractors/accordion-to-alpine'
 import { extractAlertDialogToAlpine } from '@/lib/extractors/alert-dialog-to-alpine'
 
-export type AlpineExtractorId = 'accordion' | 'alert' | 'alert-dialog' | 'aspect-ratio' | 'avatar' | 'badge' | 'breadcrumb' | 'button'
+export type AlpineExtractorId = 'accordion' | 'alert' | 'alert-dialog' | 'aspect-ratio' | 'avatar' | 'badge' | 'breadcrumb' | 'button' | 'button-group' | 'calendar' | 'card'
 
 export function extractVueToAlpineHtml(
   root: HTMLElement,
@@ -18,6 +18,9 @@ export function extractVueToAlpineHtml(
     case 'badge':
     case 'breadcrumb':
     case 'button':
+    case 'button-group':
+    case 'calendar':
+    case 'card':
       return root.innerHTML.trim()
     case 'alert-dialog':
       return extractAlertDialogToAlpine(root)

@@ -174,6 +174,36 @@ const routes: RouteRecordRaw[] = [
       description: 'Displays a button or a component that looks like a button.',
     },
   },
+  {
+    path: '/docs/components/button-group',
+    name: 'docs-components-button-group',
+    component: () => import('@/pages/components/ButtonGroupPage.vue'),
+    meta: {
+      title: 'Button Group',
+      eyebrow: 'Components',
+      description: 'A container that groups related buttons together with consistent styling.',
+    },
+  },
+  {
+    path: '/docs/components/calendar',
+    name: 'docs-components-calendar',
+    component: () => import('@/pages/components/CalendarPage.vue'),
+    meta: {
+      title: 'Calendar',
+      eyebrow: 'Components',
+      description: 'A date field component that allows users to enter and edit date.',
+    },
+  },
+  {
+    path: '/docs/components/card',
+    name: 'docs-components-card',
+    component: () => import('@/pages/components/CardPage.vue'),
+    meta: {
+      title: 'Card',
+      eyebrow: 'Components',
+      description: 'Displays a card with header, content, and footer.',
+    },
+  },
 ]
 
 export const router = createRouter({
