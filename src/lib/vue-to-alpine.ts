@@ -1,5 +1,6 @@
 import { extractAccordionToAlpine } from '@/lib/extractors/accordion-to-alpine'
 import { extractAlertDialogToAlpine } from '@/lib/extractors/alert-dialog-to-alpine'
+import { extractAvatarToAlpine } from '@/lib/extractors/avatar-to-alpine'
 import { extractCalendarToAlpine } from '@/lib/extractors/calendar-to-alpine'
 import { extractButtonGroupToAlpine } from '@/lib/extractors/button-group-to-alpine'
 
@@ -17,7 +18,7 @@ export function extractVueToAlpineHtml(
     case 'aspect-ratio':
       return root.innerHTML.trim()
     case 'avatar':
-      return root.innerHTML.trim()
+      return extractAvatarToAlpine(root)
     case 'badge':
       return root.innerHTML.trim()
     case 'breadcrumb':
