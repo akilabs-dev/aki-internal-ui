@@ -1,4 +1,5 @@
 import { createCalendarDemoData } from '@/lib/alpine/calendar-demo'
+import { createButtonGroupDemoData } from '@/lib/alpine/button-group-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -38,6 +39,7 @@ export function registerAlpineData() {
   }))
 
   Alpine.data('calendarDemo', createCalendarDemoData)
+  Alpine.data('buttonGroupDemo', createButtonGroupDemoData)
 }
 
 export function ensureAlpine() {
