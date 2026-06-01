@@ -154,6 +154,16 @@ const routes: RouteRecordRaw[] = [
       description: 'Displays a badge or a component that looks like a badge.',
     },
   },
+  {
+    path: '/docs/components/breadcrumb',
+    name: 'docs-components-breadcrumb',
+    component: () => import('@/pages/components/BreadcrumbPage.vue'),
+    meta: {
+      title: 'Breadcrumb',
+      eyebrow: 'Components',
+      description: 'Displays the path to the current resource using a hierarchy of links.',
+    },
+  },
 ]
 
 export const router = createRouter({
