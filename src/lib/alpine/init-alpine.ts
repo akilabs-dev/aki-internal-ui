@@ -1,3 +1,4 @@
+import { createCalendarDemoData } from '@/lib/alpine/calendar-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -35,6 +36,8 @@ export function registerAlpineData() {
       return this.open === id
     },
   }))
+
+  Alpine.data('calendarDemo', createCalendarDemoData)
 }
 
 export function ensureAlpine() {
