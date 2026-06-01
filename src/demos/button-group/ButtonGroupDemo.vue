@@ -29,7 +29,7 @@ const label = ref('personal')
 </script>
 
 <template>
-  <div class="flex min-h-[216px] w-full items-center justify-center">
+  <div class="flex w-full justify-center pb-56 pt-6">
     <ButtonGroup>
       <ButtonGroup class="hidden sm:flex">
         <Button variant="outline" size="icon" aria-label="Go Back">
@@ -55,7 +55,7 @@ const label = ref('personal')
               <MoreHorizontalIcon />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" class="w-52">
+          <DropdownMenuContent align="end" :avoid-collisions="false" class="w-52">
             <DropdownMenuGroup>
               <DropdownMenuItem
                 v-for="item in buttonGroupMoreMenuPrimary"
@@ -81,7 +81,12 @@ const label = ref('personal')
                   <TagIcon class="mr-2 size-4" />
                   Label As...
                 </DropdownMenuSubTrigger>
-                <DropdownMenuSubContent>
+                <DropdownMenuSubContent
+                  side="right"
+                  align="start"
+                  :side-offset="4"
+                  :avoid-collisions="false"
+                >
                   <DropdownMenuRadioGroup v-model="label">
                     <DropdownMenuRadioItem
                       v-for="option in buttonGroupLabelOptions"

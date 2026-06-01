@@ -108,6 +108,19 @@
   .alpine-html-preview .alpine-accordion-content[data-state="open"] > div {
     animation: alpine-content-in 0.2s ease-out;
   }
+
+  .alpine-html-preview [data-slot="button"] svg,
+  .alpine-html-preview [data-slot="dropdown-menu-item"] svg,
+  .alpine-html-preview [data-slot="dropdown-menu-sub-trigger"] svg {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+  }
+
+  .alpine-html-preview [data-slot="dropdown-menu-sub-trigger"] svg:last-child {
+    margin-left: auto;
+    color: var(--muted-foreground);
+  }
 }
 
 @keyframes alpine-content-in {

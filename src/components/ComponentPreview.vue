@@ -237,7 +237,7 @@ watch(activeView, (view) => {
 
     <div v-show="activeView === 'preview'" class="space-y-4">
       <div
-        class="bg-card text-card-foreground relative min-h-[280px] overflow-hidden rounded-xl border shadow-sm"
+        class="bg-card text-card-foreground relative min-h-[280px] overflow-visible rounded-xl border shadow-sm"
       >
         <div
           :class="cn(

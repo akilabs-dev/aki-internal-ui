@@ -1,3 +1,4 @@
+import { createButtonGroupDemoData } from '@/lib/alpine/button-group-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -35,6 +36,8 @@ export function registerAlpineData() {
       return this.open === id
     },
   }))
+
+  Alpine.data('buttonGroupDemo', createButtonGroupDemoData)
 }
 
 export function ensureAlpine() {
