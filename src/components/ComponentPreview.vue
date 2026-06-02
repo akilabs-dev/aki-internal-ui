@@ -57,6 +57,7 @@ const htmlMarkup = ref('')
 const htmlReady = ref(false)
 const alpinePreviewKey = ref(0)
 const codeTabId = ref('vue')
+const showInteractiveHtmlInCode = ref(false)
 
 const needsAlpineSetup = computed(() => componentHasAlpineSetup(props.alpineExtractor))
 const needsAlpinePreview = computed(() => needsAlpineSetup.value)
@@ -177,12 +178,21 @@ watch(framework, () => {
   }
 })
 
+watch(codeTabId, (id) => {
+  if (id !== 'html') {
+    showInteractiveHtmlInCode.value = false
+  }
+})
+
 watch(activeView, (view) => {
   if (view === 'preview' && !htmlReady.value) {
     void captureHtml()
   }
   if (view === 'code') {
     syncCodeTabToFramework()
+    if (!htmlReady.value) {
+      void captureHtml()
+    }
   }
 })
 </script>
@@ -312,6 +322,33 @@ watch(activeView, (view) => {
     </div>
 
     <div v-show="activeView === 'code'" class="min-w-0">
+      <div
+        v-if="needsAlpineSetup && codeTabId === 'html'"
+        class="mb-3 flex flex-wrap items-center justify-end gap-2"
+      >
+        <button
+          type="button"
+          class="text-muted-foreground hover:text-foreground hover:bg-muted inline-flex items-center rounded-md px-3 py-1.5 text-sm transition-colors"
+          @click="showInteractiveHtmlInCode = !showInteractiveHtmlInCode"
+        >
+          {{ showInteractiveHtmlInCode ? 'Hide' : 'Show' }} interactive HTML preview
+        </button>
+      </div>
+
+      <div
+        v-if="needsAlpineSetup && codeTabId === 'html' && showInteractiveHtmlInCode"
+        class="bg-card text-card-foreground mb-4 overflow-visible rounded-xl border p-4"
+      >
+        <AlpineHtmlPreview
+          v-if="htmlReady && htmlMarkup"
+          :key="alpinePreviewKey"
+          :html="htmlMarkup"
+        />
+        <p v-else class="text-muted-foreground text-sm">
+          Extracting HTML…
+        </p>
+      </div>
+
       <CodePanel v-model:active-tab-id="codeTabId" :tabs="codePanelTabs" />
     </div>
 

@@ -2,8 +2,15 @@ import type { AlpineExtractorId } from '@/lib/vue-to-alpine'
 
 /** Shown above HTML markup when the component needs Alpine.js */
 export const HTML_ALPINE_SETUP_HINT = `<!--
-  Alpine.js setup required — import and run the module from the "Alpine JS" tab
-  before this markup (e.g. in your entry file: main.ts).
+  Alpine.js setup required.
+
+  IMPORTANT:
+  - This "HTML" tab is just static markup. Click/interactive behaviors will NOT work here.
+  - To see interactions working, use the Preview switcher: "HTML (Alpine.js)".
+
+  For your app:
+  - Import and run the module from the "Alpine JS" tab before this markup
+    (e.g. in your entry file: main.ts).
 -->
 
 `
@@ -370,6 +377,45 @@ const createButtonGroupDemo = (menuPlacement = 'bottom') => ({
 
 Alpine.data('buttonGroupDemo', () => createButtonGroupDemo('bottom'))
 Alpine.data('buttonGroupDemoTop', () => createButtonGroupDemo('top'))
+
+Alpine.data('buttonGroupMessageDemo', () => ({
+  voiceEnabled: false,
+  toggleVoice() {
+    this.voiceEnabled = !this.voiceEnabled
+  },
+}))
+
+Alpine.data('buttonGroupPopoverDemo', () => ({
+  open: false,
+  init() {
+    this.$watch('open', (isOpen) => {
+      if (!isOpen) return
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          this.position()
+        })
+      })
+    })
+  },
+  toggle() {
+    this.open = !this.open
+  },
+  close() {
+    this.open = false
+  },
+  position() {
+    const trigger = this.$refs.trigger
+    const content = this.$refs.content
+    if (!trigger || !content) return
+
+    const rect = trigger.getBoundingClientRect()
+    const offset = 4
+    content.style.position = 'fixed'
+    content.style.top = \`\\\${rect.bottom + offset}px\`
+    content.style.left = \`\\\${rect.right - content.offsetWidth}px\`
+    content.style.zIndex = '50'
+  },
+}))
 
 Alpine.start()
 `

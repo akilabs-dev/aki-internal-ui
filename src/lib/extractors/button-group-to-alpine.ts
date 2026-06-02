@@ -1,11 +1,26 @@
+import { buildButtonGroupPatternsHtml } from '@/lib/extractors/button-group-patterns-to-alpine'
 import {
   buttonGroupActionLabels,
+  buttonGroupFrameBorderColor,
+  buttonGroupFrameWidthPx,
+  buttonGroupInnerFramePaddingPx,
   buttonGroupLabelOptions,
+  buttonGroupMainGapPx,
+  buttonGroupMainPaddingYPx,
   buttonGroupMoreMenuPrimary,
   buttonGroupMoreMenuSecondary,
+  buttonGroupPaginationLabels,
+  buttonGroupSizeRows,
+  buttonGroupSizeRowsGapPx,
   buttonGroupSnoozeLabel,
   buttonGroupTrashMenuItem,
 } from '@/demos/button-group/button-group-demo.data'
+import { figmaLinks } from '@/figma-links'
+
+const FIGMA_BUTTON =
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-8 gap-1.5 px-3 has-[>svg]:px-2.5'
+
+const FIGMA_ICON_SVG = `<svg class="size-4" viewBox="0 0 24 24" role="img" aria-label="Figma" xmlns="http://www.w3.org/2000/svg"><title>Figma</title><circle cx="9" cy="5" r="4" fill="#F24E1E"></circle><circle cx="15" cy="5" r="4" fill="#FF7262"></circle><circle cx="9" cy="12" r="4" fill="#A259FF"></circle><circle cx="15" cy="12" r="4" fill="#1ABCFE"></circle><circle cx="9" cy="19" r="4" fill="#0ACF83"></circle></svg>`
 
 const BUTTON_OUTLINE =
   'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] h-9 px-4 py-2 border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50'
@@ -17,6 +32,19 @@ const GROUP_HORIZONTAL =
   'flex w-fit items-stretch [&>*]:focus-visible:z-10 [&>*]:focus-visible:relative has-[>[data-slot=button-group]]:gap-2 [&>*:not(:first-child)]:rounded-l-none [&>*:not(:first-child)]:border-l-0 [&>*:not(:last-child)]:rounded-r-none'
 
 const GROUP_OUTER = `${GROUP_HORIZONTAL} has-[>[data-slot=button-group]]:gap-2`
+
+const GROUP_VERTICAL =
+  'flex w-fit flex-col items-stretch [&>*]:focus-visible:z-10 [&>*]:focus-visible:relative has-[>[data-slot=button-group]]:gap-2 [&>*:not(:first-child)]:rounded-t-none [&>*:not(:first-child)]:border-t-0 [&>*:not(:last-child)]:rounded-b-none'
+
+const BUTTON_OUTLINE_SM =
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] h-8 gap-1.5 px-3 border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50'
+
+const BUTTON_OUTLINE_LG =
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] h-10 rounded-md px-6 border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50'
+
+const BUTTON_ICON_SM = `${BUTTON_OUTLINE_SM} size-8 shrink-0 [&_svg]:size-4`
+
+const BUTTON_ICON_LG = `${BUTTON_OUTLINE_LG} size-10 shrink-0 [&_svg]:size-4`
 
 const MENU_CONTENT =
   'bg-popover text-popover-foreground z-50 min-w-[8rem] overflow-visible rounded-md border p-1 shadow-md w-52'
@@ -42,6 +70,19 @@ function svgIcon(className: string, inner: string): string {
   return `<svg ${SVG_BASE} class="${className}">${inner}</svg>`
 }
 
+const EXAMPLE_ICONS = {
+  plus: svgIcon('size-4', '<path d="M5 12h14"></path><path d="M12 5v14"></path>'),
+  minus: svgIcon('size-4', '<path d="M5 12h14"></path>'),
+  arrowLeft: svgIcon(
+    'size-4',
+    '<path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path>',
+  ),
+  arrowRight: svgIcon(
+    'size-4',
+    '<path d="m12 5 7 7-7 7"></path><path d="M5 12h14"></path>',
+  ),
+}
+
 const CHEVRON_RIGHT = svgIcon(
   'ml-auto size-4 shrink-0 text-muted-foreground',
   '<path d="m9 18 6-6-6-6"></path>',
@@ -62,12 +103,109 @@ const ICONS: Record<string, string> = {
   trash: svgIcon('size-4 shrink-0', '<path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>'),
 }
 
+function escapeAttr(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+}
+
 function escapeHtml(text: string): string {
   return text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
+}
+
+function buildFigmaLink(): string {
+  return `<div class="flex flex-wrap items-center justify-end gap-2">
+  <a
+    href="${escapeAttr(figmaLinks.buttonGroup)}"
+    target="_blank"
+    rel="noreferrer"
+    class="${FIGMA_BUTTON}"
+  >
+    ${FIGMA_ICON_SVG}
+    Figma Link
+  </a>
+</div>`
+}
+
+function outlineClass(size: 'sm' | 'default' | 'lg'): string {
+  if (size === 'sm') return BUTTON_OUTLINE_SM
+  if (size === 'lg') return BUTTON_OUTLINE_LG
+  return BUTTON_OUTLINE
+}
+
+function iconClass(size: 'sm' | 'default' | 'lg'): string {
+  if (size === 'sm') return BUTTON_ICON_SM
+  if (size === 'lg') return BUTTON_ICON_LG
+  return BUTTON_OUTLINE_ICON
+}
+
+const SECTION_DIVIDER =
+  '<div class="py-2"><div class="bg-border h-px w-full"></div></div>'
+
+function buildButtonGroupExamplesSectionHtml(): string {
+  const vertical = `<div role="group" data-slot="button-group" data-orientation="vertical" aria-label="Media controls" class="${GROUP_VERTICAL} h-fit w-fit">
+    <button type="button" data-slot="button" class="${BUTTON_OUTLINE_ICON}">${EXAMPLE_ICONS.plus}</button>
+    <button type="button" data-slot="button" class="${BUTTON_OUTLINE_ICON}">${EXAMPLE_ICONS.minus}</button>
+  </div>`
+
+  const sizeGroups = buttonGroupSizeRows
+    .map((group) => {
+      const sizeKey =
+        group.textSize === 'sm'
+          ? 'sm'
+          : group.textSize === 'lg'
+            ? 'lg'
+            : 'default'
+      const buttons = group.labels
+        .map(
+          (label) =>
+            `<button type="button" data-slot="button" class="${outlineClass(sizeKey)}">${escapeHtml(label)}</button>`,
+        )
+        .join('\n        ')
+      return `<div role="group" data-slot="button-group" class="${GROUP_HORIZONTAL}">
+        ${buttons}
+        <button type="button" data-slot="button" class="${iconClass(sizeKey)}">${EXAMPLE_ICONS.plus}</button>
+      </div>`
+    })
+    .join('\n      ')
+
+  const pages = buttonGroupPaginationLabels
+    .map(
+      (page) =>
+        `<button type="button" data-slot="button" class="${BUTTON_OUTLINE_SM}">${page}</button>`,
+    )
+    .join('\n        ')
+
+  const pagination = `<div role="group" data-slot="button-group" class="${GROUP_OUTER}">
+    <div role="group" data-slot="button-group" class="${GROUP_HORIZONTAL}">
+        ${pages}
+    </div>
+    <div role="group" data-slot="button-group" class="${GROUP_HORIZONTAL}">
+      <button type="button" data-slot="button" class="${BUTTON_ICON_SM}" aria-label="Previous">${EXAMPLE_ICONS.arrowLeft}</button>
+      <button type="button" data-slot="button" class="${BUTTON_ICON_SM}" aria-label="Next">${EXAMPLE_ICONS.arrowRight}</button>
+    </div>
+  </div>`
+
+  const sizeFrame = `<div
+    class="flex w-full flex-col rounded-3xl border border-dashed"
+    style="padding:${buttonGroupInnerFramePaddingPx}px;border-color:${buttonGroupFrameBorderColor}"
+  >
+    <div class="flex flex-col items-start" style="gap:${buttonGroupSizeRowsGapPx}px">
+      ${sizeGroups}
+    </div>
+  </div>`
+
+  return `${SECTION_DIVIDER}
+    ${vertical}
+    ${SECTION_DIVIDER}
+    ${sizeFrame}
+    ${SECTION_DIVIDER}
+    ${pagination}`
 }
 
 function menuItem(label: string, iconKey: string, destructive = false): string {
@@ -228,8 +366,16 @@ export function buildButtonGroupToolbarAlpineHtml(options?: {
 }
 
 export function buildButtonGroupAlpineHtml(): string {
-  return `<div class="flex w-full justify-center pb-56 pt-6">
-${buildButtonGroupToolbarAlpineHtml()}
+  return `<div class="space-y-4">
+  ${buildFigmaLink()}
+  <div
+    class="flex w-full flex-col overflow-visible pb-56"
+    style="max-width:${buttonGroupFrameWidthPx}px;gap:${buttonGroupMainGapPx}px;padding-top:${buttonGroupMainPaddingYPx}px;padding-bottom:${buttonGroupMainPaddingYPx}px"
+  >
+    ${buildButtonGroupToolbarAlpineHtml()}
+    ${buildButtonGroupExamplesSectionHtml()}
+    ${buildButtonGroupPatternsHtml()}
+  </div>
 </div>`
 }
 
