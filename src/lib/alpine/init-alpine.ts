@@ -1,4 +1,7 @@
 import { createCalendarDemoData } from '@/lib/alpine/calendar-demo'
+import { createBreadcrumbDropdownDemoData } from '@/lib/alpine/breadcrumb-dropdown-demo'
+import { createBreadcrumbEllipsisDemoData } from '@/lib/alpine/breadcrumb-ellipsis-demo'
+import { createBreadcrumbResponsiveDemoData } from '@/lib/alpine/breadcrumb-responsive-demo'
 import { createButtonGroupDemoData } from '@/lib/alpine/button-group-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
@@ -40,6 +43,9 @@ export function registerAlpineData() {
 
   Alpine.data('calendarDemo', createCalendarDemoData)
   Alpine.data('buttonGroupDemo', createButtonGroupDemoData)
+  Alpine.data('breadcrumbDropdownDemo', createBreadcrumbDropdownDemoData)
+  Alpine.data('breadcrumbEllipsisDemo', createBreadcrumbEllipsisDemoData)
+  Alpine.data('breadcrumbResponsiveDemo', createBreadcrumbResponsiveDemoData)
 }
 
 export function ensureAlpine() {

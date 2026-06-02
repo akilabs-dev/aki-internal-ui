@@ -17,14 +17,21 @@ import { cn } from '@/lib/utils'
 
 const CodePanel = defineAsyncComponent(() => import('@/components/CodePanel.vue'))
 
-const props = defineProps<{
-  title?: string
-  description?: string
-  vueSource: string
-  /** Optional demo data files shown as tabs next to Vue in the code panel */
-  demoDataSources?: DemoDataSource[]
-  alpineExtractor: AlpineExtractorId
-}>()
+const props = withDefaults(
+  defineProps<{
+    title?: string
+    description?: string
+    vueSource: string
+    /** Optional demo data files shown as tabs next to Vue in the code panel */
+    demoDataSources?: DemoDataSource[]
+    alpineExtractor: AlpineExtractorId
+    /** When false, pagination is omitted (use one shared nav on the page). */
+    showPagination?: boolean
+  }>(),
+  {
+    showPagination: true,
+  },
+)
 
 const route = useRoute()
 
@@ -308,7 +315,7 @@ watch(activeView, (view) => {
       <CodePanel v-model:active-tab-id="codeTabId" :tabs="codePanelTabs" />
     </div>
 
-    <ComponentPagination />
+    <ComponentPagination v-if="showPagination" />
   </section>
 </template>
 

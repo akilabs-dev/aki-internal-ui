@@ -226,6 +226,47 @@ Alpine.data('calendarDemo', () => ({
 Alpine.start()
 `
 
+const BREADCRUMB_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+Alpine.data('breadcrumbDropdownDemo', () => ({
+  menuOpen: false,
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen
+  },
+
+  closeMenu() {
+    this.menuOpen = false
+  },
+}))
+
+Alpine.data('breadcrumbEllipsisDemo', () => ({
+  menuOpen: false,
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen
+  },
+
+  closeMenu() {
+    this.menuOpen = false
+  },
+}))
+
+Alpine.data('breadcrumbResponsiveDemo', () => ({
+  menuOpen: false,
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen
+  },
+
+  closeMenu() {
+    this.menuOpen = false
+  },
+}))
+
+Alpine.start()
+`
+
 const BUTTON_GROUP_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 Alpine.data('buttonGroupDemo', () => ({
@@ -335,6 +376,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return CALENDAR_ALPINE_SETUP
     case 'button-group':
       return BUTTON_GROUP_ALPINE_SETUP
+    case 'breadcrumb':
+      return BREADCRUMB_ALPINE_SETUP
     case 'alert':
       return null
     default:

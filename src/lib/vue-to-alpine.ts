@@ -2,6 +2,7 @@ import { extractAccordionToAlpine } from '@/lib/extractors/accordion-to-alpine'
 import { extractAlertDialogToAlpine } from '@/lib/extractors/alert-dialog-to-alpine'
 import { extractAvatarToAlpine } from '@/lib/extractors/avatar-to-alpine'
 import { extractBadgeToAlpine } from '@/lib/extractors/badge-to-alpine'
+import { extractBreadcrumbToAlpine } from '@/lib/extractors/breadcrumb-to-alpine'
 import { extractCalendarToAlpine } from '@/lib/extractors/calendar-to-alpine'
 import { extractButtonGroupToAlpine } from '@/lib/extractors/button-group-to-alpine'
 
@@ -23,7 +24,7 @@ export function extractVueToAlpineHtml(
     case 'badge':
       return extractBadgeToAlpine(root)
     case 'breadcrumb':
-      return root.innerHTML.trim()
+      return extractBreadcrumbToAlpine(root)
     case 'button':
       return root.innerHTML.trim()
     case 'card':
