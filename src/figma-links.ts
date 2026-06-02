@@ -5,5 +5,6 @@ export const figmaLinks = {
   avatar: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-3473&t=CsKvCgOWxzsAGJxM-4`,
   badge: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-3479&t=OG6PkBqCQqobZfB3-4`,
   breadcrumb: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=101-424&t=OG6PkBqCQqobZfB3-4`,
+  button: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=402-654&t=sSiEVi36MHaveZSf-4`,
 } as const
 

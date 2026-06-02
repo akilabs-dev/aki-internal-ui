@@ -42,7 +42,8 @@ export function registerAlpineData() {
   }))
 
   Alpine.data('calendarDemo', createCalendarDemoData)
-  Alpine.data('buttonGroupDemo', createButtonGroupDemoData)
+  Alpine.data('buttonGroupDemo', () => createButtonGroupDemoData('bottom'))
+  Alpine.data('buttonGroupDemoTop', () => createButtonGroupDemoData('top'))
   Alpine.data('breadcrumbDropdownDemo', createBreadcrumbDropdownDemoData)
   Alpine.data('breadcrumbEllipsisDemo', createBreadcrumbEllipsisDemoData)
   Alpine.data('breadcrumbResponsiveDemo', createBreadcrumbResponsiveDemoData)

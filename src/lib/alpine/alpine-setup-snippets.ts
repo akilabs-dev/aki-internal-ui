@@ -269,7 +269,8 @@ Alpine.start()
 
 const BUTTON_GROUP_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
-Alpine.data('buttonGroupDemo', () => ({
+const createButtonGroupDemo = (menuPlacement = 'bottom') => ({
+  menuPlacement,
   menuOpen: false,
   subOpen: false,
   label: 'personal',
@@ -340,8 +341,12 @@ Alpine.data('buttonGroupDemo', () => ({
     if (!trigger || !menu) return
 
     const rect = trigger.getBoundingClientRect()
+    const offset = 4
     menu.style.position = 'fixed'
-    menu.style.top = \`\${rect.bottom + 4}px\`
+    menu.style.top =
+      this.menuPlacement === 'top'
+        ? \`\${rect.top - menu.offsetHeight - offset}px\`
+        : \`\${rect.bottom + offset}px\`
     menu.style.left = \`\${rect.right - menu.offsetWidth}px\`
     menu.style.zIndex = '50'
 
@@ -361,7 +366,10 @@ Alpine.data('buttonGroupDemo', () => ({
     sub.style.left = \`\${rect.right + 4}px\`
     sub.style.zIndex = '51'
   },
-}))
+})
+
+Alpine.data('buttonGroupDemo', () => createButtonGroupDemo('bottom'))
+Alpine.data('buttonGroupDemoTop', () => createButtonGroupDemo('top'))
 
 Alpine.start()
 `
@@ -374,6 +382,7 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return ALERT_DIALOG_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
+    case 'button':
     case 'button-group':
       return BUTTON_GROUP_ALPINE_SETUP
     case 'breadcrumb':

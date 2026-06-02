@@ -90,7 +90,41 @@ function labelOption(value: string, label: string): string {
   </button>`
 }
 
-export function buildButtonGroupAlpineHtml(): string {
+export function buildButtonGroupToolbarStaticHtml(): string {
+  const actionButtons = buttonGroupActionLabels
+    .map(
+      (label) =>
+        `<button type="button" data-slot="button" class="${BUTTON_OUTLINE}">${escapeHtml(label)}</button>`,
+    )
+    .join('\n      ')
+
+  return `<div role="group" data-slot="button-group" class="${GROUP_OUTER}">
+  <div role="group" data-slot="button-group" class="${GROUP_HORIZONTAL} hidden sm:flex">
+    <button type="button" data-slot="button" class="${BUTTON_OUTLINE_ICON}" aria-label="Go Back">
+      ${ICONS.back}
+    </button>
+  </div>
+  <div role="group" data-slot="button-group" class="${GROUP_HORIZONTAL}">
+    ${actionButtons}
+  </div>
+  <div role="group" data-slot="button-group" class="${GROUP_HORIZONTAL}">
+    <button type="button" data-slot="button" class="${BUTTON_OUTLINE}">
+      ${escapeHtml(buttonGroupSnoozeLabel)}
+    </button>
+    <button type="button" data-slot="button" class="${BUTTON_OUTLINE_ICON}" aria-label="More Options">
+      ${ICONS.more}
+    </button>
+  </div>
+</div>`
+}
+
+export function buildButtonGroupToolbarAlpineHtml(options?: {
+  menuPlacement?: 'top' | 'bottom'
+}): string {
+  const menuPlacement = options?.menuPlacement ?? 'bottom'
+  const alpineData =
+    menuPlacement === 'top' ? 'buttonGroupDemoTop' : 'buttonGroupDemo'
+
   const actionButtons = buttonGroupActionLabels
     .map(
       (label) =>
@@ -110,9 +144,8 @@ export function buildButtonGroupAlpineHtml(): string {
     .map((option) => labelOption(option.value, option.label))
     .join('\n          ')
 
-  return `<div class="flex w-full justify-center pb-56 pt-6">
-<div
-  x-data="buttonGroupDemo"
+  return `<div
+  x-data="${alpineData}"
   class="relative w-fit"
   @keydown.escape.window="closeMenu()"
 >
@@ -191,7 +224,12 @@ export function buildButtonGroupAlpineHtml(): string {
   >
     ${labelItems}
   </div>
-</div>
+</div>`
+}
+
+export function buildButtonGroupAlpineHtml(): string {
+  return `<div class="flex w-full justify-center pb-56 pt-6">
+${buildButtonGroupToolbarAlpineHtml()}
 </div>`
 }
 
