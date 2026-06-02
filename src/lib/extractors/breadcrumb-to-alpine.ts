@@ -57,10 +57,10 @@ const TRIGGER_CLASS =
 const CHEVRON_DOWN_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>`
 
 const MENU_CONTENT_CLASS =
-  'bg-popover text-popover-foreground z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-md'
+  'bg-popover text-popover-foreground z-50 w-max min-w-[8rem] rounded-md border p-1 shadow-md'
 
 const MENU_ITEM_CLASS =
-  'relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground w-full text-left'
+  'relative flex cursor-default items-center gap-2 whitespace-nowrap rounded-sm px-2 py-1.5 text-sm outline-hidden select-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground'
 
 const MENU_ITEMS = breadcrumbDropdownMenuItems.map((item) => item.label)
 
