@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { WithClassAsProps } from "./interface"
+import { computed } from "vue"
 import { cn } from "@/lib/utils"
 import { useCarousel } from "./useCarousel"
 
@@ -7,26 +8,38 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = defineProps<WithClassAsProps>()
+const props = withDefaults(
+  defineProps<
+    WithClassAsProps & {
+      /** Vertical track without -mt-4 offset (use with !pt-0 slides for 2-up layout) */
+      verticalCompact?: boolean
+    }
+  >(),
+  {
+    verticalCompact: false,
+  },
+)
 
 const { carouselRef, orientation } = useCarousel()
+
+const trackClass = computed(() => {
+  if (orientation === "horizontal") {
+    return "flex h-full -ml-4"
+  }
+  return cn(
+    "flex h-full flex-col",
+    props.verticalCompact ? "gap-0" : "-mt-4",
+  )
+})
 </script>
 
 <template>
   <div
     ref="carouselRef"
     data-slot="carousel-content"
-    class="overflow-hidden"
+    :class="cn('overflow-hidden', props.class)"
   >
-    <div
-      :class="
-        cn(
-          'flex',
-          orientation === 'horizontal' ? '-ml-4' : '-mt-4 flex-col',
-          props.class,
-        )"
-      v-bind="$attrs"
-    >
+    <div :class="trackClass" v-bind="$attrs">
       <slot />
     </div>
   </div>
