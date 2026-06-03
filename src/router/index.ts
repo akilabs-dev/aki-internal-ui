@@ -204,6 +204,17 @@ const routes: RouteRecordRaw[] = [
       description: 'Displays a card with header, content, and footer.',
     },
   },
+  {
+    path: '/docs/components/carousel',
+    name: 'docs-components-carousel',
+    component: () => import('@/pages/components/CarouselPage.vue'),
+    meta: {
+      title: 'Carousel',
+      eyebrow: 'Components',
+      description:
+        'A carousel with motion and swipe built using Embla Carousel.',
+    },
+  },
 ]
 
 export const router = createRouter({

@@ -1,20 +1,5 @@
 import type { AlpineExtractorId } from '@/lib/vue-to-alpine'
 
-/** Shown above HTML markup when the component needs Alpine.js */
-export const HTML_ALPINE_SETUP_HINT = `<!--
-  Alpine.js setup required.
-
-  IMPORTANT:
-  - This "HTML" tab is just static markup. Click/interactive behaviors will NOT work here.
-  - To see interactions working, use the Preview switcher: "HTML (Alpine.js)".
-
-  For your app:
-  - Import and run the module from the "Alpine JS" tab before this markup
-    (e.g. in your entry file: main.ts).
--->
-
-`
-
 const ACCORDION_ALPINE_SETUP = `import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -420,12 +405,87 @@ Alpine.data('buttonGroupPopoverDemo', () => ({
 Alpine.start()
 `
 
+const CAROUSEL_ALPINE_SETUP = `import EmblaCarousel from 'embla-carousel'
+import Alpine from 'alpinejs'
+
+Alpine.data('carouselDemo', () => ({
+  embla: null,
+  variant: 'basic',
+  canScrollPrev: false,
+  canScrollNext: false,
+  current: 1,
+  totalCount: 5,
+
+  init() {
+    const root = this.$root
+    const variant = root.dataset.carouselVariant || 'basic'
+    this.variant = variant
+
+    const viewport = this.$refs.viewport
+    if (!viewport) return
+
+    const axis = variant === 'vertical' ? 'y' : 'x'
+    const align = variant === 'basic' ? 'center' : 'start'
+
+    this.embla = EmblaCarousel(viewport, { axis, align })
+
+    const update = () => {
+      if (!this.embla) return
+      this.canScrollPrev = this.embla.canScrollPrev()
+      this.canScrollNext = this.embla.canScrollNext()
+      if (variant === 'status') {
+        this.totalCount = this.embla.scrollSnapList().length
+        this.current = this.embla.selectedScrollSnap() + 1
+      }
+    }
+
+    this.embla.on('init', update)
+    this.embla.on('reInit', update)
+    this.embla.on('select', update)
+    update()
+  },
+
+  destroy() {
+    this.embla?.destroy()
+    this.embla = null
+  },
+
+  scrollPrev() {
+    this.embla?.scrollPrev()
+  },
+
+  scrollNext() {
+    this.embla?.scrollNext()
+  },
+
+  onKeydown(event) {
+    const prevKey = this.variant === 'vertical' ? 'ArrowUp' : 'ArrowLeft'
+    const nextKey = this.variant === 'vertical' ? 'ArrowDown' : 'ArrowRight'
+
+    if (event.key === prevKey) {
+      event.preventDefault()
+      this.scrollPrev()
+      return
+    }
+
+    if (event.key === nextKey) {
+      event.preventDefault()
+      this.scrollNext()
+    }
+  },
+}))
+
+Alpine.start()
+`
+
 export function getAlpineSetupSource(extractor: AlpineExtractorId): string | null {
   switch (extractor) {
     case 'accordion':
       return ACCORDION_ALPINE_SETUP
     case 'alert-dialog':
       return ALERT_DIALOG_ALPINE_SETUP
+    case 'carousel':
+      return CAROUSEL_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':

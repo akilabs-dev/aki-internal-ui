@@ -18,8 +18,44 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'button-group', label: 'Button Group', path: '/docs/components/button-group' },
   { id: 'calendar', label: 'Calendar', path: '/docs/components/calendar' },
   { id: 'card', label: 'Card', path: '/docs/components/card' },
-  { id: 'carousel', label: 'Carousel', disabled: true },
+  { id: 'carousel', label: 'Carousel', path: '/docs/components/carousel' },
   { id: 'chart', label: 'Chart', disabled: true },
+  { id: 'checkbox', label: 'Checkbox', disabled: true }, // path: '/docs/components/checkbox'
+  { id: 'collapsible', label: 'Collapsible', disabled: true },
+  { id: 'combobox', label: 'Combobox', disabled: true },
+  { id: 'command', label: 'Command', disabled: true },
+  { id: 'context-menu', label: 'Context Menu', disabled: true },
+  { id: 'dialog', label: 'Dialog', disabled: true }, // path: '/docs/components/dialog'
+  { id: 'dropdown-menu', label: 'Dropdown Menu', disabled: true }, // path: '/docs/components/dropdown-menu'
+  { id: 'hover-card', label: 'Hover Card', disabled: true },
+  { id: 'input', label: 'Input', disabled: true }, // path: '/docs/components/input'
+  { id: 'input-group', label: 'Input Group', disabled: true },
+  { id: 'kbd', label: 'Kbd', disabled: true },
+  { id: 'label', label: 'Label', disabled: true }, // path: '/docs/components/label'
+  { id: 'link', label: 'Link', disabled: true }, // path: '/docs/components/link'
+  { id: 'listbox', label: 'Listbox', disabled: true },
+  { id: 'menubar', label: 'Menubar', disabled: true },
+  { id: 'navigation-menu', label: 'Navigation Menu', disabled: true },
+  { id: 'number-input', label: 'Number Input', disabled: true },
+  { id: 'pagination', label: 'Pagination', disabled: true },
+  { id: 'popover', label: 'Popover', disabled: true }, // path: '/docs/components/popover'
+  { id: 'progress', label: 'Progress', disabled: true },
+  { id: 'radio-group', label: 'Radio Group', disabled: true },
+  { id: 'scroll-area', label: 'Scroll Area', disabled: true },
+  { id: 'select', label: 'Select', disabled: true }, // path: '/docs/components/select'
+  { id: 'separator', label: 'Separator',disabled: true }, //  path: '/docs/components/separator'
+  { id: 'sheet', label: 'Sheet', disabled: true },
+  { id: 'sidebar', label: 'Sidebar', disabled: true },
+  { id: 'slider', label: 'Slider', disabled: true },
+  { id: 'sonner', label: 'Sonner', disabled: true },
+  { id: 'spinner', label: 'Spinner', disabled: true },
+  { id: 'switch', label: 'Switch', disabled: true },
+  { id: 'tabs', label: 'Tabs', disabled: true },
+  { id: 'textarea', label: 'Textarea', disabled: true }, //path: '/docs/components/textarea'
+  { id: 'toast', label: 'Toast', disabled: true },
+  { id: 'toggle', label: 'Toggle', disabled: true },
+  { id: 'toggle-group', label: 'Toggle Group', disabled: true },
+  { id: 'tooltip', label: 'Tooltip', disabled: true }, //path: '/docs/components/tooltip'
 ]
 
 export type NavigableComponent = ComponentCatalogEntry & { path: string }

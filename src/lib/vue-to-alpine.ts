@@ -6,8 +6,9 @@ import { extractBreadcrumbToAlpine } from '@/lib/extractors/breadcrumb-to-alpine
 import { extractCalendarToAlpine } from '@/lib/extractors/calendar-to-alpine'
 import { extractButtonGroupToAlpine } from '@/lib/extractors/button-group-to-alpine'
 import { extractButtonToAlpine } from '@/lib/extractors/button-to-alpine'
+import { extractCarouselToAlpine } from '@/lib/extractors/carousel-to-alpine'
 
-export type AlpineExtractorId = 'accordion' | 'alert' | 'alert-dialog' | 'aspect-ratio' | 'avatar' | 'badge' | 'breadcrumb' | 'button' | 'button-group' | 'calendar' | 'card'
+export type AlpineExtractorId = 'accordion' | 'alert' | 'alert-dialog' | 'aspect-ratio' | 'avatar' | 'badge' | 'breadcrumb' | 'button' | 'button-group' | 'calendar' | 'card' | 'carousel'
 
 export function extractVueToAlpineHtml(
   root: HTMLElement,
@@ -30,6 +31,8 @@ export function extractVueToAlpineHtml(
       return extractButtonToAlpine(root)
     case 'card':
       return root.innerHTML.trim()
+    case 'carousel':
+      return extractCarouselToAlpine(root)
     case 'calendar':
       return extractCalendarToAlpine(root)
     case 'button-group':

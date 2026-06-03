@@ -8,7 +8,6 @@ import type { CodePanelTab } from '@/components/CodePanel.vue'
 import {
   getAlpineSetupSource,
   hasAlpineSetup as componentHasAlpineSetup,
-  HTML_ALPINE_SETUP_HINT,
 } from '@/lib/alpine/alpine-setup-snippets'
 import { demoDataTabId, DEMO_DATA_TAB_LABEL, type DemoDataSource } from '@/lib/demo-data-sources'
 import type { AlpineExtractorId } from '@/lib/vue-to-alpine'
@@ -63,12 +62,6 @@ const needsAlpineSetup = computed(() => componentHasAlpineSetup(props.alpineExtr
 const needsAlpinePreview = computed(() => needsAlpineSetup.value)
 const alpineSource = computed(() => getAlpineSetupSource(props.alpineExtractor) ?? '')
 
-const htmlSourceForPanel = computed(() => {
-  if (!htmlMarkup.value) return ''
-  if (!needsAlpineSetup.value) return htmlMarkup.value
-  return `${HTML_ALPINE_SETUP_HINT}${htmlMarkup.value}`
-})
-
 const codePanelTabs = computed<CodePanelTab[]>(() => {
   const tabs: CodePanelTab[] = [
     {
@@ -81,7 +74,7 @@ const codePanelTabs = computed<CodePanelTab[]>(() => {
       id: 'html',
       label: 'HTML',
       language: 'html',
-      code: htmlSourceForPanel.value,
+      code: htmlMarkup.value,
       emptyLabel: 'Extracting HTML…',
     },
   ]

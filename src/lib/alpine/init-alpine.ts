@@ -5,6 +5,7 @@ import { createBreadcrumbResponsiveDemoData } from '@/lib/alpine/breadcrumb-resp
 import { createButtonGroupDemoData } from '@/lib/alpine/button-group-demo'
 import { createButtonGroupMessageDemoData } from '@/lib/alpine/button-group-message-demo'
 import { createButtonGroupPopoverDemoData } from '@/lib/alpine/button-group-popover-demo'
+import { createCarouselDemoData } from '@/lib/alpine/carousel-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -51,6 +52,7 @@ export function registerAlpineData() {
   Alpine.data('breadcrumbDropdownDemo', createBreadcrumbDropdownDemoData)
   Alpine.data('breadcrumbEllipsisDemo', createBreadcrumbEllipsisDemoData)
   Alpine.data('breadcrumbResponsiveDemo', createBreadcrumbResponsiveDemoData)
+  Alpine.data('carouselDemo', createCarouselDemoData)
 }
 
 export function ensureAlpine() {
