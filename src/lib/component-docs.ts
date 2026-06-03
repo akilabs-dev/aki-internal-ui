@@ -18,8 +18,8 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'button-group', label: 'Button Group', path: '/docs/components/button-group' },
   { id: 'calendar', label: 'Calendar', path: '/docs/components/calendar' },
   { id: 'card', label: 'Card', path: '/docs/components/card' },
-  { id: 'carousel', label: 'Carousel', path: '/docs/components/carousel' },
-  { id: 'checkbox', label: 'Checkbox', disabled: true }, // path: '/docs/components/checkbox'
+  { id: 'carousel', label: 'Carousel', disabled: true },
+  { id: 'checkbox', label: 'Checkbox', path: '/docs/components/checkbox' },
   { id: 'collapsible', label: 'Collapsible', disabled: true },
   { id: 'combobox', label: 'Combobox', disabled: true },
   { id: 'command', label: 'Command', disabled: true },

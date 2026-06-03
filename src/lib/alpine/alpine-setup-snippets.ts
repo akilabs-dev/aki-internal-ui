@@ -405,6 +405,26 @@ Alpine.data('buttonGroupPopoverDemo', () => ({
 Alpine.start()
 `
 
+const CHECKBOX_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+Alpine.data('checkboxDemo', () => ({
+  terms: false,
+  terms2: false,
+  toggle2: false,
+  toggle3: true,
+
+  isChecked(key) {
+    return Boolean(this[key])
+  },
+
+  toggle(key) {
+    this[key] = !this.isChecked(key)
+  },
+}))
+
+Alpine.start()
+`
+
 const CAROUSEL_ALPINE_SETUP = `import EmblaCarousel from 'embla-carousel'
 import Alpine from 'alpinejs'
 
@@ -486,6 +506,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return ALERT_DIALOG_ALPINE_SETUP
     case 'carousel':
       return CAROUSEL_ALPINE_SETUP
+    case 'checkbox':
+      return CHECKBOX_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':
