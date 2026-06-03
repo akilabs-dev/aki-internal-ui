@@ -1,4 +1,5 @@
 import { extractAccordionToAlpine } from '@/lib/extractors/accordion-to-alpine'
+import { extractAspectRatioToAlpine } from '@/lib/extractors/aspect-ratio-to-alpine'
 import { extractAlertDialogToAlpine } from '@/lib/extractors/alert-dialog-to-alpine'
 import { extractAvatarToAlpine } from '@/lib/extractors/avatar-to-alpine'
 import { extractBadgeToAlpine } from '@/lib/extractors/badge-to-alpine'
@@ -20,7 +21,7 @@ export function extractVueToAlpineHtml(
     case 'alert':
       return root.innerHTML.trim()
     case 'aspect-ratio':
-      return root.innerHTML.trim()
+      return extractAspectRatioToAlpine(root)
     case 'avatar':
       return extractAvatarToAlpine(root)
     case 'badge':
