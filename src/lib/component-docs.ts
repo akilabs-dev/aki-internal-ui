@@ -20,7 +20,7 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'card', label: 'Card', path: '/docs/components/card' },
   { id: 'carousel', label: 'Carousel', disabled: true },
   { id: 'checkbox', label: 'Checkbox', path: '/docs/components/checkbox' },
-  { id: 'collapsible', label: 'Collapsible', disabled: true },
+  { id: 'collapsible', label: 'Collapsible', path: '/docs/components/collapsible' },
   { id: 'combobox', label: 'Combobox', disabled: true },
   { id: 'command', label: 'Command', disabled: true },
   { id: 'context-menu', label: 'Context Menu', disabled: true },

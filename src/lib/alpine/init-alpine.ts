@@ -6,6 +6,7 @@ import { createButtonGroupDemoData } from '@/lib/alpine/button-group-demo'
 import { createButtonGroupMessageDemoData } from '@/lib/alpine/button-group-message-demo'
 import { createButtonGroupPopoverDemoData } from '@/lib/alpine/button-group-popover-demo'
 import { createCheckboxDemoData } from '@/lib/alpine/checkbox-demo'
+import { createCollapsibleDemoData } from '@/lib/alpine/collapsible-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -53,6 +54,8 @@ export function registerAlpineData() {
   Alpine.data('breadcrumbEllipsisDemo', createBreadcrumbEllipsisDemoData)
   Alpine.data('breadcrumbResponsiveDemo', createBreadcrumbResponsiveDemoData)
   Alpine.data('checkboxDemo', createCheckboxDemoData)
+  Alpine.data('collapsibleDemoClosed', () => createCollapsibleDemoData(false))
+  Alpine.data('collapsibleDemoOpen', () => createCollapsibleDemoData(true))
 }
 
 export function ensureAlpine() {

@@ -215,6 +215,17 @@ const routes: RouteRecordRaw[] = [
         'A control that allows the user to toggle between checked and unchecked states.',
     },
   },
+  {
+    path: '/docs/components/collapsible',
+    name: 'docs-components-collapsible',
+    component: () => import('@/pages/components/CollapsiblePage.vue'),
+    meta: {
+      title: 'Collapsible',
+      eyebrow: 'Components',
+      description:
+        'An interactive component that expands and collapses a section of content.',
+    },
+  },
 ]
 
 export const router = createRouter({

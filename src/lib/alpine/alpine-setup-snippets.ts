@@ -405,6 +405,25 @@ Alpine.data('buttonGroupPopoverDemo', () => ({
 Alpine.start()
 `
 
+const COLLAPSIBLE_ALPINE_SETUP = `import collapse from '@alpinejs/collapse'
+import Alpine from 'alpinejs'
+
+function collapsibleDemo(initialOpen = false) {
+  return {
+    open: initialOpen,
+    toggle() {
+      this.open = !this.open
+    },
+  }
+}
+
+Alpine.data('collapsibleDemoClosed', () => collapsibleDemo(false))
+Alpine.data('collapsibleDemoOpen', () => collapsibleDemo(true))
+
+Alpine.plugin(collapse)
+Alpine.start()
+`
+
 const CHECKBOX_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 Alpine.data('checkboxDemo', () => ({
@@ -508,6 +527,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return CAROUSEL_ALPINE_SETUP
     case 'checkbox':
       return CHECKBOX_ALPINE_SETUP
+    case 'collapsible':
+      return COLLAPSIBLE_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':
