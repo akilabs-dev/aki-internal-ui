@@ -20,10 +20,10 @@ const props = withDefaults(
   },
 )
 
-const { carouselRef, orientation } = useCarousel()
+const carousel = useCarousel()
 
 const trackClass = computed(() => {
-  if (orientation === "horizontal") {
+  if (carousel.orientation === "horizontal") {
     return "flex h-full -ml-4"
   }
   return cn(
@@ -35,7 +35,7 @@ const trackClass = computed(() => {
 
 <template>
   <div
-    ref="carouselRef"
+    :ref="carousel.carouselRef"
     data-slot="carousel-content"
     :class="cn('overflow-hidden', props.class)"
   >
