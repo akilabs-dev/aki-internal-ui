@@ -8,6 +8,6 @@ export const figmaLinks = {
   button: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=402-654&t=sSiEVi36MHaveZSf-4`,
   buttonGroup: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=1185-1980&t=sSiEVi36MHaveZSf-4`,
   carousel: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-4464&t=lGLtoRJK0wSXTRvl-4`,
-  checkbox: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-3398&t=acXxeTYt7Lu0fbbB-4`,
+  checkbox: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-4564&t=8QI6GaHisTBUZCh1-4`,
 } as const
 
