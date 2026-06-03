@@ -23,6 +23,7 @@ import {
 </script>
 
 <template>
+
   <div class="flex min-h-[216px] w-full items-center justify-center">
     <Card class="w-full max-w-sm">
       <CardHeader>
