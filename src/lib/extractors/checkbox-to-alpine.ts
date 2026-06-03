@@ -10,7 +10,13 @@ import {
   getCheckboxAlpineKey,
   type CheckboxDemoRow,
 } from '@/demos/checkbox/checkbox-demo.data'
+import { figmaLinks } from '@/figma-links'
 import { formatHtml } from '@/lib/format-html'
+
+const FIGMA_BUTTON =
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-8 gap-1.5 px-3 has-[>svg]:px-2.5'
+
+const FIGMA_ICON_SVG = `<svg class="size-4" viewBox="0 0 24 24" role="img" aria-label="Figma" xmlns="http://www.w3.org/2000/svg"><title>Figma</title><circle cx="9" cy="5" r="4" fill="#F24E1E"></circle><circle cx="15" cy="5" r="4" fill="#FF7262"></circle><circle cx="9" cy="12" r="4" fill="#A259FF"></circle><circle cx="15" cy="12" r="4" fill="#1ABCFE"></circle><circle cx="9" cy="19" r="4" fill="#0ACF83"></circle></svg>`
 
 const CHECKBOX_BASE =
   'peer border-input data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground data-[state=checked]:border-primary focus-visible:border-ring focus-visible:ring-ring/50 size-4 shrink-0 rounded-[4px] border shadow-xs transition-shadow outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50'
@@ -23,12 +29,33 @@ const LABEL_CLASS =
 
 const CHECK_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-3.5"><path d="M20 6 9 17l-5-5"></path></svg>`
 
+function escapeAttr(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+}
+
 function escapeHtml(text: string): string {
   return text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
+}
+
+function buildFigmaLink(): string {
+  return `<div class="flex flex-wrap items-center justify-end gap-2">
+  <a
+    href="${escapeAttr(figmaLinks.checkbox)}"
+    target="_blank"
+    rel="noreferrer"
+    class="${FIGMA_BUTTON}"
+  >
+    ${FIGMA_ICON_SVG}
+    Figma Link
+  </a>
+</div>`
 }
 
 function withClickStop(buttonHtml: string, alpineKey: string): string {
@@ -131,20 +158,23 @@ export function buildCheckboxAlpineHtml(): string {
   const [simple, description, disabled, cardUnchecked, cardChecked] =
     checkboxDemoRows.map((row) => buildRow(row))
 
-  return `<div
-  x-data="checkboxDemo"
-  class="${checkboxFrameClass}"
-  style="max-width:${checkboxFrameMaxWidthPx}px"
->
-  ${simple}
-  ${checkboxDemoSeparatorHtml}
-  ${description}
-  ${checkboxDemoSeparatorHtml}
-  ${disabled}
-  ${checkboxDemoSeparatorHtml}
-  <div class="${checkboxCardGroupClass}">
-    ${cardUnchecked}
-    ${cardChecked}
+  return `<div class="space-y-4">
+  ${buildFigmaLink()}
+  <div
+    x-data="checkboxDemo"
+    class="${checkboxFrameClass}"
+    style="max-width:${checkboxFrameMaxWidthPx}px"
+  >
+    ${simple}
+    ${checkboxDemoSeparatorHtml}
+    ${description}
+    ${checkboxDemoSeparatorHtml}
+    ${disabled}
+    ${checkboxDemoSeparatorHtml}
+    <div class="${checkboxCardGroupClass}">
+      ${cardUnchecked}
+      ${cardChecked}
+    </div>
   </div>
 </div>`
 }
