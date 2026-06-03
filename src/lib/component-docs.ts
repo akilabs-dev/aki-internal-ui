@@ -19,7 +19,6 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'calendar', label: 'Calendar', path: '/docs/components/calendar' },
   { id: 'card', label: 'Card', path: '/docs/components/card' },
   { id: 'carousel', label: 'Carousel', path: '/docs/components/carousel' },
-  { id: 'chart', label: 'Chart', disabled: true },
   { id: 'checkbox', label: 'Checkbox', disabled: true }, // path: '/docs/components/checkbox'
   { id: 'collapsible', label: 'Collapsible', disabled: true },
   { id: 'combobox', label: 'Combobox', disabled: true },
