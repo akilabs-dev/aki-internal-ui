@@ -2,6 +2,9 @@
 import type { CarouselApi } from '@/components/ui/carousel'
 import { ref } from 'vue'
 import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import FigmaIcon from '@/components/icons/FigmaIcon.vue'
+import { figmaLinks } from '@/figma-links'
 import {
   Carousel,
   CarouselContent,
@@ -40,6 +43,20 @@ function setApi(carouselApi: CarouselApi | undefined) {
 </script>
 
 <template>
+    <div class="space-y-4">
+    <div class="flex flex-wrap items-center justify-end gap-2">
+      <Button
+        as="a"
+        :href="figmaLinks.carousel"
+        target="_blank"
+        rel="noreferrer"
+        variant="outline"
+        size="sm"
+      >
+        <FigmaIcon class="size-4" />
+        Figma Link
+      </Button>
+    </div>
   <div
     :class="carouselDemoFrameClass"
     :style="carouselDemoFrameStyle()"
@@ -165,5 +182,6 @@ function setApi(carouselApi: CarouselApi | undefined) {
         Slide {{ current }} of {{ totalCount }}
       </p>
     </div>
+  </div>
   </div>
 </template>

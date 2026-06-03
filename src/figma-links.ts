@@ -7,5 +7,6 @@ export const figmaLinks = {
   breadcrumb: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=101-424&t=OG6PkBqCQqobZfB3-4`,
   button: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=402-654&t=sSiEVi36MHaveZSf-4`,
   buttonGroup: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=1185-1980&t=sSiEVi36MHaveZSf-4`,
+  carousel: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-4464&t=lGLtoRJK0wSXTRvl-4`,
 } as const
 
