@@ -226,6 +226,17 @@ const routes: RouteRecordRaw[] = [
         'An interactive component that expands and collapses a section of content.',
     },
   },
+  {
+    path: '/docs/components/combobox',
+    name: 'docs-components-combobox',
+    component: () => import('@/pages/components/ComboboxPage.vue'),
+    meta: {
+      title: 'Combobox',
+      eyebrow: 'Components',
+      description:
+        'Autocomplete input with a list of suggestions built using Popover and Command.',
+    },
+  },
 ]
 
 export const router = createRouter({

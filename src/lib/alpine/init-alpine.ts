@@ -7,6 +7,12 @@ import { createButtonGroupMessageDemoData } from '@/lib/alpine/button-group-mess
 import { createButtonGroupPopoverDemoData } from '@/lib/alpine/button-group-popover-demo'
 import { createCheckboxDemoData } from '@/lib/alpine/checkbox-demo'
 import { createCollapsibleDemoData } from '@/lib/alpine/collapsible-demo'
+import {
+  createComboboxDemoData,
+  createStatusComboboxDemoData,
+  createComboboxTaskDemoData,
+  createStatusSearchPanelDemoData,
+} from '@/lib/alpine/combobox-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -56,6 +62,15 @@ export function registerAlpineData() {
   Alpine.data('checkboxDemo', createCheckboxDemoData)
   Alpine.data('collapsibleDemoClosed', () => createCollapsibleDemoData(false))
   Alpine.data('collapsibleDemoOpen', () => createCollapsibleDemoData(true))
+  Alpine.data('comboboxDemoClosed', () => createComboboxDemoData(false))
+  Alpine.data('comboboxDemoOpen', () => createComboboxDemoData(true, 'next.js'))
+  Alpine.data('comboboxStatusClosed', () => createStatusComboboxDemoData(false))
+  Alpine.data('comboboxStatusClosed2', () => createStatusComboboxDemoData(false))
+  Alpine.data('comboboxStatusOpen', createStatusSearchPanelDemoData)
+  Alpine.data('comboboxStatusBtnClosed', () => createStatusComboboxDemoData(false))
+  Alpine.data('comboboxStatusBtnOpen', () => createStatusComboboxDemoData(false))
+  Alpine.data('comboboxTaskClosed', () => createComboboxTaskDemoData(false))
+  Alpine.data('comboboxTaskOpen', () => createComboboxTaskDemoData(false))
 }
 
 export function ensureAlpine() {

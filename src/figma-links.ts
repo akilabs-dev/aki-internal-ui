@@ -10,5 +10,6 @@ export const figmaLinks = {
   carousel: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-4464&t=lGLtoRJK0wSXTRvl-4`,
   checkbox: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-4564&t=8QI6GaHisTBUZCh1-4`,
   collapsible: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-4665&t=8QI6GaHisTBUZCh1-4`,
+  combobox: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-4665&t=8QI6GaHisTBUZCh1-4`,
 } as const
 

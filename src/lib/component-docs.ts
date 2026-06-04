@@ -21,7 +21,7 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'carousel', label: 'Carousel', disabled: true },
   { id: 'checkbox', label: 'Checkbox', path: '/docs/components/checkbox' },
   { id: 'collapsible', label: 'Collapsible', path: '/docs/components/collapsible' },
-  { id: 'combobox', label: 'Combobox', disabled: true },
+  { id: 'combobox', label: 'Combobox', path: '/docs/components/combobox' },
   { id: 'command', label: 'Command', disabled: true },
   { id: 'context-menu', label: 'Context Menu', disabled: true },
   { id: 'dialog', label: 'Dialog', disabled: true }, // path: '/docs/components/dialog'

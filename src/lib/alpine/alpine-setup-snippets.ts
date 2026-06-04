@@ -405,6 +405,236 @@ Alpine.data('buttonGroupPopoverDemo', () => ({
 Alpine.start()
 `
 
+const COMBOBOX_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+const comboboxFrameworks = [
+  { value: 'next.js', label: 'Next.js' },
+  { value: 'sveltekit', label: 'SvelteKit' },
+  { value: 'nuxt.js', label: 'Nuxt.js' },
+  { value: 'remix', label: 'Remix' },
+  { value: 'astro', label: 'Astro' },
+]
+
+function comboboxDemo(initialOpen = false, initialValue = '') {
+  return {
+    open: initialOpen,
+    value: initialValue,
+    search: '',
+    frameworks: comboboxFrameworks,
+
+    init() {
+      this.$watch('open', (isOpen) => {
+        if (!isOpen) return
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => this.position())
+        })
+      })
+      if (this.open) {
+        requestAnimationFrame(() => this.position())
+      }
+    },
+
+    get selectedLabel() {
+      const match = this.frameworks.find((f) => f.value === this.value)
+      return match?.label ?? 'Select framework...'
+    },
+
+    filteredFrameworks() {
+      const query = this.search.trim().toLowerCase()
+      if (!query) return this.frameworks
+      return this.frameworks.filter((f) =>
+        f.label.toLowerCase().includes(query),
+      )
+    },
+
+    toggle() {
+      this.open = !this.open
+    },
+
+    close() {
+      this.open = false
+    },
+
+    selectFramework(selectedValue) {
+      this.value = this.value === selectedValue ? '' : selectedValue
+      this.open = false
+      this.search = ''
+    },
+
+    isSelected(value) {
+      return this.value === value
+    },
+
+    position() {
+      const trigger = this.$refs.trigger
+      const content = this.$refs.content
+      if (!trigger || !content) return
+
+      const rect = trigger.getBoundingClientRect()
+      const offset = 4
+      content.style.position = 'fixed'
+      const spaceBelow = window.innerHeight - rect.bottom - offset
+      const spaceAbove = rect.top - offset
+      const openUp =
+        content.offsetHeight > spaceBelow && spaceAbove > spaceBelow
+
+      content.style.top = openUp
+        ? String(Math.max(8, rect.top - content.offsetHeight - offset))
+        : String(Math.min(window.innerHeight - 8 - content.offsetHeight, rect.bottom + offset))
+      content.style.left = String(rect.left)
+      content.style.zIndex = '50'
+    },
+  }
+}
+
+Alpine.data('comboboxDemoClosed', () => comboboxDemo(false))
+Alpine.data('comboboxDemoOpen', () => comboboxDemo(true, 'next.js'))
+
+const comboboxStatuses = [
+  { value: 'backlog', label: 'Backlog' },
+  { value: 'todo', label: 'Todo' },
+  { value: 'in-progress', label: 'In Progress' },
+  { value: 'done', label: 'Done' },
+  { value: 'canceled', label: 'Canceled' },
+]
+
+function statusComboboxDemo(initialOpen = false, initialValue = '') {
+  return {
+    open: initialOpen,
+    value: initialValue,
+    search: '',
+    statuses: comboboxStatuses,
+
+    init() {
+      this.$watch('open', (isOpen) => {
+        if (!isOpen) return
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => this.position())
+        })
+      })
+      if (this.open) {
+        requestAnimationFrame(() => this.position())
+      }
+    },
+
+    get selectedLabel() {
+      if (!this.value) return 'Set status'
+      const match = this.statuses.find((s) => s.value === this.value)
+      return match?.label ?? 'Set status'
+    },
+
+    get showStatusPlus() {
+      return !this.value
+    },
+
+    filteredStatuses() {
+      const query = this.search.trim().toLowerCase()
+      if (!query) return this.statuses
+      return this.statuses.filter((s) =>
+        s.label.toLowerCase().includes(query),
+      )
+    },
+
+    toggle() {
+      this.open = !this.open
+      if (this.open) {
+        this.$nextTick(() => {
+          const input = this.$refs.content?.querySelector('[data-slot="command-input"]')
+          input?.focus()
+        })
+      }
+    },
+
+    close() {
+      this.open = false
+    },
+
+    selectStatus(selectedValue) {
+      this.value = this.value === selectedValue ? '' : selectedValue
+      this.open = false
+      this.search = ''
+    },
+
+    position() {
+      const trigger = this.$refs.trigger
+      const content = this.$refs.content
+      if (!trigger || !content) return
+
+      const rect = trigger.getBoundingClientRect()
+      const offset = 4
+      content.style.position = 'fixed'
+      const spaceBelow = window.innerHeight - rect.bottom - offset
+      const spaceAbove = rect.top - offset
+      const openUp =
+        content.offsetHeight > spaceBelow && spaceAbove > spaceBelow
+
+      content.style.top = openUp
+        ? String(Math.max(8, rect.top - content.offsetHeight - offset))
+        : String(Math.min(window.innerHeight - 8 - content.offsetHeight, rect.bottom + offset))
+      content.style.left = String(rect.left)
+      content.style.zIndex = '50'
+    },
+  }
+}
+
+Alpine.data('comboboxStatusClosed', () => statusComboboxDemo(false))
+Alpine.data('comboboxStatusClosed2', () => statusComboboxDemo(false))
+
+Alpine.data('comboboxStatusOpen', () => ({
+  search: '',
+  statuses: comboboxStatuses,
+  filteredStatuses() {
+    const query = this.search.trim().toLowerCase()
+    if (!query) return this.statuses
+    return this.statuses.filter((s) =>
+      s.label.toLowerCase().includes(query),
+    )
+  },
+}))
+
+function comboboxTaskDemo(initialOpen = false) {
+  return {
+    open: initialOpen,
+    init() {
+      this.$watch('open', (isOpen) => {
+        if (!isOpen) return
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => this.position())
+        })
+      })
+      if (this.open) {
+        requestAnimationFrame(() => this.position())
+      }
+    },
+    toggle() {
+      this.open = !this.open
+    },
+    close() {
+      this.open = false
+    },
+    position() {
+      const trigger = this.$refs.trigger
+      const content = this.$refs.content
+      if (!trigger || !content) return
+      const rect = trigger.getBoundingClientRect()
+      const offset = 4
+      content.style.position = 'fixed'
+      content.style.top = String(rect.bottom + offset)
+      content.style.left = String(rect.right - content.offsetWidth)
+      content.style.zIndex = '50'
+    },
+  }
+}
+
+Alpine.data('comboboxStatusBtnClosed', () => statusComboboxDemo(false))
+Alpine.data('comboboxStatusBtnOpen', () => statusComboboxDemo(false))
+
+Alpine.data('comboboxTaskClosed', () => comboboxTaskDemo(false))
+Alpine.data('comboboxTaskOpen', () => comboboxTaskDemo(false))
+
+Alpine.start()
+`
+
 const COLLAPSIBLE_ALPINE_SETUP = `import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -529,6 +759,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return CHECKBOX_ALPINE_SETUP
     case 'collapsible':
       return COLLAPSIBLE_ALPINE_SETUP
+    case 'combobox':
+      return COMBOBOX_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':
