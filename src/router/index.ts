@@ -205,6 +205,17 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    path: '/docs/components/carousel',
+    name: 'docs-components-carousel',
+    component: () => import('@/pages/components/CarouselPage.vue'),
+    meta: {
+      title: 'Carousel',
+      eyebrow: 'Components',
+      description:
+        'A carousel with motion and swipe built using Embla Carousel.',
+    },
+  },
+  {
     path: '/docs/components/checkbox',
     name: 'docs-components-checkbox',
     component: () => import('@/pages/components/CheckboxPage.vue'),
