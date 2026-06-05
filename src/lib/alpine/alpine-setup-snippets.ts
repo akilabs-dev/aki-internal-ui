@@ -851,6 +851,150 @@ Alpine.data('carouselDemo', () => ({
 Alpine.start()
 `
 
+const DATA_TABLE_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+const payments = [
+  { id: 'm5gr84i9', amount: 316, status: 'success', email: 'ken99@yahoo.com' },
+  { id: '3u1reuv4', amount: 242, status: 'success', email: 'abe45@gmail.com' },
+  { id: 'derv1ws0', amount: 837, status: 'processing', email: 'monserrat44@gmail.com' },
+  { id: '5kma53ae', amount: 874, status: 'success', email: 'silas22@gmail.com' },
+  { id: 'bhqecj4p', amount: 721, status: 'failed', email: 'carmella@hotmail.com' },
+]
+
+Alpine.data('dataTableDemo', () => ({
+  payments: payments.map((payment) => ({ ...payment })),
+  emailFilter: '',
+  sortAsc: true,
+  selected: {},
+  pageIndex: 0,
+  pageSize: 5,
+  columnsOpen: false,
+  colVisibility: { status: true, email: true, amount: true },
+  actionsOpenId: null,
+
+  getFilteredPayments() {
+    const query = this.emailFilter.trim().toLowerCase()
+    return this.payments.filter(
+      (payment) => !query || payment.email.toLowerCase().includes(query),
+    )
+  },
+
+  getSortedPayments() {
+    const rows = [...this.getFilteredPayments()]
+    rows.sort((a, b) => {
+      const cmp = a.email.localeCompare(b.email)
+      return this.sortAsc ? cmp : -cmp
+    })
+    return rows
+  },
+
+  getPageCount() {
+    return Math.max(1, Math.ceil(this.getSortedPayments().length / this.pageSize))
+  },
+
+  getPageRows() {
+    const start = this.pageIndex * this.pageSize
+    return this.getSortedPayments().slice(start, start + this.pageSize)
+  },
+
+  toggleEmailSort() {
+    this.sortAsc = !this.sortAsc
+    this.pageIndex = 0
+  },
+
+  isRowSelected(id) {
+    return Boolean(this.selected[id])
+  },
+
+  toggleRow(id) {
+    if (this.selected[id]) delete this.selected[id]
+    else this.selected[id] = true
+  },
+
+  isAllPageSelected() {
+    const rows = this.getPageRows()
+    return rows.length > 0 && rows.every((row) => this.isRowSelected(row.id))
+  },
+
+  isSomePageSelected() {
+    const rows = this.getPageRows()
+    const some = rows.some((row) => this.isRowSelected(row.id))
+    const all = this.isAllPageSelected()
+    return some && !all
+  },
+
+  toggleAllPage() {
+    const rows = this.getPageRows()
+    if (this.isAllPageSelected()) {
+      rows.forEach((row) => { delete this.selected[row.id] })
+    } else {
+      rows.forEach((row) => { this.selected[row.id] = true })
+    }
+  },
+
+  selectedCount() {
+    return this.getSortedPayments().filter((row) => this.isRowSelected(row.id)).length
+  },
+
+  totalFiltered() {
+    return this.getSortedPayments().length
+  },
+
+  canPrevious() {
+    return this.pageIndex > 0
+  },
+
+  canNext() {
+    return this.pageIndex < this.getPageCount() - 1
+  },
+
+  previousPage() {
+    if (this.canPrevious()) this.pageIndex -= 1
+  },
+
+  nextPage() {
+    if (this.canNext()) this.pageIndex += 1
+  },
+
+  toggleColumn(column) {
+    this.colVisibility[column] = !this.colVisibility[column]
+  },
+
+  formatAmount(amount) {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(amount)
+  },
+
+  copyId(id) {
+    navigator.clipboard?.writeText(id)
+  },
+
+  toggleColumnsMenu() {
+    this.columnsOpen = !this.columnsOpen
+    this.actionsOpenId = null
+  },
+
+  toggleActions(id) {
+    this.actionsOpenId = this.actionsOpenId === id ? null : id
+    this.columnsOpen = false
+  },
+
+  closeMenus() {
+    this.columnsOpen = false
+    this.actionsOpenId = null
+  },
+
+  onFilterInput(event) {
+    this.emailFilter = event.target.value
+    this.pageIndex = 0
+  },
+}))
+
+Alpine.start()
+`
+
 export function getAlpineSetupSource(extractor: AlpineExtractorId): string | null {
   switch (extractor) {
     case 'accordion':
@@ -869,6 +1013,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return COMBOBOX_ALPINE_SETUP
     case 'command':
       return COMMAND_ALPINE_SETUP
+    case 'data-table':
+      return DATA_TABLE_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':

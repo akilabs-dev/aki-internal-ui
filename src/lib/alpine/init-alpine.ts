@@ -16,6 +16,7 @@ import {
 } from '@/lib/alpine/combobox-demo'
 import { createCommandDemoData } from '@/lib/alpine/command-demo'
 import { createContextMenuDemoData } from '@/lib/alpine/context-menu-demo'
+import { createDataTableDemoData } from '@/lib/alpine/data-table-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -78,6 +79,7 @@ export function registerAlpineData() {
   Alpine.data('commandDemo', createCommandDemoData)
   Alpine.data('contextMenuDemoClosed', createContextMenuDemoData)
   Alpine.data('contextMenuDemoClosed2', createContextMenuDemoData)
+  Alpine.data('dataTableDemo', createDataTableDemoData)
 }
 
 export function ensureAlpine() {
