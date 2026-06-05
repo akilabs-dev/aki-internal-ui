@@ -11,6 +11,6 @@ export const figmaLinks = {
   checkbox: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-4564&t=8QI6GaHisTBUZCh1-4`,
   collapsible: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-4665&t=8QI6GaHisTBUZCh1-4`,
   combobox: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-4665&t=8QI6GaHisTBUZCh1-4`,
-  dataTable: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-5727&t=ED2fM2bXn8Z8ZNPq-4`,
+  dataTable: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-5727&t=eqwCgO2FIHcyrY3k-4`,
 } as const
 
