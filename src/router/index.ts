@@ -248,6 +248,17 @@ const routes: RouteRecordRaw[] = [
         'Autocomplete input with a list of suggestions built using Popover and Command.',
     },
   },
+  {
+    path: '/docs/components/data-table',
+    name: 'docs-components-data-table',
+    component: () => import('@/pages/components/DataTablePage.vue'),
+    meta: {
+      title: 'Data Table',
+      eyebrow: 'Components',
+      description:
+        'Powerful table and datagrid built using TanStack Table with sorting, filtering, pagination, and row selection.',
+    },
+  },
 ]
 
 export const router = createRouter({
