@@ -248,6 +248,17 @@ const routes: RouteRecordRaw[] = [
         'Autocomplete input with a list of suggestions built using Popover and Command.',
     },
   },
+  {
+    path: '/docs/components/command',
+    name: 'docs-components-command',
+    component: () => import('@/pages/components/CommandPage.vue'),
+    meta: {
+      title: 'Command',
+      eyebrow: 'Components',
+      description:
+        'Fast, composable command menu for building searchable palettes and shortcuts.',
+    },
+  },
 ]
 
 export const router = createRouter({

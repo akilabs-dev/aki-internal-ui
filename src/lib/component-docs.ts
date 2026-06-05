@@ -22,7 +22,7 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'checkbox', label: 'Checkbox', path: '/docs/components/checkbox' },
   { id: 'collapsible', label: 'Collapsible', path: '/docs/components/collapsible' },
   { id: 'combobox', label: 'Combobox', path: '/docs/components/combobox' },
-  { id: 'command', label: 'Command', disabled: true },
+  { id: 'command', label: 'Command', path: '/docs/components/command' },
   { id: 'context-menu', label: 'Context Menu', disabled: true },
   { id: 'dialog', label: 'Dialog', disabled: true }, // path: '/docs/components/dialog'
   { id: 'dropdown-menu', label: 'Dropdown Menu', disabled: true }, // path: '/docs/components/dropdown-menu'

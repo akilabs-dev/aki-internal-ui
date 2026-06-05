@@ -14,6 +14,7 @@ import {
   createComboboxTaskDemoData,
   createStatusSearchPanelDemoData,
 } from '@/lib/alpine/combobox-demo'
+import { createCommandDemoData } from '@/lib/alpine/command-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -73,6 +74,7 @@ export function registerAlpineData() {
   Alpine.data('comboboxStatusBtnOpen', () => createStatusComboboxDemoData(false))
   Alpine.data('comboboxTaskClosed', () => createComboboxTaskDemoData(false))
   Alpine.data('comboboxTaskOpen', () => createComboboxTaskDemoData(false))
+  Alpine.data('commandDemo', createCommandDemoData)
 }
 
 export function ensureAlpine() {

@@ -11,8 +11,9 @@ import { extractCheckboxToAlpine } from '@/lib/extractors/checkbox-to-alpine'
 import { extractCollapsibleToAlpine } from '@/lib/extractors/collapsible-to-alpine'
 import { extractCarouselToAlpine } from '@/lib/extractors/carousel-to-alpine'
 import { extractComboboxToAlpine } from '@/lib/extractors/combobox-to-alpine'
+import { extractCommandToAlpine } from '@/lib/extractors/command-to-alpine'
 
-export type AlpineExtractorId = 'accordion' | 'alert' | 'alert-dialog' | 'aspect-ratio' | 'avatar' | 'badge' | 'breadcrumb' | 'button' | 'button-group' | 'calendar' | 'card' | 'carousel' | 'checkbox' | 'collapsible' | 'combobox'
+export type AlpineExtractorId = 'accordion' | 'alert' | 'alert-dialog' | 'aspect-ratio' | 'avatar' | 'badge' | 'breadcrumb' | 'button' | 'button-group' | 'calendar' | 'card' | 'carousel' | 'checkbox' | 'collapsible' | 'combobox' | 'command'
 
 export function extractVueToAlpineHtml(
   root: HTMLElement,
@@ -43,6 +44,8 @@ export function extractVueToAlpineHtml(
       return extractCollapsibleToAlpine(root)
     case 'combobox':
       return extractComboboxToAlpine(root)
+    case 'command':
+      return extractCommandToAlpine(root)
     case 'calendar':
       return extractCalendarToAlpine(root)
     case 'button-group':

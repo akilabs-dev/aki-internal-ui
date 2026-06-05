@@ -635,6 +635,60 @@ Alpine.data('comboboxTaskOpen', () => comboboxTaskDemo(false))
 Alpine.start()
 `
 
+const COMMAND_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+function filterItems(items, search) {
+  const query = search.trim().toLowerCase()
+  if (!query) return items
+  return items.filter((item) => item.label.toLowerCase().includes(query))
+}
+
+function commandDemo() {
+  return {
+    search: '',
+    emptyLabel: 'No results found.',
+    suggestionItems: [
+      { value: 'calendar', label: 'Calendar' },
+      { value: 'emoji', label: 'Search emoji' },
+      { value: 'calculator', label: 'Calculator', disabled: true },
+    ],
+    settingsItems: [
+      { value: 'profile', label: 'Profile', shortcut: '⌘P' },
+      { value: 'billing', label: 'Billing', shortcut: '⌘B' },
+      { value: 'settings', label: 'Settings', shortcut: '⌘S' },
+    ],
+
+    filteredSuggestions() {
+      return filterItems(this.suggestionItems, this.search)
+    },
+
+    filteredSettings() {
+      return filterItems(this.settingsItems, this.search)
+    },
+
+    showEmpty() {
+      return (
+        this.search.trim() !== ''
+        && this.filteredSuggestions().length === 0
+        && this.filteredSettings().length === 0
+      )
+    },
+
+    select(value) {
+      const item = [...this.suggestionItems, ...this.settingsItems].find(
+        (entry) => entry.value === value,
+      )
+      if (item?.disabled) return
+      this.search = ''
+    },
+  }
+}
+
+Alpine.data('commandDemo', commandDemo)
+
+Alpine.start()
+`
+
 const COLLAPSIBLE_ALPINE_SETUP = `import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -761,6 +815,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return COLLAPSIBLE_ALPINE_SETUP
     case 'combobox':
       return COMBOBOX_ALPINE_SETUP
+    case 'command':
+      return COMMAND_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':
