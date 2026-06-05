@@ -14,6 +14,10 @@ import {
   createComboboxTaskDemoData,
   createStatusSearchPanelDemoData,
 } from '@/lib/alpine/combobox-demo'
+import {
+  createDialogProfileDemoData,
+  createDialogShareDemoData,
+} from '@/lib/alpine/dialog-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -73,6 +77,8 @@ export function registerAlpineData() {
   Alpine.data('comboboxStatusBtnOpen', () => createStatusComboboxDemoData(false))
   Alpine.data('comboboxTaskClosed', () => createComboboxTaskDemoData(false))
   Alpine.data('comboboxTaskOpen', () => createComboboxTaskDemoData(false))
+  Alpine.data('dialogProfileDemo', () => createDialogProfileDemoData(false))
+  Alpine.data('dialogShareDemo', () => createDialogShareDemoData(false))
 }
 
 export function ensureAlpine() {

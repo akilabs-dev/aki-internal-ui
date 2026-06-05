@@ -248,6 +248,17 @@ const routes: RouteRecordRaw[] = [
         'Autocomplete input with a list of suggestions built using Popover and Command.',
     },
   },
+  {
+    path: '/docs/components/dialog',
+    name: 'docs-components-dialog',
+    component: () => import('@/pages/components/DialogPage.vue'),
+    meta: {
+      title: 'Dialog',
+      eyebrow: 'Components',
+      description:
+        'A window overlaid on either the primary window or another dialog, rendering content underneath inert.',
+    },
+  },
 ]
 
 export const router = createRouter({

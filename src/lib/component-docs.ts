@@ -24,7 +24,7 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'combobox', label: 'Combobox', path: '/docs/components/combobox' },
   { id: 'command', label: 'Command', disabled: true },
   { id: 'context-menu', label: 'Context Menu', disabled: true },
-  { id: 'dialog', label: 'Dialog', disabled: true }, // path: '/docs/components/dialog'
+  { id: 'dialog', label: 'Dialog', path: '/docs/components/dialog' },
   { id: 'dropdown-menu', label: 'Dropdown Menu', disabled: true }, // path: '/docs/components/dropdown-menu'
   { id: 'hover-card', label: 'Hover Card', disabled: true },
   { id: 'input', label: 'Input', disabled: true }, // path: '/docs/components/input'

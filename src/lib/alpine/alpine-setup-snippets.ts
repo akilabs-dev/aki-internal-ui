@@ -747,6 +747,34 @@ Alpine.data('carouselDemo', () => ({
 Alpine.start()
 `
 
+const DIALOG_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+function dialogDemo(initialOpen = false) {
+  return {
+    open: initialOpen,
+    openDialog() {
+      this.open = true
+    },
+    close() {
+      this.open = false
+    },
+  }
+}
+
+Alpine.data('dialogProfileDemo', () => ({
+  ...dialogDemo(false),
+  name: 'Pedro Duarte',
+  username: '@peduarte',
+}))
+
+Alpine.data('dialogShareDemo', () => ({
+  ...dialogDemo(false),
+  link: 'https://ui.shadcn.com/docs/installation',
+}))
+
+Alpine.start()
+`
+
 export function getAlpineSetupSource(extractor: AlpineExtractorId): string | null {
   switch (extractor) {
     case 'accordion':
@@ -761,6 +789,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return COLLAPSIBLE_ALPINE_SETUP
     case 'combobox':
       return COMBOBOX_ALPINE_SETUP
+    case 'dialog':
+      return DIALOG_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':
