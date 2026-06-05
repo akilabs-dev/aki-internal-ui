@@ -259,6 +259,17 @@ const routes: RouteRecordRaw[] = [
         'Fast, composable command menu for building searchable palettes and shortcuts.',
     },
   },
+  {
+    path: '/docs/components/context-menu',
+    name: 'docs-components-context-menu',
+    component: () => import('@/pages/components/ContextMenuPage.vue'),
+    meta: {
+      title: 'Context Menu',
+      eyebrow: 'Components',
+      description:
+        'Displays a menu on right click with items, submenus, checkboxes, and radio groups.',
+    },
+  },
 ]
 
 export const router = createRouter({

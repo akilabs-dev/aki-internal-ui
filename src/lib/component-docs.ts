@@ -23,7 +23,7 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'collapsible', label: 'Collapsible', path: '/docs/components/collapsible' },
   { id: 'combobox', label: 'Combobox', path: '/docs/components/combobox' },
   { id: 'command', label: 'Command', path: '/docs/components/command' },
-  { id: 'context-menu', label: 'Context Menu', disabled: true },
+  { id: 'context-menu', label: 'Context Menu', path: '/docs/components/context-menu' },
   { id: 'dialog', label: 'Dialog', disabled: true }, // path: '/docs/components/dialog'
   { id: 'dropdown-menu', label: 'Dropdown Menu', disabled: true }, // path: '/docs/components/dropdown-menu'
   { id: 'hover-card', label: 'Hover Card', disabled: true },

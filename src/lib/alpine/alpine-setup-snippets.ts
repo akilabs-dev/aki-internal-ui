@@ -728,6 +728,56 @@ Alpine.data('checkboxDemo', () => ({
 Alpine.start()
 `
 
+const CONTEXT_MENU_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+function contextMenuDemoClosed() {
+  return {
+    open: false,
+    x: 0,
+    y: 0,
+    submenuOpen: false,
+    ignoreOutsideOnce: false,
+    showBookmarks: true,
+    showFullUrls: false,
+    person: 'pedro',
+
+    openAt(event) {
+      event.preventDefault()
+      this.open = true
+      this.submenuOpen = false
+      this.x = event.clientX
+      this.y = event.clientY
+      this.ignoreOutsideOnce = true
+      setTimeout(() => {
+        this.ignoreOutsideOnce = false
+      }, 0)
+    },
+
+    close() {
+      this.open = false
+      this.submenuOpen = false
+    },
+
+    toggleSubmenu(force) {
+      this.submenuOpen = typeof force === 'boolean' ? force : !this.submenuOpen
+    },
+
+    toggleCheckbox(key) {
+      this[key] = !this[key]
+    },
+
+    setPerson(value) {
+      this.person = value
+    },
+  }
+}
+
+Alpine.data('contextMenuDemoClosed', contextMenuDemoClosed)
+Alpine.data('contextMenuDemoClosed2', contextMenuDemoClosed)
+
+Alpine.start()
+`
+
 const CAROUSEL_ALPINE_SETUP = `import EmblaCarousel from 'embla-carousel'
 import Alpine from 'alpinejs'
 
@@ -811,6 +861,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return CAROUSEL_ALPINE_SETUP
     case 'checkbox':
       return CHECKBOX_ALPINE_SETUP
+    case 'context-menu':
+      return CONTEXT_MENU_ALPINE_SETUP
     case 'collapsible':
       return COLLAPSIBLE_ALPINE_SETUP
     case 'combobox':
