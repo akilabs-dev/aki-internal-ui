@@ -29,6 +29,7 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'dialog', label: 'Dialog', path: '/docs/components/dialog' },
   { id: 'drawer', label: 'Drawer', path: '/docs/components/drawer' },
   { id: 'dropdown-menu', label: 'Dropdown Menu', path: '/docs/components/dropdown-menu' },
+  { id: 'empty', label: 'Empty', path: '/docs/components/empty' },
   { id: 'hover-card', label: 'Hover Card', disabled: true },
   { id: 'input', label: 'Input', disabled: true }, // path: '/docs/components/input'
   { id: 'input-group', label: 'Input Group', disabled: true },

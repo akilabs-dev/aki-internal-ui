@@ -314,6 +314,17 @@ const routes: RouteRecordRaw[] = [
         'Displays a menu of actions or options triggered by a button — supports shortcuts, submenus, checkboxes, and radio items.',
     },
   },
+  {
+    path: '/docs/components/empty',
+    name: 'docs-components-empty',
+    component: () => import('@/pages/components/EmptyPage.vue'),
+    meta: {
+      title: 'Empty',
+      eyebrow: 'Components',
+      description:
+        'Composable empty states for when there is no data to show — icons, avatars, actions, and search.',
+    },
+  },
 ]
 
 export const router = createRouter({
