@@ -14,4 +14,5 @@ export const figmaLinks = {
   command: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-5422&t=ycYa3oznxZAxcIsL-4`,
   contextMenu: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-5633&t=IBbbA2Zc7AFJ2lDC-4`,
   dataTable: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-5727&t=ED2fM2bXn8Z8ZNPq-4`,
+  dialog: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=74-7828&t=eqwCgO2FIHcyrY3k-4`,
 } as const

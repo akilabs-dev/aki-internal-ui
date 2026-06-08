@@ -26,7 +26,7 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'context-menu', label: 'Context Menu', path: '/docs/components/context-menu' },
   { id: 'data-table', label: 'Data Table', path: '/docs/components/data-table' },
   { id: 'date-picker', label: 'Date Picker', disabled: true },
-  { id: 'dialog', label: 'Dialog', disabled: true }, // path: '/docs/components/dialog'
+  { id: 'dialog', label: 'Dialog', path: '/docs/components/dialog' },
   { id: 'dropdown-menu', label: 'Dropdown Menu', disabled: true }, // path: '/docs/components/dropdown-menu'
   { id: 'hover-card', label: 'Hover Card', disabled: true },
   { id: 'input', label: 'Input', disabled: true }, // path: '/docs/components/input'

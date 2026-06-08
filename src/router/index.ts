@@ -281,6 +281,17 @@ const routes: RouteRecordRaw[] = [
         'Powerful table and datagrid built using TanStack Table with sorting, filtering, pagination, and row selection.',
     },
   },
+  {
+    path: '/docs/components/dialog',
+    name: 'docs-components-dialog',
+    component: () => import('@/pages/components/DialogPage.vue'),
+    meta: {
+      title: 'Dialog',
+      eyebrow: 'Components',
+      description:
+        'A window overlaid on either the primary window or another dialog, rendering content underneath inert.',
+    },
+  },
 ]
 
 export const router = createRouter({
