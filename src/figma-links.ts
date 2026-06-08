@@ -16,4 +16,5 @@ export const figmaLinks = {
   dataTable: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=73-5727&t=ED2fM2bXn8Z8ZNPq-4`,
   dialog: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=74-7828&t=eqwCgO2FIHcyrY3k-4`,
   drawer: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=74-7968&t=3OD70dgRwD1zGjhN-4`,
+  dropdownMenu: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=74-8113&t=OxIG5JGR01csVZWP-4`,
 } as const

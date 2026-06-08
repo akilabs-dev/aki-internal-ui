@@ -28,7 +28,7 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'date-picker', label: 'Date Picker', disabled: true },
   { id: 'dialog', label: 'Dialog', path: '/docs/components/dialog' },
   { id: 'drawer', label: 'Drawer', path: '/docs/components/drawer' },
-  { id: 'dropdown-menu', label: 'Dropdown Menu', disabled: true }, // path: '/docs/components/dropdown-menu'
+  { id: 'dropdown-menu', label: 'Dropdown Menu', path: '/docs/components/dropdown-menu' },
   { id: 'hover-card', label: 'Hover Card', disabled: true },
   { id: 'input', label: 'Input', disabled: true }, // path: '/docs/components/input'
   { id: 'input-group', label: 'Input Group', disabled: true },

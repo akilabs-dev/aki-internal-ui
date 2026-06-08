@@ -25,6 +25,11 @@ import {
   createDrawerProfileDemoData,
   createMoveGoalDrawerDemoData,
 } from '@/lib/alpine/drawer-demo'
+import {
+  createDropdownMenuAccountDemoData,
+  createDropdownMenuAppearanceDemoData,
+  createDropdownMenuPositionDemoData,
+} from '@/lib/alpine/dropdown-menu-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -92,6 +97,9 @@ export function registerAlpineData() {
   Alpine.data('dialogShareDemo', () => createDialogShareDemoData(false))
   Alpine.data('moveGoalDrawerDemo', () => createMoveGoalDrawerDemoData(false))
   Alpine.data('drawerProfileDemo', () => createDrawerProfileDemoData(false))
+  Alpine.data('dropdownMenuAccountDemo', createDropdownMenuAccountDemoData)
+  Alpine.data('dropdownMenuAppearanceDemo', createDropdownMenuAppearanceDemoData)
+  Alpine.data('dropdownMenuPositionDemo', createDropdownMenuPositionDemoData)
 }
 
 export function ensureAlpine() {

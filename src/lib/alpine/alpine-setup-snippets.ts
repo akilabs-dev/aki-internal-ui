@@ -995,6 +995,118 @@ Alpine.data('dataTableDemo', () => ({
 Alpine.start()
 `
 
+const DROPDOWN_MENU_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+const createDropdownMenuDemo = () => ({
+  open: false,
+  submenuOpen: false,
+  subCloseTimer: null,
+
+  init() {
+    this.$watch('open', (isOpen) => {
+      if (!isOpen) {
+        this.closeSub()
+        return
+      }
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => this.positionMenu())
+      })
+    })
+
+    this.$watch('submenuOpen', (isOpen) => {
+      if (!isOpen) return
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => this.positionSubMenu())
+      })
+    })
+  },
+
+  toggleMenu() {
+    this.open = !this.open
+    if (!this.open) this.closeSub()
+  },
+
+  closeMenu() {
+    this.open = false
+    this.closeSub()
+  },
+
+  openSub() {
+    if (this.subCloseTimer) {
+      clearTimeout(this.subCloseTimer)
+      this.subCloseTimer = null
+    }
+    this.submenuOpen = true
+  },
+
+  closeSubDelayed() {
+    this.subCloseTimer = setTimeout(() => {
+      this.submenuOpen = false
+      this.subCloseTimer = null
+    }, 150)
+  },
+
+  closeSub() {
+    if (this.subCloseTimer) {
+      clearTimeout(this.subCloseTimer)
+      this.subCloseTimer = null
+    }
+    this.submenuOpen = false
+  },
+
+  positionMenu() {
+    const trigger = this.$refs.trigger
+    const menu = this.$refs.content
+    if (!trigger || !menu) return
+
+    const rect = trigger.getBoundingClientRect()
+    const offset = 4
+    menu.style.position = 'fixed'
+    menu.style.top = \`\${rect.bottom + offset}px\`
+    menu.style.left = \`\${rect.left}px\`
+    menu.style.zIndex = '50'
+
+    if (this.submenuOpen) this.positionSubMenu()
+  },
+
+  positionSubMenu() {
+    const trigger = this.$refs.subTrigger
+    const sub = this.$refs.subContent
+    if (!trigger || !sub) return
+
+    const rect = trigger.getBoundingClientRect()
+    sub.style.position = 'fixed'
+    sub.style.top = \`\${rect.top}px\`
+    sub.style.left = \`\${rect.right + 4}px\`
+    sub.style.zIndex = '51'
+  },
+})
+
+Alpine.data('dropdownMenuAccountDemo', createDropdownMenuDemo)
+
+Alpine.data('dropdownMenuAppearanceDemo', () => ({
+  ...createDropdownMenuDemo(),
+  showStatusBar: true,
+  showActivityBar: false,
+  showPanel: false,
+
+  toggleCheckbox(key) {
+    this[key] = !this[key]
+  },
+}))
+
+Alpine.data('dropdownMenuPositionDemo', () => ({
+  ...createDropdownMenuDemo(),
+  position: 'bottom',
+
+  setPosition(value) {
+    this.position = value
+  },
+}))
+
+Alpine.start()
+`
+
 const DRAWER_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 const moveGoalChartData = [
@@ -1115,6 +1227,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return DIALOG_ALPINE_SETUP
     case 'drawer':
       return DRAWER_ALPINE_SETUP
+    case 'dropdown-menu':
+      return DROPDOWN_MENU_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':

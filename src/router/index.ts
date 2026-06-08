@@ -303,6 +303,17 @@ const routes: RouteRecordRaw[] = [
         'A panel that slides in from the edge of the screen — often used for mobile-friendly overlays and bottom sheets.',
     },
   },
+  {
+    path: '/docs/components/dropdown-menu',
+    name: 'docs-components-dropdown-menu',
+    component: () => import('@/pages/components/DropdownMenuPage.vue'),
+    meta: {
+      title: 'Dropdown Menu',
+      eyebrow: 'Components',
+      description:
+        'Displays a menu of actions or options triggered by a button — supports shortcuts, submenus, checkboxes, and radio items.',
+    },
+  },
 ]
 
 export const router = createRouter({
