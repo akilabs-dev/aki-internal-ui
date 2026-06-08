@@ -292,6 +292,17 @@ const routes: RouteRecordRaw[] = [
         'A window overlaid on either the primary window or another dialog, rendering content underneath inert.',
     },
   },
+  {
+    path: '/docs/components/drawer',
+    name: 'docs-components-drawer',
+    component: () => import('@/pages/components/DrawerPage.vue'),
+    meta: {
+      title: 'Drawer',
+      eyebrow: 'Components',
+      description:
+        'A panel that slides in from the edge of the screen — often used for mobile-friendly overlays and bottom sheets.',
+    },
+  },
 ]
 
 export const router = createRouter({

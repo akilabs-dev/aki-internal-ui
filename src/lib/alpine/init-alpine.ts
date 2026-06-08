@@ -21,6 +21,10 @@ import {
   createDialogProfileDemoData,
   createDialogShareDemoData,
 } from '@/lib/alpine/dialog-demo'
+import {
+  createDrawerProfileDemoData,
+  createMoveGoalDrawerDemoData,
+} from '@/lib/alpine/drawer-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -86,6 +90,8 @@ export function registerAlpineData() {
   Alpine.data('dataTableDemo', createDataTableDemoData)
   Alpine.data('dialogProfileDemo', () => createDialogProfileDemoData(false))
   Alpine.data('dialogShareDemo', () => createDialogShareDemoData(false))
+  Alpine.data('moveGoalDrawerDemo', () => createMoveGoalDrawerDemoData(false))
+  Alpine.data('drawerProfileDemo', () => createDrawerProfileDemoData(false))
 }
 
 export function ensureAlpine() {

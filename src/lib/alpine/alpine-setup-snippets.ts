@@ -995,6 +995,74 @@ Alpine.data('dataTableDemo', () => ({
 Alpine.start()
 `
 
+const DRAWER_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+const moveGoalChartData = [
+  { goal: 400 },
+  { goal: 300 },
+  { goal: 200 },
+  { goal: 300 },
+  { goal: 200 },
+  { goal: 278 },
+  { goal: 189 },
+  { goal: 239 },
+  { goal: 300 },
+  { goal: 200 },
+  { goal: 278 },
+  { goal: 189 },
+  { goal: 349 },
+]
+
+Alpine.data('moveGoalDrawerDemo', () => ({
+  open: false,
+  goal: 350,
+  minGoal: 200,
+  maxGoal: 400,
+  step: 10,
+  chartData: moveGoalChartData.map((item) => ({ ...item })),
+
+  openDrawer() {
+    this.open = true
+  },
+
+  close() {
+    this.open = false
+  },
+
+  decrease() {
+    if (this.goal > this.minGoal) {
+      this.goal -= this.step
+    }
+  },
+
+  increase() {
+    if (this.goal < this.maxGoal) {
+      this.goal += this.step
+    }
+  },
+
+  barHeight(value) {
+    return \`\${(value / this.maxGoal) * 100}%\`
+  },
+}))
+
+Alpine.data('drawerProfileDemo', () => ({
+  open: false,
+  name: 'Pedro Duarte',
+  username: '@peduarte',
+
+  openDrawer() {
+    this.open = true
+  },
+
+  close() {
+    this.open = false
+  },
+}))
+
+Alpine.start()
+`
+
 const DIALOG_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 function dialogDemo(initialOpen = false) {
@@ -1045,6 +1113,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return DATA_TABLE_ALPINE_SETUP
     case 'dialog':
       return DIALOG_ALPINE_SETUP
+    case 'drawer':
+      return DRAWER_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':

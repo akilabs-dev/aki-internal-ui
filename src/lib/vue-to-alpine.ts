@@ -15,8 +15,9 @@ import { extractCommandToAlpine } from '@/lib/extractors/command-to-alpine'
 import { extractContextMenuToAlpine } from '@/lib/extractors/context-menu-to-alpine'
 import { extractDataTableToAlpine } from '@/lib/extractors/data-table-to-alpine'
 import { extractDialogToAlpine } from '@/lib/extractors/dialog-to-alpine'
+import { extractDrawerToAlpine } from '@/lib/extractors/drawer-to-alpine'
 
-export type AlpineExtractorId = 'accordion' | 'alert' | 'alert-dialog' | 'aspect-ratio' | 'avatar' | 'badge' | 'breadcrumb' | 'button' | 'button-group' | 'calendar' | 'card' | 'carousel' | 'checkbox' | 'collapsible' | 'combobox' | 'command' | 'context-menu' | 'data-table' | 'dialog'
+export type AlpineExtractorId = 'accordion' | 'alert' | 'alert-dialog' | 'aspect-ratio' | 'avatar' | 'badge' | 'breadcrumb' | 'button' | 'button-group' | 'calendar' | 'card' | 'carousel' | 'checkbox' | 'collapsible' | 'combobox' | 'command' | 'context-menu' | 'data-table' | 'dialog' | 'drawer'
 
 export function extractVueToAlpineHtml(
   root: HTMLElement,
@@ -55,6 +56,8 @@ export function extractVueToAlpineHtml(
       return extractDataTableToAlpine(root)
     case 'dialog':
       return extractDialogToAlpine(root)
+    case 'drawer':
+      return extractDrawerToAlpine(root)
     case 'calendar':
       return extractCalendarToAlpine(root)
     case 'button-group':
