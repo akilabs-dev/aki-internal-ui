@@ -1270,6 +1270,129 @@ Alpine.data('inputDemo', () => ({
 Alpine.start()
 `
 
+const INPUT_GROUP_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+Alpine.data('inputGroupDemo', () => ({
+  activeMenu: null,
+  tooltipOpen: null,
+  copied: false,
+  isFavorite: false,
+  securePopoverOpen: false,
+  copyTimer: null,
+
+  toggleMenu(key) {
+    if (this.activeMenu === key) {
+      this.activeMenu = null
+      return
+    }
+    this.activeMenu = key
+    this.$nextTick(() => this.positionMenu(key))
+  },
+
+  closeMenus() {
+    this.activeMenu = null
+  },
+
+  positionMenu(key) {
+    const trigger = this.$refs[\`\${key}MenuTrigger\`]
+    const menu = this.$refs[\`\${key}MenuContent\`]
+    if (!trigger || !menu) return
+
+    const rect = trigger.getBoundingClientRect()
+    const offset = 4
+    menu.style.position = 'fixed'
+    menu.style.zIndex = '50'
+
+    if (key === 'auto') {
+      menu.style.top = \`\${rect.top - menu.offsetHeight - offset}px\`
+      menu.style.left = \`\${rect.left}px\`
+    } else {
+      menu.style.top = \`\${rect.bottom + offset}px\`
+      menu.style.left = \`\${rect.right - menu.offsetWidth}px\`
+    }
+  },
+
+  openTooltip(key, event) {
+    this.tooltipOpen = key
+    this.$nextTick(() => this.positionTooltip(event.currentTarget))
+  },
+
+  closeTooltip() {
+    this.tooltipOpen = null
+  },
+
+  tooltipLabel() {
+    const labels = {
+      'url-info': 'This is content in a tooltip.',
+      password: 'Password must be at least 8 characters',
+      email: "We'll use this to send you notifications",
+      'email-label': "We'll use this to send you notifications",
+      api: 'Click for help with API keys',
+    }
+    return this.tooltipOpen ? labels[this.tooltipOpen] : ''
+  },
+
+  positionTooltip(trigger) {
+    const tooltip = this.$refs.tooltipContent
+    if (!tooltip || !this.tooltipOpen) return
+
+    const rect = trigger.getBoundingClientRect()
+    tooltip.style.position = 'fixed'
+    tooltip.style.zIndex = '50'
+
+    if (this.tooltipOpen === 'api') {
+      tooltip.style.top = \`\${rect.top + rect.height / 2 - tooltip.offsetHeight / 2}px\`
+      tooltip.style.left = \`\${rect.left - tooltip.offsetWidth - 8}px\`
+      return
+    }
+
+    tooltip.style.top = \`\${rect.top - tooltip.offsetHeight - 8}px\`
+    tooltip.style.left = \`\${rect.left + rect.width / 2 - tooltip.offsetWidth / 2}px\`
+  },
+
+  copyUrl() {
+    const value = 'https://x.com/shadcn'
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(value)
+    }
+    this.copied = true
+    if (this.copyTimer) clearTimeout(this.copyTimer)
+    this.copyTimer = setTimeout(() => {
+      this.copied = false
+    }, 2000)
+  },
+
+  toggleFavorite() {
+    this.isFavorite = !this.isFavorite
+  },
+
+  toggleSecurePopover() {
+    this.securePopoverOpen = !this.securePopoverOpen
+    if (this.securePopoverOpen) {
+      this.$nextTick(() => this.positionSecurePopover())
+    }
+  },
+
+  closeSecurePopover() {
+    this.securePopoverOpen = false
+  },
+
+  positionSecurePopover() {
+    const trigger = this.$refs.securePopoverTrigger
+    const content = this.$refs.securePopoverContent
+    if (!trigger || !content) return
+
+    const rect = trigger.getBoundingClientRect()
+    content.style.position = 'fixed'
+    content.style.top = \`\${rect.bottom + 4}px\`
+    content.style.left = \`\${rect.left}px\`
+    content.style.zIndex = '50'
+  },
+}))
+
+Alpine.start()
+`
+
 const DROPDOWN_MENU_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 const createDropdownMenuDemo = () => ({
@@ -1510,6 +1633,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return HOVER_CARD_ALPINE_SETUP
     case 'input':
       return INPUT_ALPINE_SETUP
+    case 'input-group':
+      return INPUT_GROUP_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':

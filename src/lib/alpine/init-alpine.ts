@@ -33,6 +33,7 @@ import {
 import { createFieldDemoData } from '@/lib/alpine/field-demo'
 import { createHoverCardDemoData } from '@/lib/alpine/hover-card-demo'
 import { createInputDemoData } from '@/lib/alpine/input-demo'
+import { createInputGroupDemoData } from '@/lib/alpine/input-group-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -106,6 +107,7 @@ export function registerAlpineData() {
   Alpine.data('fieldDemo', createFieldDemoData)
   Alpine.data('hoverCardDemo', createHoverCardDemoData)
   Alpine.data('inputDemo', createInputDemoData)
+  Alpine.data('inputGroupDemo', createInputGroupDemoData)
 }
 
 export function ensureAlpine() {

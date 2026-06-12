@@ -21,4 +21,5 @@ export const figmaLinks = {
   field: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=1188-4206&t=1U1kTpCOOf9UdCJ7-4`,
   hoverCard: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=76-8466&t=NuP8NU6Vt8qmpRN4-4`,
   input: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=76-8518&t=NuP8NU6Vt8qmpRN4-4`,
+  inputGroup: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=1188-5364&t=NuP8NU6Vt8qmpRN4-4`,
 } as const

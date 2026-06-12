@@ -358,6 +358,17 @@ const routes: RouteRecordRaw[] = [
         'Styled text fields for forms — email, file, disabled, labeled, and inline action layouts.',
     },
   },
+  {
+    path: '/docs/components/input-group',
+    name: 'docs-components-input-group',
+    component: () => import('@/pages/components/InputGroupPage.vue'),
+    meta: {
+      title: 'Input Group',
+      eyebrow: 'Components',
+      description:
+        'Composable input primitives with addons, icons, buttons, tooltips, and block layouts.',
+    },
+  },
 ]
 
 export const router = createRouter({
