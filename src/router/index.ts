@@ -402,6 +402,17 @@ const routes: RouteRecordRaw[] = [
         'Keyboard shortcut labels for tooltips, buttons, inline text, and input groups.',
     },
   },
+  {
+    path: '/docs/components/label',
+    name: 'docs-components-label',
+    component: () => import('@/pages/components/LabelPage.vue'),
+    meta: {
+      title: 'Label',
+      eyebrow: 'Components',
+      description:
+        'Accessible labels for form controls, including checkbox pairings.',
+    },
+  },
 ]
 
 export const router = createRouter({

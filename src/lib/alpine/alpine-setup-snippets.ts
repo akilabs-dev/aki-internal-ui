@@ -1551,6 +1551,24 @@ Alpine.data('kbdTooltipDemo', () => ({
 Alpine.start()
 `
 
+const LABEL_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+Alpine.data('labelDemo', () => ({
+  terms: false,
+  termsPreview: true,
+
+  isChecked(key) {
+    return Boolean(this[key])
+  },
+
+  toggle(key) {
+    this[key] = !this.isChecked(key)
+  },
+}))
+
+Alpine.start()
+`
+
 const DROPDOWN_MENU_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 const createDropdownMenuDemo = () => ({
@@ -1799,6 +1817,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return ITEM_ALPINE_SETUP
     case 'kbd':
       return KBD_ALPINE_SETUP
+    case 'label':
+      return LABEL_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':

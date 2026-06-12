@@ -25,4 +25,5 @@ export const figmaLinks = {
   inputOtp: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=101-745&t=NuP8NU6Vt8qmpRN4-4`,
   item: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=1196-924&t=NuP8NU6Vt8qmpRN4-4`,
   kbd: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=1196-1098&t=NuP8NU6Vt8qmpRN4-4`,
+  label: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=76-8597&t=NuP8NU6Vt8qmpRN4-4`,
 } as const

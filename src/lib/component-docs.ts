@@ -37,7 +37,7 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'input-otp', label: 'Input OTP', path: '/docs/components/input-otp' },
   { id: 'item', label: 'Item', path: '/docs/components/item' },
   { id: 'kbd', label: 'Kbd', path: '/docs/components/kbd' },
-  { id: 'label', label: 'Label', disabled: true }, // path: '/docs/components/label'
+  { id: 'label', label: 'Label', path: '/docs/components/label' },
   { id: 'link', label: 'Link', disabled: true }, // path: '/docs/components/link'
   { id: 'listbox', label: 'Listbox', disabled: true },
   { id: 'menubar', label: 'Menubar', disabled: true },
