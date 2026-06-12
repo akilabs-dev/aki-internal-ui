@@ -391,6 +391,17 @@ const routes: RouteRecordRaw[] = [
         'Flexible list row primitives with media, content, actions, groups, and variants.',
     },
   },
+  {
+    path: '/docs/components/kbd',
+    name: 'docs-components-kbd',
+    component: () => import('@/pages/components/KbdPage.vue'),
+    meta: {
+      title: 'Kbd',
+      eyebrow: 'Components',
+      description:
+        'Keyboard shortcut labels for tooltips, buttons, inline text, and input groups.',
+    },
+  },
 ]
 
 export const router = createRouter({

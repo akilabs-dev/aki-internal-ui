@@ -1517,6 +1517,40 @@ Alpine.data('itemSelectDemo', () => ({
 Alpine.start()
 `
 
+const KBD_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+Alpine.data('kbdTooltipDemo', () => ({
+  tooltipOpen: null,
+
+  openTooltip(key, event) {
+    this.tooltipOpen = key
+    const target = event.currentTarget
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        this.positionTooltip(key, target)
+      })
+    })
+  },
+
+  closeTooltip() {
+    this.tooltipOpen = null
+  },
+
+  positionTooltip(key, trigger) {
+    const tooltip = this.$refs[\`\${key}Tooltip\`]
+    if (!tooltip) return
+
+    const rect = trigger.getBoundingClientRect()
+    tooltip.style.position = 'fixed'
+    tooltip.style.top = \`\${rect.top - tooltip.offsetHeight - 8}px\`
+    tooltip.style.left = \`\${rect.left + rect.width / 2 - tooltip.offsetWidth / 2}px\`
+    tooltip.style.zIndex = '50'
+  },
+}))
+
+Alpine.start()
+`
+
 const DROPDOWN_MENU_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 const createDropdownMenuDemo = () => ({
@@ -1763,6 +1797,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return INPUT_OTP_ALPINE_SETUP
     case 'item':
       return ITEM_ALPINE_SETUP
+    case 'kbd':
+      return KBD_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':

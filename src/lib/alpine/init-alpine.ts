@@ -47,6 +47,7 @@ import {
   createItemActionsDemoData,
   createItemSelectDemoData,
 } from '@/lib/alpine/item-demo'
+import { createKbdTooltipDemoData } from '@/lib/alpine/kbd-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -131,6 +132,7 @@ export function registerAlpineData() {
   Alpine.data('inputOtpFormPreviewDemo', createInputOtpFormPreviewDemoData)
   Alpine.data('itemActionsDemo', createItemActionsDemoData)
   Alpine.data('itemSelectDemo', createItemSelectDemoData)
+  Alpine.data('kbdTooltipDemo', createKbdTooltipDemoData)
 }
 
 export function ensureAlpine() {
