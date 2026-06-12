@@ -131,6 +131,20 @@
     min-height: 4rem;
     field-sizing: fixed;
   }
+
+  .alpine-html-preview [data-slot="input-group"] {
+    border-color: var(--border);
+    background-color: var(--background);
+  }
+
+  .alpine-html-preview [data-slot="input-group"] [data-slot="button"] {
+    border-color: var(--border);
+    background-color: var(--background);
+  }
+
+  .alpine-html-preview [data-slot="input"] {
+    border-color: var(--border);
+  }
 }
 
 @keyframes alpine-content-in {

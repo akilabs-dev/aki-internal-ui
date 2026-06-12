@@ -32,6 +32,7 @@ import {
 } from '@/lib/alpine/dropdown-menu-demo'
 import { createFieldDemoData } from '@/lib/alpine/field-demo'
 import { createHoverCardDemoData } from '@/lib/alpine/hover-card-demo'
+import { createInputDemoData } from '@/lib/alpine/input-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -104,6 +105,7 @@ export function registerAlpineData() {
   Alpine.data('dropdownMenuPositionDemo', createDropdownMenuPositionDemoData)
   Alpine.data('fieldDemo', createFieldDemoData)
   Alpine.data('hoverCardDemo', createHoverCardDemoData)
+  Alpine.data('inputDemo', createInputDemoData)
 }
 
 export function ensureAlpine() {

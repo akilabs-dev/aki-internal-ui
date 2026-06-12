@@ -347,6 +347,17 @@ const routes: RouteRecordRaw[] = [
         'For sighted users to preview content available behind a link — hover the trigger to reveal a rich card.',
     },
   },
+  {
+    path: '/docs/components/input',
+    name: 'docs-components-input',
+    component: () => import('@/pages/components/InputPage.vue'),
+    meta: {
+      title: 'Input',
+      eyebrow: 'Components',
+      description:
+        'Styled text fields for forms — email, file, disabled, labeled, and inline action layouts.',
+    },
+  },
 ]
 
 export const router = createRouter({

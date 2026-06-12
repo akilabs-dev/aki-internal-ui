@@ -32,7 +32,7 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'empty', label: 'Empty', path: '/docs/components/empty' },
   { id: 'field', label: 'Field', path: '/docs/components/field' },
   { id: 'hover-card', label: 'Hover Card', path: '/docs/components/hover-card' },
-  { id: 'input', label: 'Input', disabled: true }, // path: '/docs/components/input'
+  { id: 'input', label: 'Input', path: '/docs/components/input' },
   { id: 'input-group', label: 'Input Group', disabled: true },
   { id: 'kbd', label: 'Kbd', disabled: true },
   { id: 'label', label: 'Label', disabled: true }, // path: '/docs/components/label'

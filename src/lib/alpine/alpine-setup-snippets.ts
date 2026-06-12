@@ -1257,6 +1257,19 @@ Alpine.data('hoverCardDemo', () => ({
 Alpine.start()
 `
 
+const INPUT_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+Alpine.data('inputDemo', () => ({
+  subscribeEmail: '',
+
+  onSubscribe(event) {
+    event.preventDefault()
+  },
+}))
+
+Alpine.start()
+`
+
 const DROPDOWN_MENU_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 const createDropdownMenuDemo = () => ({
@@ -1495,6 +1508,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return FIELD_ALPINE_SETUP
     case 'hover-card':
       return HOVER_CARD_ALPINE_SETUP
+    case 'input':
+      return INPUT_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':
