@@ -34,6 +34,7 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'hover-card', label: 'Hover Card', path: '/docs/components/hover-card' },
   { id: 'input', label: 'Input', path: '/docs/components/input' },
   { id: 'input-group', label: 'Input Group', path: '/docs/components/input-group' },
+  { id: 'input-otp', label: 'Input OTP', path: '/docs/components/input-otp' },
   { id: 'kbd', label: 'Kbd', disabled: true },
   { id: 'label', label: 'Label', disabled: true }, // path: '/docs/components/label'
   { id: 'link', label: 'Link', disabled: true }, // path: '/docs/components/link'

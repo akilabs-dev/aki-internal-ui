@@ -369,6 +369,17 @@ const routes: RouteRecordRaw[] = [
         'Composable input primitives with addons, icons, buttons, tooltips, and block layouts.',
     },
   },
+  {
+    path: '/docs/components/input-otp',
+    name: 'docs-components-input-otp',
+    component: () => import('@/pages/components/InputOtpPage.vue'),
+    meta: {
+      title: 'Input OTP',
+      eyebrow: 'Components',
+      description:
+        'One-time password inputs with grouped slots, separators, and form layouts.',
+    },
+  },
 ]
 
 export const router = createRouter({

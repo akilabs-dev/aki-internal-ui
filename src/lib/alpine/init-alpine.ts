@@ -34,6 +34,15 @@ import { createFieldDemoData } from '@/lib/alpine/field-demo'
 import { createHoverCardDemoData } from '@/lib/alpine/hover-card-demo'
 import { createInputDemoData } from '@/lib/alpine/input-demo'
 import { createInputGroupDemoData } from '@/lib/alpine/input-group-demo'
+import {
+  createInputOtpAlphanumericPreviewFieldData,
+  createInputOtpFieldData,
+  createInputOtpFormDemoData,
+  createInputOtpFormPreviewDemoData,
+  createInputOtpHelperDemoData,
+  createInputOtpHelperPreviewDemoData,
+  createInputOtpPreviewFieldData,
+} from '@/lib/alpine/input-otp-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -108,6 +117,14 @@ export function registerAlpineData() {
   Alpine.data('hoverCardDemo', createHoverCardDemoData)
   Alpine.data('inputDemo', createInputDemoData)
   Alpine.data('inputGroupDemo', createInputGroupDemoData)
+  Alpine.data('inputOtpField', createInputOtpFieldData)
+  Alpine.data('inputOtpPreviewField', createInputOtpPreviewFieldData)
+  Alpine.data('inputOtpAlphanumericField', () => createInputOtpFieldData({ alphanumeric: true }))
+  Alpine.data('inputOtpAlphanumericPreviewField', createInputOtpAlphanumericPreviewFieldData)
+  Alpine.data('inputOtpHelperDemo', createInputOtpHelperDemoData)
+  Alpine.data('inputOtpHelperPreviewDemo', createInputOtpHelperPreviewDemoData)
+  Alpine.data('inputOtpFormDemo', createInputOtpFormDemoData)
+  Alpine.data('inputOtpFormPreviewDemo', createInputOtpFormPreviewDemoData)
 }
 
 export function ensureAlpine() {

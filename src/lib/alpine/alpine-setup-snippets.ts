@@ -1393,6 +1393,84 @@ Alpine.data('inputGroupDemo', () => ({
 Alpine.start()
 `
 
+const INPUT_OTP_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+const createInputOtpField = (options = {}) => ({
+  otp: options.initialOtp ?? '',
+  focused: false,
+  maxLength: options.maxLength ?? 6,
+  alphanumeric: options.alphanumeric ?? false,
+
+  charAt(index) {
+    return this.otp[index] ?? ''
+  },
+
+  isActive(index) {
+    if (!this.focused) return false
+    const position = Math.min(this.otp.length, this.maxLength - 1)
+    return index === position
+  },
+
+  sanitize(value) {
+    const cleaned = this.alphanumeric
+      ? value.replace(/[^a-zA-Z0-9]/g, '')
+      : value.replace(/\\D/g, '')
+    return cleaned.slice(0, this.maxLength)
+  },
+
+  onInput(event) {
+    const input = event.target
+    this.otp = this.sanitize(input.value)
+    input.value = this.otp
+  },
+
+  onFocus() {
+    this.focused = true
+  },
+
+  onBlur() {
+    this.focused = false
+  },
+
+  focusInput() {
+    this.$refs.input?.focus()
+  },
+})
+
+Alpine.data('inputOtpField', () => createInputOtpField())
+Alpine.data('inputOtpPreviewField', () => createInputOtpField({ initialOtp: '1' }))
+Alpine.data('inputOtpAlphanumericField', () => createInputOtpField({ alphanumeric: true }))
+Alpine.data('inputOtpAlphanumericPreviewField', () => createInputOtpField({ alphanumeric: true, initialOtp: '1' }))
+Alpine.data('inputOtpHelperDemo', () => ({
+  ...createInputOtpField(),
+  helperMessage() {
+    return this.otp === ''
+      ? 'Enter your one-time password.'
+      : \`You entered: \${this.otp}\`
+  },
+}))
+Alpine.data('inputOtpHelperPreviewDemo', () => ({
+  ...createInputOtpField({ initialOtp: '1' }),
+  helperMessage() {
+    return \`You entered: \${this.otp}\`
+  },
+}))
+Alpine.data('inputOtpFormDemo', () => ({
+  ...createInputOtpField(),
+  onSubmit(event) {
+    event.preventDefault()
+  },
+}))
+Alpine.data('inputOtpFormPreviewDemo', () => ({
+  ...createInputOtpField({ initialOtp: '1' }),
+  onSubmit(event) {
+    event.preventDefault()
+  },
+}))
+
+Alpine.start()
+`
+
 const DROPDOWN_MENU_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 const createDropdownMenuDemo = () => ({
@@ -1635,6 +1713,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return INPUT_ALPINE_SETUP
     case 'input-group':
       return INPUT_GROUP_ALPINE_SETUP
+    case 'input-otp':
+      return INPUT_OTP_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':
