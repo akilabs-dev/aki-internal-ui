@@ -995,6 +995,182 @@ Alpine.data('dataTableDemo', () => ({
 Alpine.start()
 `
 
+const FIELD_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+const selectKeys = ['month', 'year', 'department']
+
+Alpine.data('fieldDemo', () => ({
+  sameAsShipping: true,
+  hardDisks: true,
+  externalDisks: false,
+  cdsDvds: false,
+  connectedServers: false,
+  syncFolders: true,
+  subscription: 'monthly',
+  mfaEnabled: false,
+  computeEnv: 'kubernetes',
+  pushTasks: false,
+  emailTasks: false,
+  priceMin: 200,
+  priceMax: 800,
+  month: '',
+  monthLabel: '',
+  monthOpen: false,
+  year: '',
+  yearLabel: '',
+  yearOpen: false,
+  department: '',
+  departmentLabel: '',
+  departmentOpen: false,
+
+  init() {
+    selectKeys.forEach((key) => {
+      this.$watch(key + 'Open', (open) => {
+        if (!open) return
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => this.positionSelect(key))
+        })
+      })
+    })
+  },
+
+  isChecked(key) {
+    return Boolean(this[key])
+  },
+
+  toggleCheckbox(key) {
+    this[key] = !this[key]
+  },
+
+  setSubscription(value) {
+    this.subscription = value
+  },
+
+  setComputeEnv(value) {
+    this.computeEnv = value
+  },
+
+  toggleMfa() {
+    this.mfaEnabled = !this.mfaEnabled
+  },
+
+  toggleSelect(key) {
+    const openKey = key + 'Open'
+    const wasOpen = this[openKey]
+    this.monthOpen = false
+    this.yearOpen = false
+    this.departmentOpen = false
+    this[openKey] = !wasOpen
+  },
+
+  closeSelect(key) {
+    this[key + 'Open'] = false
+  },
+
+  setSelect(key, value, label) {
+    this[key] = value
+    this[key + 'Label'] = label
+    this[key + 'Open'] = false
+  },
+
+  selectDisplay(key, placeholder) {
+    return this[key + 'Label'] || placeholder
+  },
+
+  positionSelect(key) {
+    const trigger = this.$refs[key + 'Trigger']
+    const content = this.$refs[key + 'Content']
+    if (!trigger || !content) return
+
+    const rect = trigger.getBoundingClientRect()
+    const offset = 4
+    content.style.position = 'fixed'
+    content.style.top = \`\${rect.bottom + offset}px\`
+    content.style.left = \`\${rect.left}px\`
+    content.style.minWidth = \`\${rect.width}px\`
+    content.style.zIndex = '50'
+  },
+
+  activePriceThumb: null,
+
+  priceMinPercent() {
+    return (this.priceMin / 1000) * 100
+  },
+
+  priceMaxPercent() {
+    return (this.priceMax / 1000) * 100
+  },
+
+  priceRangeLeft() {
+    return this.priceMinPercent()
+  },
+
+  priceRangeWidth() {
+    return this.priceMaxPercent() - this.priceMinPercent()
+  },
+
+  priceThumbZIndex(which) {
+    if (this.activePriceThumb === which) return 3
+    if (which === 'max' && this.priceMin > 900) return 3
+    return which === 'min' ? 2 : 1
+  },
+
+  snapPrice(value) {
+    return Math.round(value / 10) * 10
+  },
+
+  priceFromPointer(event) {
+    const slider = this.$refs.priceSlider
+    if (!slider) return 0
+    const rect = slider.getBoundingClientRect()
+    const percent = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width))
+    return this.snapPrice(percent * 1000)
+  },
+
+  setPriceValue(which, value) {
+    if (which === 'min') {
+      this.priceMin = Math.min(value, this.priceMax - 10)
+      return
+    }
+    this.priceMax = Math.max(value, this.priceMin + 10)
+  },
+
+  startPriceDrag(which, event) {
+    event.preventDefault()
+    this.activePriceThumb = which
+    const target = event.currentTarget
+    target?.setPointerCapture?.(event.pointerId)
+
+    const move = (moveEvent) => {
+      this.setPriceValue(which, this.priceFromPointer(moveEvent))
+    }
+
+    const end = (endEvent) => {
+      target?.releasePointerCapture?.(endEvent.pointerId)
+      window.removeEventListener('pointermove', move)
+      window.removeEventListener('pointerup', end)
+      window.removeEventListener('pointercancel', end)
+      this.activePriceThumb = null
+    }
+
+    this.setPriceValue(which, this.priceFromPointer(event))
+    window.addEventListener('pointermove', move)
+    window.addEventListener('pointerup', end)
+    window.addEventListener('pointercancel', end)
+  },
+
+  onPriceTrackPointerDown(event) {
+    if (event.target.closest('[data-slot="slider-thumb"]')) return
+    const value = this.priceFromPointer(event)
+    const distanceToMin = Math.abs(value - this.priceMin)
+    const distanceToMax = Math.abs(value - this.priceMax)
+    this.startPriceDrag(distanceToMin <= distanceToMax ? 'min' : 'max', event)
+  },
+}))
+
+Alpine.start()
+`
+
 const DROPDOWN_MENU_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 const createDropdownMenuDemo = () => ({
@@ -1229,6 +1405,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return DRAWER_ALPINE_SETUP
     case 'dropdown-menu':
       return DROPDOWN_MENU_ALPINE_SETUP
+    case 'field':
+      return FIELD_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':

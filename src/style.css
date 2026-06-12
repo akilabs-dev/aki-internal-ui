@@ -121,6 +121,16 @@
     margin-left: auto;
     color: var(--muted-foreground);
   }
+
+  .alpine-html-preview [data-slot="slider-thumb"] {
+    padding: 0;
+  }
+
+  .alpine-html-preview [data-slot="textarea"] {
+    display: block;
+    min-height: 4rem;
+    field-sizing: fixed;
+  }
 }
 
 @keyframes alpine-content-in {

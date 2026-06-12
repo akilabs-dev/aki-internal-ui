@@ -30,6 +30,7 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'drawer', label: 'Drawer', path: '/docs/components/drawer' },
   { id: 'dropdown-menu', label: 'Dropdown Menu', path: '/docs/components/dropdown-menu' },
   { id: 'empty', label: 'Empty', path: '/docs/components/empty' },
+  { id: 'field', label: 'Field', path: '/docs/components/field' },
   { id: 'hover-card', label: 'Hover Card', disabled: true },
   { id: 'input', label: 'Input', disabled: true }, // path: '/docs/components/input'
   { id: 'input-group', label: 'Input Group', disabled: true },

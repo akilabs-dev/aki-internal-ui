@@ -30,6 +30,7 @@ import {
   createDropdownMenuAppearanceDemoData,
   createDropdownMenuPositionDemoData,
 } from '@/lib/alpine/dropdown-menu-demo'
+import { createFieldDemoData } from '@/lib/alpine/field-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -100,6 +101,7 @@ export function registerAlpineData() {
   Alpine.data('dropdownMenuAccountDemo', createDropdownMenuAccountDemoData)
   Alpine.data('dropdownMenuAppearanceDemo', createDropdownMenuAppearanceDemoData)
   Alpine.data('dropdownMenuPositionDemo', createDropdownMenuPositionDemoData)
+  Alpine.data('fieldDemo', createFieldDemoData)
 }
 
 export function ensureAlpine() {

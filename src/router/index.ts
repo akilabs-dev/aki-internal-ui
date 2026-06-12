@@ -325,6 +325,17 @@ const routes: RouteRecordRaw[] = [
         'Composable empty states for when there is no data to show — icons, avatars, actions, and search.',
     },
   },
+  {
+    path: '/docs/components/field',
+    name: 'docs-components-field',
+    component: () => import('@/pages/components/FieldPage.vue'),
+    meta: {
+      title: 'Field',
+      eyebrow: 'Components',
+      description:
+        'Composable field primitives for building accessible forms — labels, descriptions, groups, and responsive layouts.',
+    },
+  },
 ]
 
 export const router = createRouter({
