@@ -380,6 +380,17 @@ const routes: RouteRecordRaw[] = [
         'One-time password inputs with grouped slots, separators, and form layouts.',
     },
   },
+  {
+    path: '/docs/components/item',
+    name: 'docs-components-item',
+    component: () => import('@/pages/components/ItemPage.vue'),
+    meta: {
+      title: 'Item',
+      eyebrow: 'Components',
+      description:
+        'Flexible list row primitives with media, content, actions, groups, and variants.',
+    },
+  },
 ]
 
 export const router = createRouter({

@@ -1471,6 +1471,52 @@ Alpine.data('inputOtpFormPreviewDemo', () => ({
 Alpine.start()
 `
 
+const ITEM_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+Alpine.data('itemActionsDemo', () => ({
+  onAction(_label) {
+    // Demo action handler for HTML preview buttons.
+  },
+}))
+
+Alpine.data('itemSelectDemo', () => ({
+  open: false,
+
+  init() {
+    this.$watch('open', (isOpen) => {
+      if (!isOpen) return
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          this.positionMenu()
+        })
+      })
+    })
+  },
+
+  toggleMenu() {
+    this.open = !this.open
+  },
+
+  closeMenu() {
+    this.open = false
+  },
+
+  positionMenu() {
+    const trigger = this.$refs.trigger
+    const menu = this.$refs.content
+    if (!trigger || !menu) return
+
+    const rect = trigger.getBoundingClientRect()
+    menu.style.position = 'fixed'
+    menu.style.top = \`\${rect.bottom + 4}px\`
+    menu.style.left = \`\${rect.right - menu.offsetWidth}px\`
+    menu.style.zIndex = '50'
+  },
+}))
+
+Alpine.start()
+`
+
 const DROPDOWN_MENU_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 const createDropdownMenuDemo = () => ({
@@ -1715,6 +1761,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return INPUT_GROUP_ALPINE_SETUP
     case 'input-otp':
       return INPUT_OTP_ALPINE_SETUP
+    case 'item':
+      return ITEM_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':

@@ -43,6 +43,10 @@ import {
   createInputOtpHelperPreviewDemoData,
   createInputOtpPreviewFieldData,
 } from '@/lib/alpine/input-otp-demo'
+import {
+  createItemActionsDemoData,
+  createItemSelectDemoData,
+} from '@/lib/alpine/item-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -125,6 +129,8 @@ export function registerAlpineData() {
   Alpine.data('inputOtpHelperPreviewDemo', createInputOtpHelperPreviewDemoData)
   Alpine.data('inputOtpFormDemo', createInputOtpFormDemoData)
   Alpine.data('inputOtpFormPreviewDemo', createInputOtpFormPreviewDemoData)
+  Alpine.data('itemActionsDemo', createItemActionsDemoData)
+  Alpine.data('itemSelectDemo', createItemSelectDemoData)
 }
 
 export function ensureAlpine() {
