@@ -336,6 +336,17 @@ const routes: RouteRecordRaw[] = [
         'Composable field primitives for building accessible forms — labels, descriptions, groups, and responsive layouts.',
     },
   },
+  {
+    path: '/docs/components/hover-card',
+    name: 'docs-components-hover-card',
+    component: () => import('@/pages/components/HoverCardPage.vue'),
+    meta: {
+      title: 'Hover Card',
+      eyebrow: 'Components',
+      description:
+        'For sighted users to preview content available behind a link — hover the trigger to reveal a rich card.',
+    },
+  },
 ]
 
 export const router = createRouter({

@@ -19,4 +19,5 @@ export const figmaLinks = {
   dropdownMenu: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=74-8113&t=OxIG5JGR01csVZWP-4`,
   empty: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=1186-3810&t=XjYw5X3K0tXucFIO-4`,
   field: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=1188-4206&t=1U1kTpCOOf9UdCJ7-4`,
+  hoverCard: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=76-8466&t=NuP8NU6Vt8qmpRN4-4`,
 } as const

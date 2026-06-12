@@ -1171,6 +1171,92 @@ Alpine.data('fieldDemo', () => ({
 Alpine.start()
 `
 
+const HOVER_CARD_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+Alpine.data('hoverCardDemo', () => ({
+  open: false,
+  openTimer: null,
+  closeTimer: null,
+  openDelay: 700,
+  closeDelay: 300,
+
+  init() {
+    this.$watch('open', (isOpen) => {
+      if (!isOpen) return
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => this.position())
+      })
+    })
+  },
+
+  clearOpenTimer() {
+    if (this.openTimer) {
+      clearTimeout(this.openTimer)
+      this.openTimer = null
+    }
+  },
+
+  clearCloseTimer() {
+    if (this.closeTimer) {
+      clearTimeout(this.closeTimer)
+      this.closeTimer = null
+    }
+  },
+
+  scheduleOpen() {
+    this.clearCloseTimer()
+    if (this.open) return
+    if (this.openTimer) return
+    this.openTimer = setTimeout(() => {
+      this.open = true
+      this.openTimer = null
+    }, this.openDelay)
+  },
+
+  scheduleClose() {
+    this.clearOpenTimer()
+    if (!this.open) return
+    if (this.closeTimer) return
+    this.closeTimer = setTimeout(() => {
+      this.open = false
+      this.closeTimer = null
+    }, this.closeDelay)
+  },
+
+  onTriggerEnter() {
+    this.scheduleOpen()
+  },
+
+  onTriggerLeave() {
+    this.scheduleClose()
+  },
+
+  onContentEnter() {
+    this.clearCloseTimer()
+    if (!this.open) this.scheduleOpen()
+  },
+
+  onContentLeave() {
+    this.scheduleClose()
+  },
+
+  position() {
+    const trigger = this.$refs.trigger
+    const content = this.$refs.content
+    if (!trigger || !content) return
+
+    const rect = trigger.getBoundingClientRect()
+    const offset = 4
+    content.style.position = 'fixed'
+    content.style.top = \`\${rect.bottom + offset}px\`
+    content.style.left = \`\${rect.left}px\`
+    content.style.zIndex = '50'
+  },
+}))
+
+Alpine.start()
+`
+
 const DROPDOWN_MENU_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 const createDropdownMenuDemo = () => ({
@@ -1407,6 +1493,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return DROPDOWN_MENU_ALPINE_SETUP
     case 'field':
       return FIELD_ALPINE_SETUP
+    case 'hover-card':
+      return HOVER_CARD_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':

@@ -19,8 +19,9 @@ import { extractDrawerToAlpine } from '@/lib/extractors/drawer-to-alpine'
 import { extractDropdownMenuToAlpine } from '@/lib/extractors/dropdown-menu-to-alpine'
 import { extractEmptyToAlpine } from '@/lib/extractors/empty-to-alpine'
 import { extractFieldToAlpine } from '@/lib/extractors/field-to-alpine'
+import { extractHoverCardToAlpine } from '@/lib/extractors/hover-card-to-alpine'
 
-export type AlpineExtractorId = 'accordion' | 'alert' | 'alert-dialog' | 'aspect-ratio' | 'avatar' | 'badge' | 'breadcrumb' | 'button' | 'button-group' | 'calendar' | 'card' | 'carousel' | 'checkbox' | 'collapsible' | 'combobox' | 'command' | 'context-menu' | 'data-table' | 'dialog' | 'drawer' | 'dropdown-menu' | 'empty' | 'field'
+export type AlpineExtractorId = 'accordion' | 'alert' | 'alert-dialog' | 'aspect-ratio' | 'avatar' | 'badge' | 'breadcrumb' | 'button' | 'button-group' | 'calendar' | 'card' | 'carousel' | 'checkbox' | 'collapsible' | 'combobox' | 'command' | 'context-menu' | 'data-table' | 'dialog' | 'drawer' | 'dropdown-menu' | 'empty' | 'field' | 'hover-card'
 
 export function extractVueToAlpineHtml(
   root: HTMLElement,
@@ -67,6 +68,8 @@ export function extractVueToAlpineHtml(
       return extractEmptyToAlpine(root)
     case 'field':
       return extractFieldToAlpine(root)
+    case 'hover-card':
+      return extractHoverCardToAlpine(root)
     case 'calendar':
       return extractCalendarToAlpine(root)
     case 'button-group':
