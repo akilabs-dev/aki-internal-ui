@@ -523,6 +523,17 @@ const routes: RouteRecordRaw[] = [
         'Horizontal and vertical separators dividing content sections and inline navigation.',
     },
   },
+  {
+    path: '/docs/components/sheet',
+    name: 'docs-components-sheet',
+    component: () => import('@/pages/components/SheetPage.vue'),
+    meta: {
+      title: 'Sheet',
+      eyebrow: 'Components',
+      description:
+        'Slide-in panel from the screen edge with profile form, overlay, and save/close actions.',
+    },
+  },
 ]
 
 export const router = createRouter({

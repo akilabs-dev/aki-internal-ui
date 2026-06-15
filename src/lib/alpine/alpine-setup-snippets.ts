@@ -1929,6 +1929,23 @@ Alpine.data('selectTimezoneDemo2', () => createSelectDemo('Select a timezone', t
 Alpine.start()
 `
 
+const SHEET_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+Alpine.data('sheetDemo', () => ({
+  open: false,
+
+  openSheet() {
+    this.open = true
+  },
+
+  close() {
+    this.open = false
+  },
+}))
+
+Alpine.start()
+`
+
 const RADIO_GROUP_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 Alpine.data('radioGroupDemo', () => ({
@@ -2212,6 +2229,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return RADIO_GROUP_ALPINE_SETUP
     case 'select':
       return SELECT_ALPINE_SETUP
+    case 'sheet':
+      return SHEET_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':

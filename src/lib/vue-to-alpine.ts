@@ -36,8 +36,9 @@ import { extractRadioGroupToAlpine } from '@/lib/extractors/radio-group-to-alpin
 import { extractScrollAreaToAlpine } from '@/lib/extractors/scroll-area-to-alpine'
 import { extractSelectToAlpine } from '@/lib/extractors/select-to-alpine'
 import { extractSeparatorToAlpine } from '@/lib/extractors/separator-to-alpine'
+import { extractSheetToAlpine } from '@/lib/extractors/sheet-to-alpine'
 
-export type AlpineExtractorId = 'accordion' | 'alert' | 'alert-dialog' | 'aspect-ratio' | 'avatar' | 'badge' | 'breadcrumb' | 'button' | 'button-group' | 'calendar' | 'card' | 'carousel' | 'checkbox' | 'collapsible' | 'combobox' | 'command' | 'context-menu' | 'data-table' | 'dialog' | 'drawer' | 'dropdown-menu' | 'empty' | 'field' | 'hover-card' | 'input' | 'input-group' | 'input-otp' | 'item' | 'kbd' | 'label' | 'menubar' | 'native-select' | 'navigation-menu' | 'pagination' | 'popover' | 'progress' | 'radio-group' | 'scroll-area' | 'select' | 'separator'
+export type AlpineExtractorId = 'accordion' | 'alert' | 'alert-dialog' | 'aspect-ratio' | 'avatar' | 'badge' | 'breadcrumb' | 'button' | 'button-group' | 'calendar' | 'card' | 'carousel' | 'checkbox' | 'collapsible' | 'combobox' | 'command' | 'context-menu' | 'data-table' | 'dialog' | 'drawer' | 'dropdown-menu' | 'empty' | 'field' | 'hover-card' | 'input' | 'input-group' | 'input-otp' | 'item' | 'kbd' | 'label' | 'menubar' | 'native-select' | 'navigation-menu' | 'pagination' | 'popover' | 'progress' | 'radio-group' | 'scroll-area' | 'select' | 'separator' | 'sheet'
 
 export function extractVueToAlpineHtml(
   root: HTMLElement,
@@ -118,6 +119,8 @@ export function extractVueToAlpineHtml(
       return extractSelectToAlpine(root)
     case 'separator':
       return extractSeparatorToAlpine(root)
+    case 'sheet':
+      return extractSheetToAlpine(root)
     case 'calendar':
       return extractCalendarToAlpine(root)
     case 'button-group':

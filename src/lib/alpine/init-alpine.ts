@@ -57,6 +57,7 @@ import { createPopoverDemoData } from '@/lib/alpine/popover-demo'
 import { createProgressDemoData } from '@/lib/alpine/progress-demo'
 import { createRadioGroupDemoData } from '@/lib/alpine/radio-group-demo'
 import { createSelectDemoData } from '@/lib/alpine/select-demo'
+import { createSheetDemoData } from '@/lib/alpine/sheet-demo'
 import {
   fruitGroup,
   selectFruitPlaceholder,
@@ -181,6 +182,7 @@ export function registerAlpineData() {
       groups: timezoneGroups,
     }),
   )
+  Alpine.data('sheetDemo', createSheetDemoData)
 }
 
 export function ensureAlpine() {
