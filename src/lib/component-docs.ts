@@ -48,10 +48,10 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'scroll-area', label: 'Scroll Area', path: '/docs/components/scroll-area' },
   { id: 'select', label: 'Select', path: '/docs/components/select' },
   { id: 'separator', label: 'Separator', path: '/docs/components/separator' },
+  { id: 'sheet', label: 'Sheet', path: '/docs/components/sheet' },
   { id: 'link', label: 'Link', disabled: true }, // path: '/docs/components/link'
   { id: 'listbox', label: 'Listbox', disabled: true },
   { id: 'number-input', label: 'Number Input', disabled: true },
-  { id: 'sheet', label: 'Sheet', path: '/docs/components/sheet' },
   { id: 'sidebar', label: 'Sidebar', disabled: true },
   { id: 'slider', label: 'Slider', disabled: true },
   { id: 'sonner', label: 'Sonner', disabled: true },
