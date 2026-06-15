@@ -42,10 +42,10 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'native-select', label: 'Native Select', path: '/docs/components/native-select' },
   { id: 'navigation-menu', label: 'Navigation Menu', path: '/docs/components/navigation-menu' },
   { id: 'pagination', label: 'Pagination', path: '/docs/components/pagination' },
+  { id: 'popover', label: 'Popover', path: '/docs/components/popover' },
   { id: 'link', label: 'Link', disabled: true }, // path: '/docs/components/link'
   { id: 'listbox', label: 'Listbox', disabled: true },
   { id: 'number-input', label: 'Number Input', disabled: true },
-  { id: 'popover', label: 'Popover', disabled: true }, // path: '/docs/components/popover'
   { id: 'progress', label: 'Progress', disabled: true },
   { id: 'radio-group', label: 'Radio Group', disabled: true },
   { id: 'scroll-area', label: 'Scroll Area', disabled: true },

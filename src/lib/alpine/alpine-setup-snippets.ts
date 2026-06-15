@@ -1764,6 +1764,53 @@ Alpine.data('paginationDemo', () => {
 Alpine.start()
 `
 
+const POPOVER_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+const createPopoverDemo = (initialOpen = false) => ({
+  open: initialOpen,
+
+  init() {
+    this.$watch('open', (isOpen) => {
+      if (!isOpen) return
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => this.position())
+      })
+    })
+
+    if (this.open) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => this.position())
+      })
+    }
+  },
+
+  toggle() {
+    this.open = !this.open
+  },
+
+  close() {
+    this.open = false
+  },
+
+  position() {
+    const trigger = this.$refs.trigger
+    const content = this.$refs.content
+    if (!trigger || !content) return
+
+    const rect = trigger.getBoundingClientRect()
+    const offset = 4
+    content.style.position = 'fixed'
+    content.style.top = \`\${rect.bottom + offset}px\`
+    content.style.left = \`\${rect.left}px\`
+    content.style.zIndex = '50'
+  },
+})
+
+Alpine.data('popoverDemo', () => createPopoverDemo(false))
+
+Alpine.start()
+`
+
 const DROPDOWN_MENU_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 const createDropdownMenuDemo = () => ({
@@ -2022,6 +2069,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return NAVIGATION_MENU_ALPINE_SETUP
     case 'pagination':
       return PAGINATION_ALPINE_SETUP
+    case 'popover':
+      return POPOVER_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':

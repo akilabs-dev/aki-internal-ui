@@ -457,6 +457,17 @@ const routes: RouteRecordRaw[] = [
         'Pagination controls with previous/next links, page numbers, and ellipsis.',
     },
   },
+  {
+    path: '/docs/components/popover',
+    name: 'docs-components-popover',
+    component: () => import('@/pages/components/PopoverPage.vue'),
+    meta: {
+      title: 'Popover',
+      eyebrow: 'Components',
+      description:
+        'Floating panel anchored to a trigger, with form content and open/close interaction.',
+    },
+  },
 ]
 
 export const router = createRouter({
