@@ -35,4 +35,5 @@ export const figmaLinks = {
   radioGroup: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=76-8893&t=7hSPJDcHW7N4VCwP-4`,
   scrollArea: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=76-8955&t=5kKtPgtEhk9z7x6v-4`,
   select: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=76-9053&t=5kKtPgtEhk9z7x6v-4`,
+  separator: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=76-10176&t=5kKtPgtEhk9z7x6v-4`,
 } as const

@@ -50,7 +50,7 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'link', label: 'Link', disabled: true }, // path: '/docs/components/link'
   { id: 'listbox', label: 'Listbox', disabled: true },
   { id: 'number-input', label: 'Number Input', disabled: true },
-  { id: 'separator', label: 'Separator',disabled: true }, //  path: '/docs/components/separator'
+  { id: 'separator', label: 'Separator', path: '/docs/components/separator' },
   { id: 'sheet', label: 'Sheet', disabled: true },
   { id: 'sidebar', label: 'Sidebar', disabled: true },
   { id: 'slider', label: 'Slider', disabled: true },

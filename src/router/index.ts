@@ -512,6 +512,17 @@ const routes: RouteRecordRaw[] = [
         'Fruit and timezone selects with grouped options, checkmarks, and scrollable menus.',
     },
   },
+  {
+    path: '/docs/components/separator',
+    name: 'docs-components-separator',
+    component: () => import('@/pages/components/SeparatorPage.vue'),
+    meta: {
+      title: 'Separator',
+      eyebrow: 'Components',
+      description:
+        'Horizontal and vertical separators dividing content sections and inline navigation.',
+    },
+  },
 ]
 
 export const router = createRouter({
