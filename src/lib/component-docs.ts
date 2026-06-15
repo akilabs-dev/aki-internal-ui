@@ -45,10 +45,10 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'popover', label: 'Popover', path: '/docs/components/popover' },
   { id: 'progress', label: 'Progress', path: '/docs/components/progress' },
   { id: 'radio-group', label: 'Radio Group', path: '/docs/components/radio-group' },
+  { id: 'scroll-area', label: 'Scroll Area', path: '/docs/components/scroll-area' },
   { id: 'link', label: 'Link', disabled: true }, // path: '/docs/components/link'
   { id: 'listbox', label: 'Listbox', disabled: true },
   { id: 'number-input', label: 'Number Input', disabled: true },
-  { id: 'scroll-area', label: 'Scroll Area', path: '/docs/components/scroll-area' },
   { id: 'select', label: 'Select', disabled: true }, // path: '/docs/components/select'
   { id: 'separator', label: 'Separator',disabled: true }, //  path: '/docs/components/separator'
   { id: 'sheet', label: 'Sheet', disabled: true },
