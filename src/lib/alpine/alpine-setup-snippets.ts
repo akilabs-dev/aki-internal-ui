@@ -1551,6 +1551,113 @@ Alpine.data('kbdTooltipDemo', () => ({
 Alpine.start()
 `
 
+const MENUBAR_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+Alpine.data('menubarDemo', () => ({
+  activeMenu: null,
+  activeSubmenu: null,
+  subCloseTimer: null,
+  bookmarksBar: false,
+  fullUrls: true,
+  profile: 'benoit',
+
+  init() {
+    this.$watch('activeMenu', (menu) => {
+      if (!menu) {
+        this.closeSubmenu()
+        return
+      }
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => this.positionMenu(menu))
+      })
+    })
+
+    this.$watch('activeSubmenu', (sub) => {
+      if (!sub) return
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => this.positionSubmenu(sub))
+      })
+    })
+  },
+
+  isMenuOpen(menu) {
+    return this.activeMenu === menu
+  },
+
+  toggleMenu(menu) {
+    this.activeMenu = this.activeMenu === menu ? null : menu
+    if (this.activeMenu !== menu) {
+      this.closeSubmenu()
+    } else {
+      this.activeSubmenu = null
+    }
+  },
+
+  closeMenus() {
+    this.activeMenu = null
+    this.closeSubmenu()
+  },
+
+  openSubmenu(key) {
+    if (this.subCloseTimer) {
+      clearTimeout(this.subCloseTimer)
+      this.subCloseTimer = null
+    }
+    this.activeSubmenu = key
+  },
+
+  closeSubmenuDelayed() {
+    this.subCloseTimer = setTimeout(() => {
+      this.activeSubmenu = null
+      this.subCloseTimer = null
+    }, 150)
+  },
+
+  closeSubmenu() {
+    if (this.subCloseTimer) {
+      clearTimeout(this.subCloseTimer)
+      this.subCloseTimer = null
+    }
+    this.activeSubmenu = null
+  },
+
+  positionMenu(menu) {
+    const trigger = this.$refs[menu + 'Trigger']
+    const content = this.$refs[menu + 'Content']
+    if (!trigger || !content) return
+    const rect = trigger.getBoundingClientRect()
+    content.style.position = 'fixed'
+    content.style.top = \`\${rect.bottom + 8}px\`
+    content.style.left = \`\${rect.left}px\`
+    content.style.zIndex = '50'
+    if (this.activeSubmenu) {
+      this.positionSubmenu(this.activeSubmenu)
+    }
+  },
+
+  positionSubmenu(key) {
+    const trigger = this.$refs[key + 'SubTrigger']
+    const content = this.$refs[key + 'SubContent']
+    if (!trigger || !content) return
+    const rect = trigger.getBoundingClientRect()
+    content.style.position = 'fixed'
+    content.style.top = \`\${rect.top}px\`
+    content.style.left = \`\${rect.right + 4}px\`
+    content.style.zIndex = '51'
+  },
+
+  toggleCheckbox(key) {
+    this[key] = !this[key]
+  },
+
+  setProfile(value) {
+    this.profile = value
+  },
+}))
+
+Alpine.start()
+`
+
 const LABEL_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 Alpine.data('labelDemo', () => ({
@@ -1819,6 +1926,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return KBD_ALPINE_SETUP
     case 'label':
       return LABEL_ALPINE_SETUP
+    case 'menubar':
+      return MENUBAR_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':

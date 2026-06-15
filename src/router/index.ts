@@ -413,6 +413,17 @@ const routes: RouteRecordRaw[] = [
         'Accessible labels for form controls, including checkbox pairings.',
     },
   },
+  {
+    path: '/docs/components/menubar',
+    name: 'docs-components-menubar',
+    component: () => import('@/pages/components/MenubarPage.vue'),
+    meta: {
+      title: 'Menubar',
+      eyebrow: 'Components',
+      description:
+        'Horizontal menu bar with nested submenus, shortcuts, checkboxes, and radio groups.',
+    },
+  },
 ]
 
 export const router = createRouter({

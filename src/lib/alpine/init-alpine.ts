@@ -49,6 +49,7 @@ import {
 } from '@/lib/alpine/item-demo'
 import { createKbdTooltipDemoData } from '@/lib/alpine/kbd-demo'
 import { createLabelDemoData } from '@/lib/alpine/label-demo'
+import { createMenubarDemoData } from '@/lib/alpine/menubar-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -135,6 +136,7 @@ export function registerAlpineData() {
   Alpine.data('itemSelectDemo', createItemSelectDemoData)
   Alpine.data('kbdTooltipDemo', createKbdTooltipDemoData)
   Alpine.data('labelDemo', createLabelDemoData)
+  Alpine.data('menubarDemo', createMenubarDemoData)
 }
 
 export function ensureAlpine() {
