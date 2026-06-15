@@ -1686,6 +1686,30 @@ Alpine.data('nativeSelectDemo', () => ({
 Alpine.start()
 `
 
+const NAVIGATION_MENU_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+const createNavigationMenuDemo = (initialMenu = null) => ({
+  activeMenu: initialMenu,
+
+  isOpen(key) {
+    return this.activeMenu === key
+  },
+
+  toggleMenu(key) {
+    this.activeMenu = this.activeMenu === key ? null : key
+  },
+
+  closeMenus() {
+    this.activeMenu = null
+  },
+})
+
+Alpine.data('navigationMenuDemo', () => createNavigationMenuDemo())
+Alpine.data('navigationMenuDemoOpen', () => createNavigationMenuDemo('components'))
+
+Alpine.start()
+`
+
 const DROPDOWN_MENU_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 const createDropdownMenuDemo = () => ({
@@ -1940,6 +1964,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return MENUBAR_ALPINE_SETUP
     case 'native-select':
       return NATIVE_SELECT_ALPINE_SETUP
+    case 'navigation-menu':
+      return NAVIGATION_MENU_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':

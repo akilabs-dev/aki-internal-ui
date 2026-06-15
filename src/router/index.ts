@@ -435,6 +435,17 @@ const routes: RouteRecordRaw[] = [
         'Styled native select with option groups, disabled state, and invalid styling.',
     },
   },
+  {
+    path: '/docs/components/navigation-menu',
+    name: 'docs-components-navigation-menu',
+    component: () => import('@/pages/components/NavigationMenuPage.vue'),
+    meta: {
+      title: 'Navigation Menu',
+      eyebrow: 'Components',
+      description:
+        'Collection of links for navigating websites with dropdown panels and grouped content.',
+    },
+  },
 ]
 
 export const router = createRouter({

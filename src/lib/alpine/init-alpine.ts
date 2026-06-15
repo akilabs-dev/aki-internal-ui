@@ -51,6 +51,7 @@ import { createKbdTooltipDemoData } from '@/lib/alpine/kbd-demo'
 import { createLabelDemoData } from '@/lib/alpine/label-demo'
 import { createMenubarDemoData } from '@/lib/alpine/menubar-demo'
 import { createNativeSelectDemoData } from '@/lib/alpine/native-select-demo'
+import { createNavigationMenuDemoData } from '@/lib/alpine/navigation-menu-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -139,6 +140,8 @@ export function registerAlpineData() {
   Alpine.data('labelDemo', createLabelDemoData)
   Alpine.data('menubarDemo', createMenubarDemoData)
   Alpine.data('nativeSelectDemo', createNativeSelectDemoData)
+  Alpine.data('navigationMenuDemo', () => createNavigationMenuDemoData())
+  Alpine.data('navigationMenuDemoOpen', () => createNavigationMenuDemoData('components'))
 }
 
 export function ensureAlpine() {
