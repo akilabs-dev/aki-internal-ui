@@ -52,6 +52,7 @@ import { createLabelDemoData } from '@/lib/alpine/label-demo'
 import { createMenubarDemoData } from '@/lib/alpine/menubar-demo'
 import { createNativeSelectDemoData } from '@/lib/alpine/native-select-demo'
 import { createNavigationMenuDemoData } from '@/lib/alpine/navigation-menu-demo'
+import { createPaginationDemoData } from '@/lib/alpine/pagination-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -142,6 +143,7 @@ export function registerAlpineData() {
   Alpine.data('nativeSelectDemo', createNativeSelectDemoData)
   Alpine.data('navigationMenuDemo', () => createNavigationMenuDemoData())
   Alpine.data('navigationMenuDemoOpen', () => createNavigationMenuDemoData('components'))
+  Alpine.data('paginationDemo', createPaginationDemoData)
 }
 
 export function ensureAlpine() {

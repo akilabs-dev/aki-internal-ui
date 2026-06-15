@@ -1710,6 +1710,60 @@ Alpine.data('navigationMenuDemoOpen', () => createNavigationMenuDemo('components
 Alpine.start()
 `
 
+const PAGINATION_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+const paginationPageInactiveClass = 'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 size-9'
+
+const paginationPageActiveClass = 'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 size-9'
+
+Alpine.data('paginationDemo', () => {
+  const itemsPerPage = 10
+  const total = 30
+  const pageCount = Math.ceil(total / itemsPerPage)
+
+  return {
+    page: 2,
+    itemsPerPage,
+    total,
+    pageCount,
+
+    get pages() {
+      return Array.from({ length: this.pageCount }, (_, index) => index + 1)
+    },
+
+    isActive(pageNumber) {
+      return this.page === pageNumber
+    },
+
+    pageButtonClass(pageNumber) {
+      return this.isActive(pageNumber)
+        ? paginationPageActiveClass
+        : paginationPageInactiveClass
+    },
+
+    goToPage(pageNumber) {
+      if (pageNumber >= 1 && pageNumber <= this.pageCount) {
+        this.page = pageNumber
+      }
+    },
+
+    prev() {
+      if (this.page > 1) {
+        this.page -= 1
+      }
+    },
+
+    next() {
+      if (this.page < this.pageCount) {
+        this.page += 1
+      }
+    },
+  }
+})
+
+Alpine.start()
+`
+
 const DROPDOWN_MENU_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 const createDropdownMenuDemo = () => ({
@@ -1966,6 +2020,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return NATIVE_SELECT_ALPINE_SETUP
     case 'navigation-menu':
       return NAVIGATION_MENU_ALPINE_SETUP
+    case 'pagination':
+      return PAGINATION_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':

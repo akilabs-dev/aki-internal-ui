@@ -40,11 +40,11 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'label', label: 'Label', path: '/docs/components/label' },
   { id: 'menubar', label: 'Menubar', path: '/docs/components/menubar' },
   { id: 'native-select', label: 'Native Select', path: '/docs/components/native-select' },
+  { id: 'navigation-menu', label: 'Navigation Menu', path: '/docs/components/navigation-menu' },
+  { id: 'pagination', label: 'Pagination', path: '/docs/components/pagination' },
   { id: 'link', label: 'Link', disabled: true }, // path: '/docs/components/link'
   { id: 'listbox', label: 'Listbox', disabled: true },
-  { id: 'navigation-menu', label: 'Navigation Menu', path: '/docs/components/navigation-menu' },
   { id: 'number-input', label: 'Number Input', disabled: true },
-  { id: 'pagination', label: 'Pagination', disabled: true },
   { id: 'popover', label: 'Popover', disabled: true }, // path: '/docs/components/popover'
   { id: 'progress', label: 'Progress', disabled: true },
   { id: 'radio-group', label: 'Radio Group', disabled: true },

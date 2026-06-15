@@ -446,6 +446,17 @@ const routes: RouteRecordRaw[] = [
         'Collection of links for navigating websites with dropdown panels and grouped content.',
     },
   },
+  {
+    path: '/docs/components/pagination',
+    name: 'docs-components-pagination',
+    component: () => import('@/pages/components/PaginationPage.vue'),
+    meta: {
+      title: 'Pagination',
+      eyebrow: 'Components',
+      description:
+        'Pagination controls with previous/next links, page numbers, and ellipsis.',
+    },
+  },
 ]
 
 export const router = createRouter({
