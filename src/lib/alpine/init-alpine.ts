@@ -55,6 +55,7 @@ import { createNavigationMenuDemoData } from '@/lib/alpine/navigation-menu-demo'
 import { createPaginationDemoData } from '@/lib/alpine/pagination-demo'
 import { createPopoverDemoData } from '@/lib/alpine/popover-demo'
 import { createProgressDemoData } from '@/lib/alpine/progress-demo'
+import { createRadioGroupDemoData } from '@/lib/alpine/radio-group-demo'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -148,6 +149,7 @@ export function registerAlpineData() {
   Alpine.data('paginationDemo', createPaginationDemoData)
   Alpine.data('popoverDemo', () => createPopoverDemoData(false))
   Alpine.data('progressDemo', createProgressDemoData)
+  Alpine.data('radioGroupDemo', createRadioGroupDemoData)
 }
 
 export function ensureAlpine() {

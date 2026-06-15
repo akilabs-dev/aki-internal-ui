@@ -1834,6 +1834,23 @@ Alpine.data('progressDemo', () => ({
 Alpine.start()
 `
 
+const RADIO_GROUP_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+Alpine.data('radioGroupDemo', () => ({
+  value: 'default',
+
+  select(nextValue) {
+    this.value = nextValue
+  },
+
+  isChecked(optionValue) {
+    return this.value === optionValue
+  },
+}))
+
+Alpine.start()
+`
+
 const DROPDOWN_MENU_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 const createDropdownMenuDemo = () => ({
@@ -2096,6 +2113,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return POPOVER_ALPINE_SETUP
     case 'progress':
       return PROGRESS_ALPINE_SETUP
+    case 'radio-group':
+      return RADIO_GROUP_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':

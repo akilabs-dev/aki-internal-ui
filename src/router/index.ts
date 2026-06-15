@@ -479,6 +479,17 @@ const routes: RouteRecordRaw[] = [
         'Horizontal progress indicator that animates from an initial value to a target percentage.',
     },
   },
+  {
+    path: '/docs/components/radio-group',
+    name: 'docs-components-radio-group',
+    component: () => import('@/pages/components/RadioGroupPage.vue'),
+    meta: {
+      title: 'Radio Group',
+      eyebrow: 'Components',
+      description:
+        'Vertical radio group with Default, Comfortable, and Compact options.',
+    },
+  },
 ]
 
 export const router = createRouter({

@@ -32,8 +32,9 @@ import { extractNavigationMenuToAlpine } from '@/lib/extractors/navigation-menu-
 import { extractPaginationToAlpine } from '@/lib/extractors/pagination-to-alpine'
 import { extractPopoverToAlpine } from '@/lib/extractors/popover-to-alpine'
 import { extractProgressToAlpine } from '@/lib/extractors/progress-to-alpine'
+import { extractRadioGroupToAlpine } from '@/lib/extractors/radio-group-to-alpine'
 
-export type AlpineExtractorId = 'accordion' | 'alert' | 'alert-dialog' | 'aspect-ratio' | 'avatar' | 'badge' | 'breadcrumb' | 'button' | 'button-group' | 'calendar' | 'card' | 'carousel' | 'checkbox' | 'collapsible' | 'combobox' | 'command' | 'context-menu' | 'data-table' | 'dialog' | 'drawer' | 'dropdown-menu' | 'empty' | 'field' | 'hover-card' | 'input' | 'input-group' | 'input-otp' | 'item' | 'kbd' | 'label' | 'menubar' | 'native-select' | 'navigation-menu' | 'pagination' | 'popover' | 'progress'
+export type AlpineExtractorId = 'accordion' | 'alert' | 'alert-dialog' | 'aspect-ratio' | 'avatar' | 'badge' | 'breadcrumb' | 'button' | 'button-group' | 'calendar' | 'card' | 'carousel' | 'checkbox' | 'collapsible' | 'combobox' | 'command' | 'context-menu' | 'data-table' | 'dialog' | 'drawer' | 'dropdown-menu' | 'empty' | 'field' | 'hover-card' | 'input' | 'input-group' | 'input-otp' | 'item' | 'kbd' | 'label' | 'menubar' | 'native-select' | 'navigation-menu' | 'pagination' | 'popover' | 'progress' | 'radio-group'
 
 export function extractVueToAlpineHtml(
   root: HTMLElement,
@@ -106,6 +107,8 @@ export function extractVueToAlpineHtml(
       return extractPopoverToAlpine(root)
     case 'progress':
       return extractProgressToAlpine(root)
+    case 'radio-group':
+      return extractRadioGroupToAlpine(root)
     case 'calendar':
       return extractCalendarToAlpine(root)
     case 'button-group':
