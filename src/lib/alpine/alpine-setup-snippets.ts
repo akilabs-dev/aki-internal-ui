@@ -1676,6 +1676,16 @@ Alpine.data('labelDemo', () => ({
 Alpine.start()
 `
 
+const NATIVE_SELECT_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+Alpine.data('nativeSelectDemo', () => ({
+  status: 'todo',
+  department: '',
+}))
+
+Alpine.start()
+`
+
 const DROPDOWN_MENU_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 const createDropdownMenuDemo = () => ({
@@ -1928,6 +1938,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return LABEL_ALPINE_SETUP
     case 'menubar':
       return MENUBAR_ALPINE_SETUP
+    case 'native-select':
+      return NATIVE_SELECT_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':

@@ -39,6 +39,7 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'kbd', label: 'Kbd', path: '/docs/components/kbd' },
   { id: 'label', label: 'Label', path: '/docs/components/label' },
   { id: 'menubar', label: 'Menubar', path: '/docs/components/menubar' },
+  { id: 'native-select', label: 'Native Select', path: '/docs/components/native-select' },
   { id: 'link', label: 'Link', disabled: true }, // path: '/docs/components/link'
   { id: 'listbox', label: 'Listbox', disabled: true },
   { id: 'navigation-menu', label: 'Navigation Menu', disabled: true },

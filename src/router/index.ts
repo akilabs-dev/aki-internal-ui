@@ -424,6 +424,17 @@ const routes: RouteRecordRaw[] = [
         'Horizontal menu bar with nested submenus, shortcuts, checkboxes, and radio groups.',
     },
   },
+  {
+    path: '/docs/components/native-select',
+    name: 'docs-components-native-select',
+    component: () => import('@/pages/components/NativeSelectPage.vue'),
+    meta: {
+      title: 'Native Select',
+      eyebrow: 'Components',
+      description:
+        'Styled native select with option groups, disabled state, and invalid styling.',
+    },
+  },
 ]
 
 export const router = createRouter({

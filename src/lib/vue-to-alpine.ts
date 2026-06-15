@@ -27,8 +27,9 @@ import { extractItemToAlpine } from '@/lib/extractors/item-to-alpine'
 import { extractKbdToAlpine } from '@/lib/extractors/kbd-to-alpine'
 import { extractLabelToAlpine } from '@/lib/extractors/label-to-alpine'
 import { extractMenubarToAlpine } from '@/lib/extractors/menubar-to-alpine'
+import { extractNativeSelectToAlpine } from '@/lib/extractors/native-select-to-alpine'
 
-export type AlpineExtractorId = 'accordion' | 'alert' | 'alert-dialog' | 'aspect-ratio' | 'avatar' | 'badge' | 'breadcrumb' | 'button' | 'button-group' | 'calendar' | 'card' | 'carousel' | 'checkbox' | 'collapsible' | 'combobox' | 'command' | 'context-menu' | 'data-table' | 'dialog' | 'drawer' | 'dropdown-menu' | 'empty' | 'field' | 'hover-card' | 'input' | 'input-group' | 'input-otp' | 'item' | 'kbd' | 'label' | 'menubar'
+export type AlpineExtractorId = 'accordion' | 'alert' | 'alert-dialog' | 'aspect-ratio' | 'avatar' | 'badge' | 'breadcrumb' | 'button' | 'button-group' | 'calendar' | 'card' | 'carousel' | 'checkbox' | 'collapsible' | 'combobox' | 'command' | 'context-menu' | 'data-table' | 'dialog' | 'drawer' | 'dropdown-menu' | 'empty' | 'field' | 'hover-card' | 'input' | 'input-group' | 'input-otp' | 'item' | 'kbd' | 'label' | 'menubar' | 'native-select'
 
 export function extractVueToAlpineHtml(
   root: HTMLElement,
@@ -91,6 +92,8 @@ export function extractVueToAlpineHtml(
       return extractLabelToAlpine(root)
     case 'menubar':
       return extractMenubarToAlpine(root)
+    case 'native-select':
+      return extractNativeSelectToAlpine(root)
     case 'calendar':
       return extractCalendarToAlpine(root)
     case 'button-group':
