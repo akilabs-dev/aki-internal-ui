@@ -33,4 +33,5 @@ export const figmaLinks = {
   popover: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=76-8822&t=ic7qp1RKlDgFZotT-4`,
   progress: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=76-8886&t=bxPbmM7yhcMW0jTu-4`,
   radioGroup: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=76-8893&t=7hSPJDcHW7N4VCwP-4`,
+  scrollArea: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=76-8955&t=5kKtPgtEhk9z7x6v-4`,
 } as const

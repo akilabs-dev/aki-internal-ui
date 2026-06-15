@@ -490,6 +490,17 @@ const routes: RouteRecordRaw[] = [
         'Vertical radio group with Default, Comfortable, and Compact options.',
     },
   },
+  {
+    path: '/docs/components/scroll-area',
+    name: 'docs-components-scroll-area',
+    component: () => import('@/pages/components/ScrollAreaPage.vue'),
+    meta: {
+      title: 'Scroll Area',
+      eyebrow: 'Components',
+      description:
+        'Vertical tag list and horizontal photo gallery with custom scrollbars.',
+    },
+  },
 ]
 
 export const router = createRouter({
