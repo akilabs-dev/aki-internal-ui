@@ -31,4 +31,5 @@ export const figmaLinks = {
   navigationMenu: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=76-8691&t=WYdObVj0Jn5wWDfA-4`,
   pagination: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=76-8794&t=ic7qp1RKlDgFZotT-4`,
   popover: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=76-8822&t=ic7qp1RKlDgFZotT-4`,
+  progress: `https://www.figma.com/design/hwPO6oLO8c8IMLOc07KPpK/Aki-Internal-UI---Updated-May-2026?node-id=76-8886&t=bxPbmM7yhcMW0jTu-4`,
 } as const

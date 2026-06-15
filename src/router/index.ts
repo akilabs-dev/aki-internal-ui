@@ -468,6 +468,17 @@ const routes: RouteRecordRaw[] = [
         'Floating panel anchored to a trigger, with form content and open/close interaction.',
     },
   },
+  {
+    path: '/docs/components/progress',
+    name: 'docs-components-progress',
+    component: () => import('@/pages/components/ProgressPage.vue'),
+    meta: {
+      title: 'Progress',
+      eyebrow: 'Components',
+      description:
+        'Horizontal progress indicator that animates from an initial value to a target percentage.',
+    },
+  },
 ]
 
 export const router = createRouter({

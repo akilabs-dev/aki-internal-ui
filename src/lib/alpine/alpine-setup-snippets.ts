@@ -1811,6 +1811,29 @@ Alpine.data('popoverDemo', () => createPopoverDemo(false))
 Alpine.start()
 `
 
+const PROGRESS_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+Alpine.data('progressDemo', () => ({
+  progress: 13,
+  timer: null,
+
+  init() {
+    this.timer = setTimeout(() => {
+      this.progress = 66
+    }, 500)
+  },
+
+  destroy() {
+    if (this.timer) {
+      clearTimeout(this.timer)
+      this.timer = null
+    }
+  },
+}))
+
+Alpine.start()
+`
+
 const DROPDOWN_MENU_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 const createDropdownMenuDemo = () => ({
@@ -2071,6 +2094,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return PAGINATION_ALPINE_SETUP
     case 'popover':
       return POPOVER_ALPINE_SETUP
+    case 'progress':
+      return PROGRESS_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':
