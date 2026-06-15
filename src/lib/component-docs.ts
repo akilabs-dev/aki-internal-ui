@@ -49,7 +49,7 @@ export const componentCatalog: ComponentCatalogEntry[] = [
   { id: 'link', label: 'Link', disabled: true }, // path: '/docs/components/link'
   { id: 'listbox', label: 'Listbox', disabled: true },
   { id: 'number-input', label: 'Number Input', disabled: true },
-  { id: 'select', label: 'Select', disabled: true }, // path: '/docs/components/select'
+  { id: 'select', label: 'Select', path: '/docs/components/select' },
   { id: 'separator', label: 'Separator',disabled: true }, //  path: '/docs/components/separator'
   { id: 'sheet', label: 'Sheet', disabled: true },
   { id: 'sidebar', label: 'Sidebar', disabled: true },

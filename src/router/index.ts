@@ -501,6 +501,17 @@ const routes: RouteRecordRaw[] = [
         'Vertical tag list and horizontal photo gallery with custom scrollbars.',
     },
   },
+  {
+    path: '/docs/components/select',
+    name: 'docs-components-select',
+    component: () => import('@/pages/components/SelectPage.vue'),
+    meta: {
+      title: 'Select',
+      eyebrow: 'Components',
+      description:
+        'Fruit and timezone selects with grouped options, checkmarks, and scrollable menus.',
+    },
+  },
 ]
 
 export const router = createRouter({

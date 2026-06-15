@@ -1834,6 +1834,101 @@ Alpine.data('progressDemo', () => ({
 Alpine.start()
 `
 
+const SELECT_ALPINE_SETUP = `import Alpine from 'alpinejs'
+
+const createSelectDemo = (placeholder, groups, defaultValue = '') => ({
+  open: false,
+  value: defaultValue,
+  placeholder,
+  groups,
+
+  init() {
+    this.$watch('open', (isOpen) => {
+      if (!isOpen) return
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => this.position())
+      })
+    })
+  },
+
+  toggle() {
+    this.open = !this.open
+  },
+
+  close() {
+    this.open = false
+  },
+
+  select(nextValue) {
+    this.value = nextValue
+    this.close()
+  },
+
+  label() {
+    if (!this.value) return this.placeholder
+    for (const group of this.groups) {
+      const match = group.options.find((option) => option.value === this.value)
+      if (match) return match.label
+    }
+    return this.placeholder
+  },
+
+  isSelected(optionValue) {
+    return this.value === optionValue
+  },
+
+  isPlaceholder() {
+    return !this.value
+  },
+
+  position() {
+    const trigger = this.$refs.trigger
+    const content = this.$refs.content
+    if (!trigger || !content) return
+
+    const rect = trigger.getBoundingClientRect()
+    const offset = 4
+    content.style.position = 'fixed'
+    content.style.top = \`\${rect.bottom + offset}px\`
+    content.style.left = \`\${rect.left}px\`
+    content.style.minWidth = \`\${rect.width}px\`
+    content.style.zIndex = '50'
+  },
+})
+
+const fruitGroup = {
+  label: 'Fruits',
+  options: [
+    { value: 'apple', label: 'Apple' },
+    { value: 'banana', label: 'Banana' },
+    { value: 'blueberry', label: 'Blueberry' },
+    { value: 'grapes', label: 'Grapes' },
+    { value: 'pineapple', label: 'Pineapple' },
+  ],
+}
+
+const timezoneGroups = [
+  {
+    label: 'North America',
+    options: [
+      { value: 'est', label: 'Eastern Standard Time (EST)' },
+      { value: 'cst', label: 'Central Standard Time (CST)' },
+      { value: 'mst', label: 'Mountain Standard Time (MST)' },
+      { value: 'pst', label: 'Pacific Standard Time (PST)' },
+      { value: 'akst', label: 'Alaska Standard Time (AKST)' },
+      { value: 'hst', label: 'Hawaii Standard Time (HST)' },
+    ],
+  },
+]
+
+Alpine.data('selectFruitDemo', () => createSelectDemo('Select a fruit', [fruitGroup]))
+Alpine.data('selectFruitDemo2', () => createSelectDemo('Select a fruit', [fruitGroup]))
+Alpine.data('selectTimezoneDemo', () => createSelectDemo('Select a timezone', timezoneGroups))
+Alpine.data('selectTimezoneDemo2', () => createSelectDemo('Select a timezone', timezoneGroups))
+
+Alpine.start()
+`
+
 const RADIO_GROUP_ALPINE_SETUP = `import Alpine from 'alpinejs'
 
 Alpine.data('radioGroupDemo', () => ({
@@ -2115,6 +2210,8 @@ export function getAlpineSetupSource(extractor: AlpineExtractorId): string | nul
       return PROGRESS_ALPINE_SETUP
     case 'radio-group':
       return RADIO_GROUP_ALPINE_SETUP
+    case 'select':
+      return SELECT_ALPINE_SETUP
     case 'calendar':
       return CALENDAR_ALPINE_SETUP
     case 'button':

@@ -56,6 +56,13 @@ import { createPaginationDemoData } from '@/lib/alpine/pagination-demo'
 import { createPopoverDemoData } from '@/lib/alpine/popover-demo'
 import { createProgressDemoData } from '@/lib/alpine/progress-demo'
 import { createRadioGroupDemoData } from '@/lib/alpine/radio-group-demo'
+import { createSelectDemoData } from '@/lib/alpine/select-demo'
+import {
+  fruitGroup,
+  selectFruitPlaceholder,
+  selectTimezonePlaceholder,
+  timezoneGroups,
+} from '@/demos/select/select-demo.data'
 import collapse from '@alpinejs/collapse'
 import Alpine from 'alpinejs'
 
@@ -150,6 +157,30 @@ export function registerAlpineData() {
   Alpine.data('popoverDemo', () => createPopoverDemoData(false))
   Alpine.data('progressDemo', createProgressDemoData)
   Alpine.data('radioGroupDemo', createRadioGroupDemoData)
+  Alpine.data('selectFruitDemo', () =>
+    createSelectDemoData({
+      placeholder: selectFruitPlaceholder,
+      groups: [fruitGroup],
+    }),
+  )
+  Alpine.data('selectFruitDemo2', () =>
+    createSelectDemoData({
+      placeholder: selectFruitPlaceholder,
+      groups: [fruitGroup],
+    }),
+  )
+  Alpine.data('selectTimezoneDemo', () =>
+    createSelectDemoData({
+      placeholder: selectTimezonePlaceholder,
+      groups: timezoneGroups,
+    }),
+  )
+  Alpine.data('selectTimezoneDemo2', () =>
+    createSelectDemoData({
+      placeholder: selectTimezonePlaceholder,
+      groups: timezoneGroups,
+    }),
+  )
 }
 
 export function ensureAlpine() {
